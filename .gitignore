@@ -1,0 +1,36 @@
+# Build output
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.slnLaunch.user
+
+# NuGet
+packages/
+NugetPackages_Source/
+*.nupkg
+
+# Backup / temp files
+*.bak
+*.tmp
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Debug/log output
+*.log
+debug_*.txt
+
+# Config (local settings)
+Config.ini

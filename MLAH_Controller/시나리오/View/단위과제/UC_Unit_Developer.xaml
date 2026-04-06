@@ -1,0 +1,395 @@
+﻿<UserControl x:Class="MLAH_Controller.UC_Unit_Developer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MLAH_Controller"
+        mc:Ignorable="d" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        dx:ThemeManager.ThemeName="Win11Dark"
+        Height="1160" Width="520" 
+        Background="{StaticResource MLAH_COLOR_BG_Brush}"  
+        >
+
+
+    <UserControl.DataContext>
+        <Binding Source="{x:Static local:ViewModel_UC_Unit_Developer.SingletonInstance}"/>
+    </UserControl.DataContext>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="700"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="아/적군 객체 이동경로" Grid.Row="0" Grid.RowSpan="4" Foreground="{StaticResource SciFi_Cyan}" BorderBrush="{StaticResource SciFi_Border}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <DataGrid Style="{StaticResource NormalDataGrid}" ItemsSource="{Binding MovePlanList}" SelectedIndex="{Binding MovePlanListIndex}" Height="280" VerticalAlignment="Top" HorizontalScrollBarVisibility="Hidden">
+                    <DataGrid.Columns>
+                        <!-- 순번 컬럼 -->
+                        <!--<DataGridTextColumn Header="순번" Width="55" IsReadOnly="True">
+                            <DataGridTextColumn.Binding>
+                                <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource AncestorType=DataGridRow}" Converter="{StaticResource IndexPlusOneConverter}" />
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>-->
+                        <DataGridTextColumn Header="객체 ID" Width="150" IsReadOnly="True" Binding="{Binding UnitID}"/>
+                        <!--<DataGridTextColumn Header="경로 이름" Width="300" IsReadOnly="True" Binding="{Binding Name}"/>-->
+                    </DataGrid.Columns>
+                    <i:Interaction.Behaviors>
+                        <local:BindableSelectedItemBehaviorForDataGrid SelectedItem="{Binding SelectedMovePlanListItem, Mode=TwoWay}" />
+                    </i:Interaction.Behaviors>
+                </DataGrid>
+
+                <Button Grid.Row="1" Content="{Binding Button1Text}" Style="{StaticResource HudButtonStyle}" IsEnabled="{Binding Button1Enable}" Width="80" HorizontalAlignment="Left" Margin="0,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown">
+                            <i:InvokeCommandAction Command="{Binding Button1Command}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+                <Button Grid.Row="1" Content="{Binding Button2Text}" Style="{StaticResource HudButtonStyle}" IsEnabled="{Binding Button2Enable}" Width="80" HorizontalAlignment="Left" Margin="85,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown">
+                            <i:InvokeCommandAction Command="{Binding Button2Command}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+                <Button Grid.Row="1" Content="{Binding Button3Text}" Style="{StaticResource HudButtonStyle}" IsEnabled="{Binding Button3Enable}" Width="80" HorizontalAlignment="Left" Margin="170,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown">
+                            <i:InvokeCommandAction Command="{Binding Button3Command}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+            </Grid>
+ 
+        </GroupBox>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="350"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            
+
+         
+
+        </Grid>
+
+        <!--<GroupBox Grid.ColumnSpan="2" Grid.RowSpan="5" Header="이동경로" Foreground="White"/>-->
+        <GroupBox Grid.ColumnSpan="2" Grid.Row="1" Header="이동 경로" Foreground="{StaticResource SciFi_Cyan}" BorderBrush="{StaticResource SciFi_Border}" Margin="10,10,10,10" Height="680" VerticalAlignment="Top" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <DataGrid Grid.Column="0" Style="{StaticResource NormalDataGrid}" ItemsSource="{Binding MovePlans}" HorizontalScrollBarVisibility="Disabled" IsEnabled="True"
+                          SelectedIndex="{Binding PathPlanListIndex}" Height="330" VerticalAlignment="Top">
+                    <DataGrid.Columns>
+                        <!--<DataGridTextColumn Header="순번" Width="35" IsReadOnly="True" Binding="{Binding LAT}"/>-->
+                        <DataGridTextColumn Header="위도" Width="65" IsReadOnly="True" Binding="{Binding LAT,StringFormat=F5}"/>
+                        <DataGridTextColumn Header="경도" Width="65" IsReadOnly="True" Binding="{Binding LON, StringFormat=F5}"/>
+                        <DataGridTextColumn Header="고도" Width="65" IsReadOnly="True" Binding="{Binding ALT, StringFormat=F1}"/>
+                    </DataGrid.Columns>
+                    <i:Interaction.Behaviors>
+                        <local:BindableSelectedItemBehaviorForDataGrid SelectedItem="{Binding SelectedPathPlan, Mode=TwoWay}" />
+                    </i:Interaction.Behaviors>
+                </DataGrid>
+
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+
+                    <ToggleButton Grid.Column="0" Grid.Row="0" Style="{StaticResource POSSelectToggleButtonStyle}" IsEnabled="{Binding PathCheckEnable}" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding DevelopPathChecked}" />
+
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="Unit ID" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding LOCInfo_ID, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="30" HorizontalAlignment="Center"/>
+                    
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="위도" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding LOCInfo_LAT,StringFormat=F5, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}"/>
+                    <TextBlock Grid.Column="3" Grid.Row="1" Text=" °" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="경도" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding LOCInfo_LON,StringFormat=F5, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}"/>
+                    <TextBlock Grid.Column="3" Grid.Row="2" Text=" °" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="고도" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding LOCInfo_ALT,StringFormat=F1, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}"/>
+                    <TextBlock Grid.Column="3" Grid.Row="3" Text=" m" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+
+                    <TextBlock Grid.Column="1" Grid.Row="4" Text="속력" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding LOCInfo_Speed,StringFormat=F1, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}"/>
+                    <TextBlock Grid.Column="3" Grid.Row="4" Text=" m/s" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+
+                    <TextBlock Grid.Column="1" Grid.Row="5" Text="임무" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <ComboBox Grid.Column="2" Grid.Row="5" Style="{StaticResource HudComboBoxStyle}" Height="25" Width="110" Margin="{StaticResource UIELEMENT_MARGIN}" IsEnabled="{Binding EditEnable}" SelectedIndex="{Binding MissionTypeIndex}">
+                        <ComboBoxItem Content="이동" />
+                        <ComboBoxItem Content="Loitering" />
+                        <ComboBoxItem Content="Holding" />
+                        <ComboBoxItem Content="Attack_ATGM" />
+                        <ComboBoxItem Content="Attack_Rocket" />
+                        <ComboBoxItem Content="Attack_Gun" />
+                        <ComboBoxItem Content="None" />
+                    </ComboBox>
+
+                    <TextBlock Grid.Column="1" Grid.Row="6" Text="통과" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <ComboBox Grid.Column="2" Grid.Row="6" Style="{StaticResource HudComboBoxStyle}" Height="25" Width="110" Margin="{StaticResource UIELEMENT_MARGIN}" IsEnabled="{Binding EditEnable}" SelectedIndex="{Binding PassTypeIndex}">
+                        <ComboBoxItem Content="Fly Over" />
+                        <ComboBoxItem Content="Fly By" />
+                    </ComboBox>
+
+                    <TextBlock Grid.Column="1" Grid.Row="7" Text="대기" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <ComboBox Grid.Column="2" Grid.Row="7" Style="{StaticResource HudComboBoxStyle}" Height="25" Width="110" Margin="{StaticResource UIELEMENT_MARGIN}" IsEnabled="{Binding EditEnable}" SelectedIndex="{Binding WaitTypeIndex}">
+                        <ComboBoxItem Content="무한 대기" />
+                        <ComboBoxItem Content="대기 없음" />
+                        <ComboBoxItem Content="5" />
+                        <ComboBoxItem Content="10" />
+                        <ComboBoxItem Content="30" />
+                        <ComboBoxItem Content="60" />
+                        <ComboBoxItem Content="600" />
+                    </ComboBox>
+
+                    <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="8" Text="표적 ID(공격임무만)" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding TargetID, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="30" HorizontalAlignment="Right"/>
+
+                    <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="9" Text="공격횟수(공격임무만)" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                    <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding AttackCount, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="30" HorizontalAlignment="Right"/>
+
+                    <GroupBox Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="10" Grid.RowSpan="9" Header="촬영" BorderBrush="{StaticResource SciFi_Border}" Foreground="{StaticResource SciFi_Cyan}" Height="250">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="모드" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                            <ComboBox Grid.Column="1" Style="{StaticResource HudComboBoxStyle}" Height="25" Width="100" Margin="112,1,2,1" IsEnabled="{Binding EditEnable}" SelectedIndex="{Binding CameraModeIndex}">
+                                <ComboBoxItem Content="좌표 고정" />
+                                <ComboBoxItem Content="Sweep" />
+                                <ComboBoxItem Content="기체 고정" />
+                                <ComboBoxItem Content="표적 추적" />
+                                <ComboBoxItem Content="Default" />
+                            </ComboBox>
+
+                            <TextBlock Grid.Row="1" Text="FOV" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding CameraFOV, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+
+                            <Grid Grid.Row="2" Visibility="{Binding FixedPointVisible}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                
+                                <TextBlock Grid.Row="0" Text="위도" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding FixedPointLat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+
+                                <TextBlock Grid.Row="1" Text="경도" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding FixedPointLon, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Grid Grid.Row="2" Visibility="{Binding SweepVisible}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="Point 1 위도" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SweepPoint1Lat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+
+                                <TextBlock Grid.Row="1" Text="Point 1 경도" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SweepPoint1Lon, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+
+                                <TextBlock Grid.Row="2" Text="Point 2 위도" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SweepPoint2Lat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+
+                                <TextBlock Grid.Row="3" Text="Point 2 경도" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SweepPoint2Lon, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+
+                                <TextBlock Grid.Row="4" Text="SweepTime" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SweepTime, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Grid Grid.Row="2" Visibility="{Binding FixedUAVVisible}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="Roll" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding FixedUAVRoll, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+
+                                <TextBlock Grid.Row="1" Text="Pitch" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding FixedUAVPitch, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+
+                                <TextBlock Grid.Row="2" Text="Yaw" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding FixedUAVYaw, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <Grid Grid.Row="2" Visibility="{Binding ChasingTargetVisible}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="표적 번호" Style="{StaticResource NormalTextBlock}" Foreground="{StaticResource SciFi_Cyan}"/>
+                                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ChasingTargetNum, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" IsEnabled="{Binding PathEnable}" Width="100" HorizontalAlignment="Right"/>
+
+                            </Grid>
+
+                        </Grid>
+                        
+                    </GroupBox>
+
+
+                    <Button Grid.Column="1" Grid.Row="19" Grid.ColumnSpan="3" Content="Point 저장" Style="{StaticResource HudButtonStyle}" HorizontalAlignment="Left" Height="30" Width="100" IsEnabled="True">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{Binding DetailSaveCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                    <Button Grid.Column="1" Grid.Row="20" Grid.ColumnSpan="3" Content="고도 / 속도 일괄저장" Style="{StaticResource HudButtonStyle}" HorizontalAlignment="Left" Height="30" Width="180">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{Binding TotalDetailSaveCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+
+
+            </Grid>
+        </GroupBox>
+
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Content="이동경로 송신" Style="{StaticResource HudButtonStyle}" IsEnabled="{Binding Button1Enable}" Width="100" HorizontalAlignment="Left" Margin="0,0,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding SendCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+            <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" Content="메모장 불러오기" Style="{StaticResource HudButtonStyle}" IsEnabled="{Binding Button1Enable}" Width="120" HorizontalAlignment="Left" Margin="50,0,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding TextTestCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+            <Button Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Content="언리얼 객체만 생성(모의 중 언리얼 재시작 시)" Style="{StaticResource HudButtonStyle}" IsEnabled="True" Width="300" HorizontalAlignment="Left" Margin="0,0,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding SendUnrealCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+        </Grid>
+    </Grid>
+
+    
+    
+
+</UserControl>
+
+

@@ -1,0 +1,151 @@
+﻿<dx:ThemedWindow x:Class="MLAH_Controller.View_Parameter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MLAH_Controller"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        mc:Ignorable="d" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        dx:ThemeManager.ThemeName="Win11Dark"
+        Height="500" Width="400" ResizeMode="NoResize" Topmost="True"
+        Background="{StaticResource MLAH_COLOR_BG_Brush}"  WindowStartupLocation="CenterScreen"
+        ControlBoxButtonSet="None" Title="파라미터 설정"
+        >
+
+    <dx:ThemedWindow.Resources>
+        <ResourceDictionary>
+
+            <Style BasedOn="{StaticResource NormalTextBlock}" TargetType="TextBlock"/>
+            
+        </ResourceDictionary>
+    </dx:ThemedWindow.Resources>
+    <!--리소스 정의 끝-->
+
+
+    <dx:ThemedWindow.DataContext>
+        <Binding Source="{x:Static local:ViewModel_Parameter.SingletonInstance}"/>
+    </dx:ThemedWindow.DataContext>
+
+    <TabControl  Style="{StaticResource NormalTabControl}">
+        <TabItem Header="피탐 모델링" Style="{StaticResource NormalTabItem}" Width="120" HorizontalAlignment="Stretch" IsSelected="True" Height="30">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+
+                <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="1" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="1" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="2" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="2" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="3" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="3" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="4" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="4" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="5" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="5" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="6" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="6" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="7" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="7" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="8" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="8" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="9" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="9" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="10" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="10" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <Border Grid.Column="0" Grid.Row="11" BorderBrush="Gray" BorderThickness="0.4"/>
+                <Border Grid.Column="2" Grid.Row="11" BorderBrush="Gray" BorderThickness="0.4"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="객체 번호" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ObjectLat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="매개변수" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <!--<TextBlock Grid.Column="1" Text="ID" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>-->
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="값" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                
+                
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="거리 기준" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding ObjectLat, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+                
+
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="거리에 따른 확률 감소 기울기" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="3" Text="5" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="최대 확률" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="4" Text="3500" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="5" Text="기준 시간" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="5" Text="3500" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="6" Text="락온 후 사격까지 소요되는 시간" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="6" Text="3500" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="7" Text="지수 함수 기울기 조절 계수" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="7" Text="3500" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="8" Text="거리 기준 (Short)" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="8" Text="3500" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="9" Text="거리에 따른 확률 감소 기울기 (Short)" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="9" Text="3500" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="10" Text="최대 확률 (Short)" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="10" Text="3500" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="11" Text="스캔 간격" Style="{StaticResource NormalTextBlock}" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="11" Text="3500" Style="{StaticResource NormalTextBox}" HorizontalAlignment="Center" Width="115"/>
+
+
+            </Grid>
+
+        </TabItem>
+        <TabItem Header="격추 모델링 (GUN)" Style="{StaticResource NormalTabItem}" Width="130" HorizontalAlignment="Stretch" IsSelected="True" Height="30">
+
+        </TabItem>
+        <TabItem Header="격추 모델링 (Missile)" Style="{StaticResource NormalTabItem}" Width="130" HorizontalAlignment="Stretch" IsSelected="True" Height="30">
+
+        </TabItem>
+
+
+    </TabControl>
+
+
+
+
+
+</dx:ThemedWindow>
+
+

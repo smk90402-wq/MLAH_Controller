@@ -1,0 +1,170 @@
+{
+  "PathID": "0S002002002",
+  "AircraftID": 5,
+  "IsFormationFlight": 0,
+  "Formation": {},
+  "Waypoints": [
+    {
+      "WaypointID": 427,
+      "Coordinate": {
+        "Latitude": 38.0789713538008,
+        "Longitude": 128.19806121761926,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 0.00,
+      "ECF": 0.00,
+      "NextWaypointID": 428,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 4,
+        "CoordinateOrientation": {},
+        "LineSearch": {},
+        "AutoTracking": null,
+        "AircraftFixed": {
+          "GimbalPitch": 90,
+          "GimbalYaw": 0
+        },
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 428,
+      "Coordinate": {
+        "Latitude": 38.083552326756745,
+        "Longitude": 128.19866771232515,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 14.55,
+      "ECF": 1.46,
+      "NextWaypointID": 429,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 4,
+        "CoordinateOrientation": {},
+        "LineSearch": {},
+        "AutoTracking": null,
+        "AircraftFixed": {
+          "GimbalPitch": 90,
+          "GimbalYaw": 0
+        },
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 429,
+      "Coordinate": {
+        "Latitude": 38.08362255922518,
+        "Longitude": 128.19793182552246,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 16.41,
+      "ECF": 1.65,
+      "NextWaypointID": 430,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 4,
+        "CoordinateOrientation": {},
+        "LineSearch": {},
+        "AutoTracking": null,
+        "AircraftFixed": {
+          "GimbalPitch": 90,
+          "GimbalYaw": 0
+        },
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 430,
+      "Coordinate": {
+        "Latitude": 38.07904982797678,
+        "Longitude": 128.19732646773463,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 30.94,
+      "ECF": 3.10,
+      "NextWaypointID": 431,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 4,
+        "CoordinateOrientation": {},
+        "LineSearch": {},
+        "AutoTracking": null,
+        "AircraftFixed": {
+          "GimbalPitch": 90,
+          "GimbalYaw": 0
+        },
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 431,
+      "Coordinate": {
+        "Latitude": 38.07912829754018,
+        "Longitude": 128.19659171636013,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 32.80,
+      "ECF": 3.29,
+      "NextWaypointID": 432,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 4,
+        "CoordinateOrientation": {},
+        "LineSearch": {},
+        "AutoTracking": null,
+        "AircraftFixed": {
+          "GimbalPitch": 90,
+          "GimbalYaw": 0
+        },
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 432,
+      "Coordinate": {
+        "Latitude": 38.08369278706865,
+        "Longitude": 128.19719593739288,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 47.32,
+      "ECF": 4.74,
+      "NextWaypointID": 433,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 4,
+        "CoordinateOrientation": {},
+        "LineSearch": {},
+        "AutoTracking": null,
+        "AircraftFixed": {
+          "GimbalPitch": 90,
+          "GimbalYaw": 0
+        },
+        "AutoScan": {}
+      }
+    }
+  ]
+}

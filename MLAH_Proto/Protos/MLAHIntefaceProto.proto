@@ -1,0 +1,644 @@
+syntax = "proto3";
+
+package MLAHInterop;
+// server -> client : Responce
+// client -> server : Request
+
+// RL
+message InitEpisodeResponse
+{
+	string message = 1;
+}
+
+message InitEpisodeRequest
+{
+	string message = 1;
+}
+
+message EndEpisodeResponse
+{
+	string message = 1;
+}
+
+message EndEpisodeRequest
+{
+	string message = 1;
+}
+
+message DisconnectRequest
+{
+	string message = 1;
+}
+
+message EndSimulationResponse
+{
+	string message = 1;
+}
+
+message ScenarioRequest
+{
+	// entity create ok
+	string message = 1;
+}
+
+message ScenarioResponse
+{
+	// location rotation velocity
+	string type = 1;			// UAV, Helicopter
+	string subtype = 2;
+	int32 id = 3;
+	string identify = 4;
+
+	LLAPosition location = 5;
+	Orientation rotation = 6;
+	Velocity velocity = 7;
+
+	double health = 8;
+
+	double fuel = 9;
+	double fuel_comsumption = 10;
+
+	// helicopter
+	int32 auto_attack_flag = 11;
+	int32 atgm_round = 12;
+	int32 hydra_round = 13;
+	int32 minigun_round = 14;
+	double atgm_direct_damage = 15;
+	double atgm_explosion_damage = 16;
+	double atgm_direct_accuracy = 17;
+	double atgm_explosion_accuracy = 18;
+	double hydra_direct_damage = 19;
+	double hydra_explosion_damage = 20;
+	double hydra_direct_accuracy = 21;
+	double hydra_explosion_accuracy = 22;
+	double minigun_damage = 23;
+	double minigun_accuracy = 24;
+	
+	// UAV
+	string camera_type = 25;
+	double recognition_pixel = 26;
+	double detection_pixel = 27;
+
+	// target
+	double target_damage = 28;
+	double target_attack_range = 29;
+	double target_detect_range = 30;
+	double target_attack_delay = 31;
+	double target_attack_accuracy = 32;
+	double target_attack_midpoint = 33;
+	double target_attack_steepness = 34;
+
+	enumInputStatus inputstatus = 35;
+
+	bool next_scenario = 36;
+}
+
+message ObservationRequest
+{
+	string message = 1;
+
+	double simulationtime = 2;
+
+	repeated ObservationHelicopterInfo	helicopters = 3;
+	repeated ObservationUAVInfo			uavs = 4;
+	repeated ObservationTargetInfo		targets = 5;
+}
+
+/*
+message ObservationEntityInfo
+{
+	string type = 1;
+	int32 id = 2;
+
+	LLAPosition location = 3;
+
+	double heading = 4;
+
+	bool done = 5;
+
+	oneof data{
+		ObservationHelicopterInfo helicopter_info = 6;
+		ObservationUAVInfo uav_info = 7;
+	}
+
+	LLAPosition current_waypoint = 8;
+	bool waypoint_done = 9;
+}
+*/
+
+message ObservationHelicopterInfo
+{
+	string type = 1;
+	string subtype = 2;
+	int32 id = 3;
+
+	LLAPosition location = 4;
+	Orientation rotation = 5;
+	Velocity velocity = 6;
+
+	double health = 7;
+	double fuel = 8;
+
+	bool done = 9;
+	// != 0 ? true : false
+
+	LLAPosition current_waypoint = 10;
+	bool waypoint_done = 11;
+	
+	int32 atgm_round = 12;
+	int32 hydra_round = 13;
+	int32 minigun_round = 14;
+
+	enumEntityStatus status = 15; 
+	
+	int32 missionID = 16;
+	int32 waypointID = 17;
+	
+	EntityAbnormalCause abnormalcause = 18;
+
+	UnrealPosition unreallocation = 19;
+
+	//유인기 활성화 상태,  0 - Unknown, 1 - 정상, 2 - 비정상
+	int32 HealthStatus = 20;
+
+	//유인기 연료 상태,  0 - Unknown, 1 - 정상, 2 - 경고, 3 - 위험
+	int32 FuelStatus = 21;
+	
+	
+}
+
+message ObservationUAVInfo
+{
+	string type = 1;
+	string subtype = 2;
+	int32 id = 3;
+
+	LLAPosition location = 4;
+	Orientation rotation = 5;
+	Velocity velocity = 6;
+
+	double health = 7;
+	double fuel = 8;	
+
+	bool done = 9;
+
+	LLAPosition current_waypoint = 10;
+	bool waypoint_done = 11;
+
+	string camera_type = 12;
+	repeated LLAPosition camera_goal_position = 13;
+	double camera_vfov = 14;
+	double camera_hfov = 15;
+	double camera_dfov = 16;
+	double camera_hypoenuse = 17;
+	
+	// 상황인지 데이터
+	repeated ObservationTargetInfo search_target_info = 18;
+	repeated ObservationTargetInfo detected_target_info = 19;
+	repeated ObservationInterestRegion interest_region_info = 20;
+
+	ObservationSimulationInfo simulation_info = 21;
+	
+	// Status
+	enumEntityStatus status = 22; 
+
+	int32 missionID = 23;
+	int32 waypointID = 24;
+
+	EntityAbnormalCause abnormalcause = 25;
+
+	UnrealPosition unreallocation = 26;
+	
+	double recognition_pixel = 27;
+	double detection_pixel = 28;
+
+		//무인기 활성화 상태,  0 - Unknown, 1 - 정상, 2 - 비정상
+	int32 HealthStatus = 29;
+
+	//무인기 연료 상태,  0 - Unknown, 1 - 정상, 2 - 경고, 3 - 위험
+	int32 FuelStatus = 30;
+
+	//무인기 센서 상태,  0 - Unknown, 1 - 정상, 2 - 비정상
+	int32 SensorStatus = 31;
+}
+
+message ObservationTargetInfo
+{
+	string type = 1;
+	string subtype = 2;
+	int32 id = 3;
+
+	LLAPosition location = 4;
+	Orientation rotation = 5;
+	Velocity velocity = 6;
+	
+	double health = 7;
+	double fuel = 8;	
+
+	bool done = 9;
+
+	enumEntityStatus status = 10; 
+
+	int32 missionID = 11;
+	int32 waypointID = 12;
+
+	UnrealPosition unreallocation = 13;
+
+	int32 detectpixel = 14;
+	
+	// Unit 1 message proto
+	int32 unit1targetid = 15;
+	int32 unit1targetstatus = 16;
+
+	//표적 활성화 상태,  0 - Unknown, 1 - 정상, 2 - 비정상
+	int32 HealthStatus = 17;
+
+}
+
+message ObservationInterestRegion
+{
+	int32 id = 1;
+
+	LLAPosition location = 2;
+}
+
+message ObservationSimulationInfo
+{
+	// 상황인지 데이터
+	string name = 1;
+}
+
+enum enumInputStatus
+{
+	STATUS_MISSION = 0;
+	STATUS_CONTROL = 1;
+	STATUS_RL = 2;
+	STATUS_VF = 3;
+}
+
+enum enumEntityStatus
+{
+	/*
+	STATUS_MISSION = 0;
+	STATUS_FLIGHT = 1;
+	STATUS_LOITER = 2;
+	STATUS_HOLDING = 3;
+	STATUS_ATTACK = 4;
+	STATUS_DEATH = 5;
+	STATUS_TRACKING = 6;
+	STATUS_CONTROL = 7;
+	*/
+	STATUS_FLIGHT = 0;
+	STATUS_WAIT = 1;
+	STATUS_ATTACK = 2;
+	STATUS_DEATH = 3;
+}
+
+message EntityAbnormalCause
+{
+	int32 hit = 1;
+	int32 loss_1 = 2;
+	int32 loss_2 = 3;
+	int32 loss_3 = 4;
+	int32 fuelwarning = 5;
+	int32 fueldenger = 6;
+	int32 fuelzero = 7;
+	int32 crash = 8;
+	//int32 sensor = 9; - 무인기 SensorStatus로 대체
+	
+}
+
+message ActionResponse
+{
+	repeated ActionEntityinfo entityinfo = 1;
+}
+
+message ActionEntityinfo
+{
+	string type = 1;
+	int32 id = 2;
+
+	bool done = 3;
+
+	enumActionType action_type = 4;
+	Vector4 action = 5;
+	/*
+	enumMoveActionType moveaction_type = 4;
+	Vector4 moveaction = 5;
+
+	enumAttackActionType attackaction_type = 6;
+	Vector4 attackaction = 7;
+	*/
+
+	CameraAction cameraaction = 6;
+}
+
+enum enumActionType
+{
+	ACTION_MOVETOGPS = 0;
+	ACTION_LOITER = 1;
+	ACTION_HOLDING = 2;
+	ACTION_ATTACKTO_ATGM = 3;
+	ACTION_ATTACKTO_HYDRA = 4;
+	ACTION_ATTACKTO_MINIGUN = 5;
+	ACTION_NONE = 6;
+}
+
+/*
+enum enumMoveActionType
+{
+	ACTION_MOVETOGPS = 0;
+	ACTION_LOITER = 1;
+	ACTION_HOLDING = 2;
+	ACTION_MOVE_NONE = 3;
+}
+
+enum enumAttackActionType
+{
+	ACTION_ATTACKTO_ATGM = 0;
+	ACTION_ATTACKTO_HYDRA = 1;
+	ACTION_ATTACKTO_MINIGUN = 2;
+	ACTION_ATTACK_NONE = 3;
+}
+*/
+
+message ScenarioMissionRequest
+{
+	string name = 1;
+
+	string type = 2;
+	int32 id = 3;
+
+	int32 missionID = 4;
+	int32 waypointID = 5;
+}
+
+message ScenarioMissionResponse
+{
+	string message = 1;
+	repeated ScenarioMission missionList = 2;
+}
+
+message ScenarioMission
+{
+	string type = 1;
+	int32 id = 2;
+
+	enumMissionType mission_type = 3;
+	int32 waypointpasstype = 4;			// 0 - fly over/ 1 - fly by
+	int32 onwaittime = 5;				// -1 - infinite wait / 0 - next mission / >0 time wait
+	Vector4 mission = 6;
+	
+	CameraAction cameramission = 7;
+
+	int32 missionID = 8;
+	int32 waypointID = 9;
+}
+
+message UpdateEntity
+{
+	string message = 1;
+	repeated UpdateEntityInfo entityList = 2;
+}
+
+message UpdateEntityInfo
+{
+	string type = 1;
+	string subtype = 2;
+	int32 id = 3;
+
+	LLAPosition location = 4;
+	Orientation rotation = 5;
+	Velocity velocity = 6;
+	
+	string camera_type = 7;
+	CameraAction camera_rotation = 8;
+}
+
+message SWBit
+{
+	string message = 1;
+}
+
+message NextMissionResponse
+{
+	string message = 1;
+
+	string type = 2;
+	int32 id = 3;
+}
+
+message UAVStatusResponse
+{
+	string message = 1;
+
+	int32 id = 2;
+
+	LLAPosition		UAVLocation = 3;
+	Orientation		UAVRotation = 4;
+
+	int32			SensorType = 5;				// 0 none 1 eo 2 ir
+	Orientation		SensorAttitude = 6;	
+	double			fov = 7;
+	LLAPosition		CenterCoordinate = 8;
+}
+
+message UAVStatusControlResponse
+{
+	string message = 1;
+
+	int32 id = 2;
+
+	LLAPosition		UAVLocation = 3;
+	Orientation		UAVRotation = 4;
+
+	int32			SensorType = 5;				// 0 none 1 eo 2 ir
+	Orientation		SensorAttitude = 6;	
+	double			fov = 7;
+	LLAPosition		CenterCoordinate = 8;
+}
+
+enum enumMissionType
+{
+	MISSION_MOVETOGPS = 0;
+	MISSION_LOITER = 1;
+	MISSION_HOLDING = 2;
+	MISSION_ATTACKTO_ATGM = 3;
+	MISSION_ATTACKTO_HYDRA = 4;
+	MISSION_ATTACKTO_MINIGUN = 5;
+	MISSION_NONE = 6;
+}
+
+message LLAPosition
+{
+    double latitude = 1;
+    double longitude = 2;
+    double altitude = 3;
+}
+
+message UnrealPosition
+{
+    double x = 1;
+    double y = 2;
+    double z = 3;
+}
+
+message Orientation
+{
+    float psi = 1;      // Roll
+    float theta = 2;    // Pitch
+    float phi = 3;      // Yaw
+}
+
+message Velocity
+{
+    float u = 1;        // forward
+    float v = 2;        // right
+    float w = 3;        // down
+}
+
+message Vector4
+{
+	double x = 1;
+	double y = 2;
+	double z = 3;
+	double w = 4;
+}
+
+message CameraAction
+{
+	int32 mode = 1;	
+	
+	double fov = 2;
+	
+	double x = 3;
+	double y = 4;
+	double z = 5;
+	double w = 6;
+
+	double sweeptime = 7;
+}
+
+message ChangeHealthResponse
+{
+	int32 id = 1;
+	double health = 2;
+}
+
+message ChangeHealthStatusResponse
+{
+    int32 id = 1;
+
+    //0:Unknown 1:정상 2:비정상
+    int32 healthstatus = 2;
+}
+
+
+message ChangeFuelResponse
+{
+	int32 id = 1;
+	double fuel = 2;
+}
+
+message ChangeFuelStatusResponse
+{
+    int32 id = 1;
+
+    //0:Unknown 1:정상 2:경고 3:위험
+    int32 fuelstatus = 2;
+}
+
+message ChangeDataLinkResponse
+{
+	int32 id = 1;
+	int32 link = 2;		// 0 - all, 1 - 4, 2 - 5, 3 - 6, 4 - (4,5), 5 - (4,6), 6 - (5,6)
+}
+
+message ChangeSensorResponse
+{
+	int32 id = 1;
+	int32 sensor = 2;	// 0 - Unknown, 1 - 정상, 2 - 비정상
+}
+
+message ChangeTimeDilationResponse
+{
+	int32 timedilation = 1;
+}
+
+message CoperationTimeInformation
+{
+	double coperationtime = 1;
+}
+
+message IndividualTimeInformation
+{
+	int32 id = 1;
+	double individualtime = 2;
+}
+
+message ChangeEnvironmentResponse
+{
+	double time = 1;		// -1, 0 ~ 2400
+	int32 weather_mode = 2; // -1, 0 ~ 10
+	/*
+	0 clear_skies
+	1 cloudy
+	2 foggy
+	3 overcast
+	4 partly_cloudy
+	5 rain
+	6 rain_light
+	7 rain_thunderstorm
+	8 sand_dust_calm
+	9 sand_dust_storm
+	10 snow
+	11 snow_blizzard
+	12 snow_light
+	*/
+	int32 season_mode = 3;  // -1, 0 ~ 3
+	int32 level = 4;		// 0 ~ 3
+	/*
+	0 none
+	1 Jipo_Level
+	2 Hongik_Level
+	3 Inje_Level
+	*/
+}
+// VF
+
+/*
+message InitializeWeapon
+{
+	// LAH, Target
+	int32 id = 1;
+	
+	// Detect
+    double P_fa = 2;                     // 레이더 오경보 확률
+    double a = 3;                        // 전환점 계수
+    double sigma = 4;                    // 레이더 단면적
+    double n = 5;                        // 지수 함수 기울기 조절 계수
+    double t_ref = 6;                    // 레이더 노출 기준 시간
+    double a_range = 7;                  // 단거리 확률 거리 기준
+    double omega = 8;                    // 최대 확률
+    double b_slope = 9;                  // 거리에 따른 확률 감소 기울기
+    double checkinterval = 10;     // 스캔 간격
+
+	// Attack
+    double a_range = 11;                      // 거리 기준
+    double b_slope = 12;                      // 거리에 따른 확률 감소 기울기
+    double omega = 13;                        // 최대 확률
+    double t_fire = 14;                       // 탁온 후 사격까지 소요되는 시간
+    double t_ref = 15;                        // 기준 시간
+    double refRange = 16;                     // 거리 기준
+    double b_slope_shortrange = 17;           // 거리에 따른 확률 감소 기울기
+    double omega_shortrange = 18;            // 최대 확률
+    double n = 19;                           // 지수 함수 기울기 조절 계수
+    double reload = 20;                      // 
+    double checkinterval = 21;				// 스캔 간격
+}
+*/
+message EntityWapointDoneResponse
+{
+	int32 id = 1;
+	int32 missionid = 2;
+}

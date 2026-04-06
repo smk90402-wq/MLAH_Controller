@@ -1,0 +1,205 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>False</UseWindowsForms>
+		<PlatformTarget>x64</PlatformTarget>
+		<Platforms>x64</Platforms>
+		<ApplicationIcon>Helicopter_Black.ico</ApplicationIcon>
+		<AnalysisLevel>latest</AnalysisLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<IsPublishable>True</IsPublishable>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<IsPublishable>True</IsPublishable>
+		<PublishSingleFile>true</PublishSingleFile>
+		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<PublishTrimmed>false</PublishTrimmed>
+		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="gRPC\ExampleApplication.proto" />
+		<None Remove="gRPC\FederateInterface.proto" />
+		<None Remove="gRPC\MLAHIntefaceProto.proto.bak" />
+		<None Remove="Helicopter_Red.ico" />
+		<None Remove="MLAH_Controller.csproj.bak" />
+		<None Remove="Resources\Config.ini.bak" />
+		<None Remove="Resources\Images\AddScenario - 복사본.png" />
+		<None Remove="Resources\Images\AddScenario.png" />
+		<None Remove="Resources\Images\Cargo_Helicopter.png" />
+		<None Remove="Resources\Images\File_Open.png" />
+		<None Remove="Resources\Images\Helicopter.png" />
+		<None Remove="Resources\Images\Helicopter_Abnormal.png" />
+		<None Remove="Resources\Images\Helicopter_Leader.png" />
+		<None Remove="Resources\Images\Hostile.png" />
+		<None Remove="Resources\Images\Hostile_AAG.png" />
+		<None Remove="Resources\Images\Hostile_Panzer.png" />
+		<None Remove="Resources\Images\Hostile_Tank.png" />
+		<None Remove="Resources\Images\KUH.png" />
+		<None Remove="Resources\Images\LAH.png" />
+		<None Remove="Resources\Images\LAH_BLUE.png" />
+		<None Remove="Resources\Images\LAH_RED.png" />
+		<None Remove="Resources\Images\M2010.png" />
+		<None Remove="Resources\Images\MainImage.png" />
+		<None Remove="Resources\Images\Neutral.png" />
+		<None Remove="Resources\Images\OpenScenario.png" />
+		<None Remove="Resources\Images\Pause.png" />
+		<None Remove="Resources\Images\Play.png" />
+		<None Remove="Resources\Images\POS_CLICK.png" />
+		<None Remove="Resources\Images\POS_NORMAL.png" />
+		<None Remove="Resources\Images\RTB.png" />
+		<None Remove="Resources\Images\SaveScenario.png" />
+		<None Remove="Resources\Images\Stop.png" />
+		<None Remove="Resources\Images\Tank.png" />
+		<None Remove="Resources\Images\Test_UAV.png" />
+		<None Remove="Resources\Images\Test_UAV2.png" />
+		<None Remove="Resources\Images\UAV.png" />
+		<None Remove="Resources\Images\UAV_Abnormal.png" />
+		<None Remove="Resources\Images\UAV_Selected.png" />
+		<None Remove="Resources\Images\UAV_TopView.png" />
+		<None Remove="Resources\Images\UAV_TopView_Blue.png" />
+		<None Remove="Resources\Images\UAV_TopView_Red.png" />
+		<None Remove="Resources\Images\ZPU-4.png" />
+		<None Remove="UDP\Model_InternalMessage.cs.bak" />
+		<None Remove="UDP\UDPModule.cs.bak" />
+		<None Remove="메인화면\Viewmodel\ViewModel_MainView.cs.bak" />
+		<None Remove="시나리오\Model\단위과제\Model_ScenarioSequenceManager.cs.bak" />
+		<None Remove="시나리오\ViewModel\단위과제\ViewModel_IntegrationTest.cs.bak" />
+		<None Remove="시나리오\ViewModel\단위과제\ViewModel_ScenarioView.cs.bak" />
+		<None Remove="시나리오\ViewModel\단위과제\ViewModel_UC_Unit_Developer.cs.bak" />
+		<None Remove="시나리오\ViewModel\단위과제\ViewModel_UC_Unit_INITMissionInfo.cs.bak" />
+		<None Remove="시나리오\ViewModel\단위과제\ViewModel_Unit_Map.cs.bak" />
+		<None Remove="시나리오\View\단위과제\UC_Unit_MissionPackage.xaml.bak" />
+		<None Remove="시나리오\View\단위과제\UC_Unit_UAVMissionPlan.xaml.bak" />
+		<None Remove="환경설정및제어\Viewmodel\ViewModel_Config_PopUp.cs.bak" />
+		<None Remove="환경설정및제어\View\View_Config_PopUp.xaml.bak" />
+		<None Remove="Resources\Tiles_0623_14\**\*.*" />
+
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Helicopter_Black.ico" />
+		<Content Include="Resources\Config.ini">
+			<Link>Config.ini</Link>
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\PsExec.exe">
+			<Link>PsExec.exe</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Resources\ScenarioFiles\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Images\Hostile_AAG.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Images\Hostile.png" />
+		<Resource Include="Resources\Images\Hostile_Panzer.png" />
+		<Resource Include="Resources\Images\Hostile_Tank.png" />
+		<Resource Include="Resources\Images\KUH.png" />
+		<Resource Include="Resources\Images\LAH_RED.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Images\LAH_BLUE.png" />
+		<Resource Include="Resources\Images\M2010.png" />
+		<Resource Include="Resources\Images\Neutral.png" />
+		<Resource Include="Resources\Images\ZPU-4.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Images\LAH.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="BitMiracle.LibTiff.NET" Version="2.4.660" />
+		<PackageReference Include="DevExpress.AIIntegration" Version="25.1.3" />
+		<PackageReference Include="DevExpress.AIIntegration.Desktop" Version="25.1.3" />
+		<PackageReference Include="DevExpress.AIIntegration.Reporting.Common" Version="25.1.3" />
+		<PackageReference Include="DevExpress.AIIntegration.Wpf" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Data" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Diagram.Core" Version="25.1.3" />
+		<PackageReference Include="DevExpress.ExpressApp.PivotGrid" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Mvvm" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Pdf.Drawing" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Accordion" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Core" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Core.Extensions" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Docking" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Grid" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Grid.Core" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Grid.Printing" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.LayoutControl" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Map" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Scheduler" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Scheduling" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Themes.All" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Themes.DXStyle" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Themes.VS2019Dark" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Themes.Win11Dark" Version="25.1.3" />
+		<PackageReference Include="Grpc.AspNetCore.Server" Version="2.65.0" />
+		<PackageReference Include="Grpc.Reflection" Version="2.65.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\MLAH_Proto\MLAH_Proto.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Images\AddScenario - 복사본.png" />
+		<Resource Include="Resources\Images\AddScenario.png" />
+		<Resource Include="Resources\Images\Cargo_Helicopter.png" />
+		<Resource Include="Resources\Images\File_Open.png" />
+		<Resource Include="Resources\Images\Helicopter.png" />
+		<Resource Include="Resources\Images\Helicopter_Abnormal.png" />
+		<Resource Include="Resources\Images\Helicopter_Leader.png" />
+		<Resource Include="Resources\Images\MainImage.png" />
+		<Resource Include="Resources\Images\OpenScenario.png" />
+		<Resource Include="Resources\Images\Pause.png" />
+		<Resource Include="Resources\Images\Play.png" />
+		<Resource Include="Resources\Images\POS_CLICK.png" />
+		<Resource Include="Resources\Images\POS_NORMAL.png" />
+		<Resource Include="Resources\Images\RTB.png" />
+		<Resource Include="Resources\Images\SaveScenario.png" />
+		<Resource Include="Resources\Images\Stop.png" />
+		<Resource Include="Resources\Images\Tank.png" />
+		<Resource Include="Resources\Images\Test_UAV.png" />
+		<Resource Include="Resources\Images\Test_UAV2.png" />
+		<Resource Include="Resources\Images\UAV.png" />
+		<Resource Include="Resources\Images\UAV_Abnormal.png" />
+		<Resource Include="Resources\Images\UAV_Selected.png" />
+		<Resource Include="Resources\Images\UAV_TopView.png" />
+		<Resource Include="Resources\Images\UAV_TopView_Blue.png" />
+		<Resource Include="Resources\Images\UAV_TopView_Red.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<Page Update="시나리오\View\단위과제\View_Unit_Map.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="시나리오\View\단위과제\UC_Unit_Docking.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="REM --- Config.ini 스마트 복사 ---&#xD;&#xA;REM 파일이 없으면 복사, 있으면 필수 섹션([IPSet]) 확인 후 누락 시만 복사&#xD;&#xA;if not exist &quot;$(TargetDir)Config.ini&quot; (&#xD;&#xA;    copy /y &quot;$(ProjectDir)Resources\Config.ini&quot; &quot;$(TargetDir)Config.ini&quot;&#xD;&#xA;) else (&#xD;&#xA;    findstr /c:&quot;[IPSet]&quot; &quot;$(TargetDir)Config.ini&quot; &gt;nul 2&gt;&amp;1&#xD;&#xA;    if errorlevel 1 (&#xD;&#xA;        copy /y &quot;$(ProjectDir)Resources\Config.ini&quot; &quot;$(TargetDir)Config.ini&quot;&#xD;&#xA;    )&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;REM --- 단일 파일 복사 (Xcopy) ---&#xD;&#xA;REM PsExec.exe와 .proto 파일을 출력 폴더로 복사합니다.&#xD;&#xA;xcopy /y &quot;$(ProjectDir)Resources\srtm_62_05.tif&quot; &quot;$(TargetDir)\&quot;&#xD;&#xA;xcopy /y &quot;$(ProjectDir)Resources\PsExec.exe&quot; &quot;$(TargetDir)\&quot;&#xD;&#xA;REM proto 파일은 MLAH_Proto 프로젝트에서 자동 복사됨&#xD;&#xA;&#xD;&#xA;REM --- 폴더 복사 (Xcopy) ---&#xD;&#xA;REM ScenarioFiles 폴더를 출력 폴더에 복사합니다.&#xD;&#xA;REM /i 옵션은 대상이 폴더가 없는 경우 새로 만들도록 합니다.&#xD;&#xA;xcopy /y /i /e &quot;$(ProjectDir)Resources\ScenarioFiles&quot; &quot;$(TargetDir)ScenarioFiles\&quot;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;REM --- 불필요한 언어 리소스 폴더 삭제 ---&#xD;&#xA;REM 'ko' 폴더를 제외한 모든 언어 리소스 폴더(*.resources.dll을 포함하는)를 삭제합니다.&#xD;&#xA;if exist &quot;$(TargetDir)&quot; (&#xD;&#xA;    pushd &quot;$(TargetDir)&quot;&#xD;&#xA;    for /d %25%25i in (*) do (&#xD;&#xA;        if exist &quot;%25%25i\*.resources.dll&quot; (&#xD;&#xA;            if /I not &quot;%25%25i&quot;==&quot;ko&quot; (&#xD;&#xA;                rmdir /s /q &quot;%25%25i&quot;&#xD;&#xA;            )&#xD;&#xA;        )&#xD;&#xA;    )&#xD;&#xA;    popd&#xD;&#xA;)&#xD;&#xA;" />
+	</Target>
+</Project>

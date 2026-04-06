@@ -1,0 +1,331 @@
+﻿<UserControl x:Class="MLAH_LogAnalyzer.View_Target"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:local="clr-namespace:MLAH_LogAnalyzer"
+        mc:Ignorable="d" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        Background="{StaticResource MLAH_COLOR_BG_Brush}"  
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+        xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+        xmlns:dxcr="http://schemas.devexpress.com/winfx/2008/xaml/charts/rangecontrolclient"
+        xmlns:dxgn="http://schemas.devexpress.com/winfx/2008/xaml/gantt" 
+        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+        d:DataContext="{d:DesignInstance Type=local:View_Target, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <Style BasedOn="{StaticResource NormalTextBlock}" TargetType="TextBlock"/>
+            
+            <!-- TreeView 스타일 -->
+            <Style x:Key="TreeViewStyle" TargetType="TreeView">
+                <Setter Property="Background" Value="{StaticResource MLAH_COLOR_BG_Brush}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+            
+            <!-- TreeViewItem 스타일 -->
+            <Style x:Key="TreeViewItemStyle" TargetType="TreeViewItem">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Padding" Value="2"/>
+            </Style>
+
+            <dxc:CustomMarker2DModel x:Key="yellowCircleMarker">
+                <dxc:CustomMarker2DModel.PointTemplate>
+                    <ControlTemplate>
+                        <Rectangle Width="10" Height="10" 
+                     Fill="Yellow" 
+                     Stroke="DarkGoldenrod" 
+                     StrokeThickness="1"/>
+                    </ControlTemplate>
+                </dxc:CustomMarker2DModel.PointTemplate>
+            </dxc:CustomMarker2DModel>
+            
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+     <!--리소스 정의 끝--> 
+
+
+    <!--전체 그리드-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="50"/>
+            
+        </Grid.RowDefinitions>
+
+        <dxlc:LayoutControl Grid.Row="0" Grid.ColumnSpan="2" Padding="0" Margin="0">
+            <dxlc:LayoutGroup Header="분석 데이터 및 차트" 
+                      View="GroupBox" 
+                      IsCollapsible="True" 
+                      
+                      Orientation="Vertical">
+
+                <Grid Height="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--AnimationMode="OnLoad"-->
+                    <dxc:ChartControl Grid.Column="1" Name="TargetChart" CrosshairEnabled="True" DataSource="{Binding DataContext.SelectedScenarioTargetChartData}" 
+                                      CustomDrawCrosshair="ScoreChart_CustomDrawCrosshair" MouseLeftButtonDown="Chart_MouseLeftButtonDown">
+                        <dxc:ChartControl.Diagram>
+                            <dxc:XYDiagram2D SeriesDataMember="TargetID" EnableAxisXNavigation="True" EnableAxisYNavigation="False">
+                                <!--#region AxisY-->
+                                <dxc:XYDiagram2D.AxisY>
+                                    <dxc:AxisY2D>
+                                        <dxc:AxisY2D.Title>
+                                            <dxc:AxisTitle
+                            Content="Target Status" />
+                                        </dxc:AxisY2D.Title>
+                                        <dxc:AxisY2D.WholeRange>
+                                            <dxc:Range AutoSideMargins="False"/>
+                                        </dxc:AxisY2D.WholeRange>
+                                    </dxc:AxisY2D>
+                                </dxc:XYDiagram2D.AxisY>
+
+                                <dxc:XYDiagram2D.AxisX>
+                                    <dxc:AxisX2D x:Name="axisX" Visible="True" Alignment="Near" >
+                                        <dxc:AxisX2D.DateTimeScaleOptions>
+                                            <dxc:ContinuousDateTimeScaleOptions/>
+                                        </dxc:AxisX2D.DateTimeScaleOptions>
+                                        <dxc:AxisX2D.Label>
+                                            <dxc:AxisLabel TextPattern="{}{V:mm:ss.fff}"/>
+                                        </dxc:AxisX2D.Label>
+                                    </dxc:AxisX2D>
+                                </dxc:XYDiagram2D.AxisX>
+
+                                <!--#endregion-->
+                                <dxc:XYDiagram2D.SeriesTemplate>
+                                    <dxc:LineSeries2D
+                        ArgumentDataMember="Timestamp"
+                        ArgumentScaleType="DateTime"
+                        MarkerSize="10"
+                        MarkerVisible="True"
+                        ValueDataMember="State" ValueScaleType="Numerical" 
+                        CrosshairLabelPattern="Target {S} : {V}" />
+                                </dxc:XYDiagram2D.SeriesTemplate>
+                            </dxc:XYDiagram2D>
+                        </dxc:ChartControl.Diagram>
+                        <!--#region Legend-->
+                        <dxc:ChartControl.Legend>
+                            <dxc:Legend
+            HorizontalPosition="Right"
+            ReverseItems="True" />
+                        </dxc:ChartControl.Legend>
+                        <!--#endregion-->
+                        <!--#region Titles-->
+                        <!--<dxc:ChartControl.Titles>
+                <dxc:Title
+            Dock="Top"
+            HorizontalAlignment="Center">임무 성취도</dxc:Title>
+            </dxc:ChartControl.Titles>-->
+                        <!--#endregion-->
+                        <!--#region ToolTipController-->
+                        <!--<dxc:ChartControl.ToolTipController>
+                <dxc:ChartToolTipController
+            AutoPopDelay="0" />
+            </dxc:ChartControl.ToolTipController>-->
+                        <!--#endregion-->
+                        <dxc:ChartControl.CrosshairOptions>
+                            <dxc:CrosshairOptions GroupHeaderPattern="Time : {A:yyyy-MM-dd HH:mm:ss.fff}"/>
+                        </dxc:ChartControl.CrosshairOptions>
+                    </dxc:ChartControl>
+
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <GroupBox Header="시나리오 선택" BorderBrush="White">
+                            <dxg:GridControl Grid.Row="1" x:Name="CoverageSelectGrid" Margin="5,0,5,5" dx:ThemeManager.ThemeName="VS2019Dark" 
+                                 ItemsSource="{Binding DataContext.CheckedScenariosForDisplay,RelativeSource={RelativeSource AncestorType={x:Type local:View_ScoreMain}}}" 
+                                 SelectedItem="{Binding DataContext.SelectedScenarioSummary, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type local:View_ScoreMain}}}">
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn FieldName="ScenarioName" Header="시나리오 이름" Width="*" AllowEditing="False"/>
+                                </dxg:GridControl.Columns>
+                                <dxg:GridControl.View>
+                                    <dxg:TableView ShowGroupPanel="False"
+              ShowSearchPanelMode="Never"
+              AllowSorting="True"
+              AllowGrouping="False"/>
+                                </dxg:GridControl.View>
+                            </dxg:GridControl>
+                        </GroupBox>
+
+                        <GroupBox Header="임무 성취도" BorderBrush="White" Grid.Column="1">
+                            <TextBlock FontSize="80" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource NormalTextBlock}">
+<Run Text="{Binding SelectedScenarioScore}"/>
+<Run Text="%" Foreground="White" />
+                            </TextBlock>
+                        </GroupBox>
+
+                        <GroupBox Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="White">
+                            <GroupBox.Header>
+                                <TextBlock Foreground="White" FontWeight="Bold">
+                    <Run Text="세부 정보 - 전체 표적 수 : "/>
+                    <Run Text="{Binding TotalTargetCount}" Foreground="Yellow"/>
+                                </TextBlock>
+                            </GroupBox.Header>
+
+                            <dxg:GridControl x:Name="AreaGrid" Margin="5" 
+                             dx:ThemeManager.ThemeName="VS2019Dark" 
+                             ItemsSource="{Binding SelectedScenarioTargetGridData}">
+
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn FieldName="TargetID" Header="표적 ID" Width="80" 
+                                    HorizontalHeaderContentAlignment="Center">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+
+                                    <dxg:GridColumn FieldName="IsIdentified" Header="탐지" Width="*" 
+                                    HorizontalHeaderContentAlignment="Center">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                                        </dxg:GridColumn.EditSettings>
+
+                                        <dxg:GridColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Value}" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="Gray"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Value}" Value="O">
+                                                                    <Setter Property="Foreground" Value="LightGreen"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Value}" Value="X">
+                                                                    <Setter Property="Foreground" Value="#FF6666"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </dxg:GridColumn.CellTemplate>
+                                    </dxg:GridColumn>
+
+                                    <dxg:GridColumn FieldName="IsDetected" Header="식별" Width="*" 
+                                    HorizontalHeaderContentAlignment="Center">
+                                        <dxg:GridColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Value}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="Gray"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Value}" Value="O">
+                                                                    <Setter Property="Foreground" Value="Orange"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Value}" Value="X">
+                                                                    <Setter Property="Foreground" Value="#FF6666"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </dxg:GridColumn.CellTemplate>
+                                    </dxg:GridColumn>
+
+                                    <dxg:GridColumn FieldName="IsDestroyed" Header="파괴" Width="*" 
+                                    HorizontalHeaderContentAlignment="Center">
+                                        <dxg:GridColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Value}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="Gray"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Value}" Value="O">
+                                                                    <Setter Property="Foreground" Value="Red"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Value}" Value="X">
+                                                                    <Setter Property="Foreground" Value="#FF6666"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </dxg:GridColumn.CellTemplate>
+                                    </dxg:GridColumn>
+
+                                </dxg:GridControl.Columns>
+
+                                <dxg:GridControl.View>
+                                    <dxg:TableView ShowGroupPanel="False"
+                                   ShowSearchPanelMode="Never"
+                                   AllowSorting="True"
+                                   AllowGrouping="False"
+                                   NavigationStyle="Row"/>
+                                </dxg:GridControl.View>
+                            </dxg:GridControl>
+                        </GroupBox>
+
+                    </Grid>
+
+                    <!--<GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Height="5" Background="MediumPurple" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>-->
+
+                </Grid>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+
+        
+
+        <!--지도-->
+        <local:View_Unit_Map_Target Grid.ColumnSpan="2" Grid.Row="2"/>
+
+        <dxlc:LayoutItem Grid.Row="3" Grid.ColumnSpan="2" AddColonToLabel="true" Margin="10,0,10,0" dx:ThemeManager.ThemeName="VS2019Dark">
+            <dxlc:LayoutItem.Label>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Timeline" VerticalAlignment="Center" Foreground="White"/>
+                    <TextBlock Text=" (" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="White"/>
+                    <TextBlock Text="{Binding CurrentSnapshotTimestampFormatted}" 
+                           VerticalAlignment="Center" Foreground="LightGray" FontWeight="Bold"/>
+                    <TextBlock Text=")" VerticalAlignment="Center" Foreground="White"/>
+                </StackPanel>
+            </dxlc:LayoutItem.Label>
+            <dxe:TrackBarEdit x:Name="TargetTrackBar" 
+                          Minimum="0" Maximum="0" TickFrequency="1"
+                          Value="{Binding CurrentTimelineIndex, Mode=TwoWay}"
+                          ValueToolTipPlacement="TopLeft">
+                <dxe:TrackBarEdit.StyleSettings>
+                    <dxe:TrackBarZoomStyleSettings />
+                </dxe:TrackBarEdit.StyleSettings>
+            </dxe:TrackBarEdit>
+        </dxlc:LayoutItem>
+
+        <!--DataSource="{DXBinding '$local:WindRoseData.Load()'}"-->
+
+    </Grid>
+
+</UserControl>
+
+

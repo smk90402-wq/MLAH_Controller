@@ -1,0 +1,606 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+
+    <!-- #컬러 -->
+    <Color x:Key="MLAH_COLOR_POPUP_DLG_BG"  A="255" R="52" G="67" B="89"/>
+    <Color x:Key="MLAH_COLOR_BG"  A="255" R="45" G="55" B="65" />
+    <Color x:Key="MLAH_COLOR_BG2"  A="255" R="43" G="63" B="70" />
+    <Color x:Key="MLAH_COLOR_BLACK"  A="255" R="0" G="0" B="0" />
+    <Color x:Key="MLAH_COLOR_RED"  A="255" R="170" G="35" B="10" />
+    <Color x:Key="MLAH_COLOR_GREEN"  A="255" R="10" G="140" B="80" />
+    <Color x:Key="MLAH_COLOR_ORANGE"  A="255" R="255" G="130" B="0"/>
+    <Color x:Key="MLAH_COLOR_YELLOW"  A="255" R="198" G="195" B="0"/>
+    <Color x:Key="MLAH_COLOR_GRAY"  A="255" R="49" G="48" B="49"/>
+    <Color x:Key="MLAH_COLOR_DEFAULT_TEXT"  A="255" R="182" G="182" B="182" />
+    <Color x:Key="MLAH_COLOR_WHITE"  A="255" R="255" G="255" B="255" />
+    <Color x:Key="MLAH_COLOR_SELECTABLE_TEXT"  A="255" R="220" G="180" B="25" />
+    <Color x:Key="MLAH_COLOR_DEFAULT_PEN"  A="255" R="165" G="162" B="165" />
+    <Color x:Key="MLAH_COLOR_DEFAULT_BRUSH"  A="255" R="165" G="162" B="165" />
+    <Color x:Key="MLAH_COLOR_DATA_DISP_AREA_BG"  A="255" R="36" G="44" B="50" />
+    <Color x:Key="MLAH_COLOR_DATA_AREA_FG"  A="255" R="30" G="35" B="40" />
+    <Color x:Key="MLAH_COLOR_ENVELOPE_MAIN_DATA"  A="255" R="0" G="195" B="0" />
+    <Color x:Key="MLAH_COLOR_OWNSHIP_HDG_PEN"  A="255" R="0" G="166" B="123" />
+    <Color x:Key="MLAH_COLOR_BRIGHT_GRAY"  A="255" R="85" G="85" B="85" />
+    <Color x:Key="MLAH_COLOR_LIGHT_BLUE"  A="255" R="0" G="130" B="255" />
+    <Color x:Key="MLAH_COLOR_DARK_VIOLET"  A="255" R="255" G="40" B="255" />
+    <Color x:Key="MLAH_COLOR_GREEN_TEXT"  A="255" R="0" G="255" B="0" />
+    <Color x:Key="MLAH_COLOR_VIOLET"  A="255" R="189" G="105" B="247" />
+    <Color x:Key="MLAH_COLOR_TouchPanelDlgButton_Brush1"  A="255" R="173" G="0" B="0" />
+    <Color x:Key="MLAH_COLOR_TouchPanelDlgButton_Brush2"  A="255" R="0" G="96" B="202" />
+    <Color x:Key="MLAH_COLOR_EquipControlButton_Brush1"  A="255" R="146" G="0" B="0" />
+    <Color x:Key="MLAH_COLOR_OperatorMasteringTrainingBg_Brush1"  A="255" R="0" G="0" B="100" />
+    <Color x:Key="MLAH_COLOR_OperatorMasteringTrainingBg_Brush2"  A="255" R="0" G="0" B="100" />
+
+    <DrawingBrush x:Key="HatchBrushRed" TileMode="Tile" Viewport="0,0,10,10" ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Brush="Red">
+                <GeometryDrawing.Geometry>
+                    <LineGeometry StartPoint="0,0" EndPoint="10,10" />
+                </GeometryDrawing.Geometry>
+                <GeometryDrawing.Pen>
+                    <Pen Brush="Red" Thickness="1.5"/>
+                </GeometryDrawing.Pen>
+            </GeometryDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!--<ImageBrush x:Key="HatchBrushRedL" 
+            ImageSource="/hatch.png" 
+            TileMode="Tile"
+            Viewport="0,0,10,10" 
+            ViewportUnits="Absolute" />-->
+
+    <SolidColorBrush x:Key="aaaa" Color="#2c313a"/>
+
+    <!-- [ColorDefine.h] -->
+    <!--FT_CLR_MAIN_TOP				GLOBAL_FONT_COLOR : 회색 25% -->
+    <Color x:Key="GLOBAL_FONT_COLOR"  A="255" R="195" G="195" B="195" />
+
+    <!--/// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ .// #
+  // #측정치 Color Define.
+  // # [0] : Up, [1] : 방위 Zero , [2] : Down.
+  /// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ .// #
+  const COLORREF MEASURE_COLOR[10][3] ={};-->
+    <!--const COLORREF MEASURE_COLOR[0][] ={	RGB(255, 0, 0) ,		RGB(255, 255, 0),		RGB(0, 255, 0)	},-->
+    <Color x:Key="MEASURE_COLOR_0_0"  A="255" R="255" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_0_1"  A="255" R="255" G="255" B="0" />
+    <Color x:Key="MEASURE_COLOR_0_2"  A="255" R="0" G="255" B="0" />
+    <!--const COLORREF MEASURE_COLOR[1][] ={	RGB(174, 0, 0) ,		RGB(174, 174, 0),		RGB(0, 174, 0)	},-->
+    <Color x:Key="MEASURE_COLOR_1_0"  A="255" R="174" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_1_1"  A="255" R="174" G="174" B="0" />
+    <Color x:Key="MEASURE_COLOR_1_2"  A="255" R="0" G="174" B="0" />
+    <!--const COLORREF MEASURE_COLOR[2][] ={	RGB(125, 0, 0) ,		RGB(125, 125, 0),		RGB(0, 125, 0)	},-->
+    <Color x:Key="MEASURE_COLOR_2_0"  A="255" R="125" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_2_1"  A="255" R="125" G="125" B="0" />
+    <Color x:Key="MEASURE_COLOR_2_2"  A="255" R="0" G="125" B="0" />
+    <!--const COLORREF MEASURE_COLOR[3][] ={	RGB(96, 0, 0) ,			RGB(96, 96, 0),			RGB(0, 96, 0)	},-->
+    <Color x:Key="MEASURE_COLOR_3_0"  A="255" R="96" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_3_1"  A="255" R="96" G="96" B="0" />
+    <Color x:Key="MEASURE_COLOR_3_2"  A="255" R="0" G="96" B="0" />
+    <!--const COLORREF MEASURE_COLOR[4][] ={	RGB(78, 0, 0) ,			RGB(78, 78, 0),			RGB(0, 78, 0)	},-->
+    <Color x:Key="MEASURE_COLOR_4_0"  A="255" R="78" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_4_1"  A="255" R="78" G="78" B="0" />
+    <Color x:Key="MEASURE_COLOR_4_2"  A="255" R="0" G="78" B="0" />
+    <!--const COLORREF MEASURE_COLOR[5][] ={	RGB(67, 0, 0) ,			RGB(67, 67, 0),			RGB(0, 67, 0)	},-->
+    <Color x:Key="MEASURE_COLOR_5_0"  A="255" R="67" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_5_1"  A="255" R="67" G="67" B="0" />
+    <Color x:Key="MEASURE_COLOR_5_2"  A="255" R="0" G="67" B="0" />
+    <!--const COLORREF MEASURE_COLOR[6][] ={	RGB(60, 0, 0) ,			RGB(60, 60, 0),			RGB(0, 60, 0)	},-->
+    <Color x:Key="MEASURE_COLOR_6_0"  A="255" R="60" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_6_1"  A="255" R="60" G="60" B="0" />
+    <Color x:Key="MEASURE_COLOR_6_2"  A="255" R="0" G="60" B="0" />
+    <!--const COLORREF MEASURE_COLOR[7][] ={	RGB(56, 0, 0) ,			RGB(56, 56, 0),			RGB(0, 56, 0)	},-->
+    <Color x:Key="MEASURE_COLOR_7_0"  A="255" R="56" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_7_1"  A="255" R="56" G="56" B="0" />
+    <Color x:Key="MEASURE_COLOR_7_2"  A="255" R="0" G="56" B="0" />
+    <!--const COLORREF MEASURE_COLOR[8][] ={	RGB(54, 0, 0) ,			RGB(54, 54, 0),			RGB(0, 54, 0)	},-->
+    <Color x:Key="MEASURE_COLOR_8_0"  A="255" R="54" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_8_1"  A="255" R="54" G="54" B="0" />
+    <Color x:Key="MEASURE_COLOR_8_2"  A="255" R="0" G="54" B="0" />
+    <!--const COLORREF MEASURE_COLOR[9][] ={	RGB(52, 0, 0) ,			RGB(52, 52, 0),			RGB(0, 52, 0)	}-->
+    <Color x:Key="MEASURE_COLOR_9_0"  A="255" R="52" G="0" B="0" />
+    <Color x:Key="MEASURE_COLOR_9_1"  A="255" R="52" G="52" B="0" />
+    <Color x:Key="MEASURE_COLOR_9_2"  A="255" R="0" G="52" B="0" />
+
+    <!-- // #성능예측 레벨별 색상 -->
+    <!-- #define SPP_LEVEL_1 RGB(128, 0, 0) -->
+    <Color x:Key="SPP_LEVEL_1" A="255" R="128" G="0" B="0" />
+    <!-- #define SPP_LEVEL_2						RGB(251, 0, 0) -->
+    <Color x:Key="SPP_LEVEL_2" A="255" R="251" G="0" B="0" />
+    <!-- #define SPP_LEVEL_3						RGB(255, 120, 0) -->
+    <Color x:Key="SPP_LEVEL_3"  A="255" R="255" G="120" B="0" />
+    <!-- #define SPP_LEVEL_4						RGB(255, 243, 0) -->
+    <Color x:Key="SPP_LEVEL_4"  A="255" R="255" G="243" B="0" />
+    <!-- #define SPP_LEVEL_5						RGB(143, 255, 112) -->
+    <Color x:Key="SPP_LEVEL_5"  A="255" R="143" G="255" B="112" />
+    <!-- #define SPP_LEVEL_6						RGB(20, 255, 235) -->
+    <Color x:Key="SPP_LEVEL_6"  A="255" R="20" G="255" B="235" />
+    <!-- #define SPP_LEVEL_7						RGB(0, 151, 255) -->
+    <Color x:Key="SPP_LEVEL_7"  A="255" R="0" G="151" B="255" />
+    <!-- #define SPP_LEVEL_8						RGB(0, 20, 255) -->
+    <Color x:Key="SPP_LEVEL_8"  A="255" R="0" G="20" B="255" />
+
+    <!--/// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ .// #
+  // #기본 Color Define.
+  /// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ /.// #/ .// #-->
+    <!--const COLORREF COLOR_WHITE			= RGB(255, 255, 255);-->
+    <Color x:Key="COLOR_WHITE"  A="255" R="255" G="255" B="255" />
+    <!--const COLORREF COLOR_BLACK			= RGB(  0,   0,   0);-->
+    <Color x:Key="COLOR_BLACK"  A="255" R="0" G="0" B="0" />
+
+    <!--const COLORREF COLOR_RED			= RGB(255,   0,   0);-->
+    <Color x:Key="COLOR_RED"  A="255" R="255" G="0" B="0" />
+    <!--const COLORREF COLOR_RED60			= RGB( 60,   0,   0);-->
+    <Color x:Key="COLOR_RED60"  A="255" R="222" G="0" B="0" />
+    <!--const COLORREF COLOR_RED95			= RGB( 95,   0,   0);-->
+    <Color x:Key="COLOR_RED95"  A="255" R="95" G="0" B="0" />
+    <!--const COLORREF COLOR_RED150			= RGB(150,   0,   0);-->
+    <Color x:Key="COLOR_RED150"  A="255" R="150" G="0" B="0" />
+    <!--const COLORREF COLOR_RED193			= RGB(193,  10,  12);-->
+    <Color x:Key="COLOR_RED193"  A="255" R="193" G="10" B="12" />
+    <!--const COLORREF COLOR_RED243			= RGB(243,  25,  25);   
+    // # PPI 외곽선 색상-->
+    <Color x:Key="COLOR_RED243"  A="255" R="243" G="25" B="25" />
+
+    <!--const COLORREF COLOR_GREEN			= RGB(  0, 255,   0);-->
+    <Color x:Key="COLOR_GREEN"  A="255" R="0" G="255" B="0" />
+    <!--const COLORREF COLOR_GREEN50		= RGB(  0,  50,   0);-->
+    <Color x:Key="COLOR_GREEN50"  A="255" R="0" G="50" B="0" />
+    <!--const COLORREF COLOR_GREEN85		= RGB(  0,  85,   0);-->
+    <Color x:Key="COLOR_GREEN85"  A="255" R="0" G="140" B="0" />
+    <!--const COLORREF COLOR_GREEN102		= RGB(  0, 102,   0);-->
+    <Color x:Key="COLOR_GREEN102"  A="255" R="0" G="102" B="0" />
+    <!--const COLORREF COLOR_GREEN128		= RGB(  0, 128,   0);-->
+    <Color x:Key="COLOR_GREEN128"  A="255" R="0" G="128" B="0" />
+    <!--const COLORREF COLOR_GREEN147		= RGB(  0, 147,   0);-->
+    <Color x:Key="COLOR_GREEN147"  A="255" R="0" G="147" B="0" />
+    <!--const COLORREF COLOR_GREEN192		= RGB(154, 192,   0);-->
+    <Color x:Key="COLOR_GREEN192"  A="255" R="154" G="192" B="0" />
+    <!--const COLORREF COLOR_GREEN128_255	= RGB(128, 255,   0);-->
+    <Color x:Key="COLOR_GREEN128_255"  A="255" R="128" G="255" B="0" />
+    <!--const COLORREF COLOR_GREEN224		= RGB(224, 255, 224);-->
+    <Color x:Key="COLOR_GREEN224"  A="255" R="224" G="255" B="224" />
+    <!--const COLORREF COLOR_GREEN191		= RGB(147, 191,  36);-->
+    <Color x:Key="COLOR_GREEN191"  A="255" R="147" G="191" B="36" />
+    <!--const COLORREF COLOR_GREEN64_192	= RGB( 64, 192,  64);-->
+    <Color x:Key="COLOR_GREEN64_192"  A="255" R="64" G="192" B="64" />
+
+    <!--const COLORREF COLOR_BLUE			= RGB(  0,   0, 255);-->
+    <Color x:Key="COLOR_BLUE"  A="255" R="0" G="0" B="255" />
+    <!--const COLORREF COLOR_BLUEGREEN		= RGB(  0,  64,  64);-->
+    <Color x:Key="COLOR_BLUEGREEN"  A="255" R="0" G="64" B="64" />
+    <!--const COLORREF COLOR_BLUE64_128		= RGB(  0,  64, 128);-->
+    <Color x:Key="COLOR_BLUE64_128"  A="255" R="0" G="0" B="216" />
+    <!--const COLORREF COLOR_BLUE90			= RGB(  0,  50,  90);-->
+    <Color x:Key="COLOR_BLUE90"  A="255" R="0" G="50" B="90" />
+    <!--const COLORREF COLOR_BLUE128		= RGB(  0, 128, 128);-->
+    <Color x:Key="COLOR_BLUE128"  A="255" R="0" G="128" B="128" />
+    <!--const COLORREF COLOR_BLUE10_10		= RGB( 10,  10, 255);-->
+    <Color x:Key="COLOR_BLUE10_10"  A="255" R="10" G="10" B="255" />
+    <!--const COLORREF COLOR_BLUE60			= RGB(  0,   0,  60);-->
+    <Color x:Key="COLOR_BLUE60"  A="255" R="0" G="0" B="60" />
+    <!--const COLORREF COLOR_BLUE79			= RGB( 79, 144, 180);-->
+    <Color x:Key="COLOR_BLUE79"  A="255" R="79" G="144" B="180" />
+    <!--const COLORREF COLOR_BLUE100		= RGB(100, 185, 255);-->
+    <Color x:Key="COLOR_BLUE100"  A="255" R="100" G="185" B="255" />
+
+    <!--const COLORREF COLOR_YELLOW    		= RGB(255, 255,   0);-->
+    <Color x:Key="COLOR_YELLOW"  A="255" R="255" G="255" B="0" />
+    <!--const COLORREF COLOR_YELLOW255_128	= RGB(255, 255, 128);-->
+    <Color x:Key="COLOR_YELLOW255_128"  A="255" R="255" G="255" B="128" />
+    <!--const COLORREF COLOR_YELLOW255_192	= RGB(255, 255, 192);-->
+    <Color x:Key="COLOR_YELLOW255_192"  A="255" R="255" G="255" B="192" />
+    <!--const COLORREF COLOR_YELLOW60  		= RGB( 60,  60,  10);-->
+    <Color x:Key="COLOR_YELLOW60"  A="255" R="60" G="60" B="10" />
+    <!--const COLORREF COLOR_YELLOW95  		= RGB( 95,  95,  45);-->
+    <Color x:Key="COLOR_YELLOW95"  A="255" R="95" G="95" B="45" />
+    <!--const COLORREF COLOR_YELLOW128 		= RGB(128, 128,   0);-->
+    <Color x:Key="COLOR_YELLOW128"  A="255" R="248" G="188" B="0" />
+    <!--const COLORREF COLOR_YELLOW96 		= RGB(128, 128, 96);-->
+    <Color x:Key="COLOR_YELLOW96"  A="255" R="128" G="128" B="96" />
+
+    <!--const COLORREF COLOR_GRAY30			= RGB( 30,  30,  30);-->
+    <Color x:Key="COLOR_GRAY30"  A="255" R="30" G="30" B="30" />
+    <!--const COLORREF COLOR_GRAY49			= RGB( 49,  49,  49);   
+    // #  Title 색상-->
+    <Color x:Key="COLOR_GRAY49"  A="255" R="49" G="49" B="49" />
+    <!--const COLORREF COLOR_GRAY51			= RGB( 51,  51,  51);-->
+    <Color x:Key="COLOR_GRAY51"  A="255" R="50" G="51" B="51" />
+    <!--const COLORREF COLOR_GRAY65			= RGB( 65,  65,  65);-->
+    <Color x:Key="COLOR_GRAY65"  A="255" R="65" G="65" B="65" />
+    <!--const COLORREF COLOR_GRAY79			= RGB( 79,  79,  79);-->
+    <Color x:Key="COLOR_GRAY79"  A="255" R="79" G="79" B="79" />
+    <!--const COLORREF COLOR_GRAY102		= RGB(102, 102, 102);-->
+    <Color x:Key="COLOR_GRAY102"  A="255" R="102" G="102" B="102" />
+    <!--const COLORREF COLOR_GRAY128		= RGB(128, 128, 128);-->
+    <Color x:Key="COLOR_GRAY128"  A="255" R="128" G="128" B="128" />
+    <!--const COLORREF COLOR_GRAY153		= RGB(153, 153, 153);-->
+    <Color x:Key="COLOR_GRAY153"  A="255" R="153" G="153" B="153" />
+    <!--const COLORREF COLOR_GRAY180		= RGB(180, 180, 180);-->
+    <Color x:Key="COLOR_GRAY180"  A="255" R="180" G="180" B="180" />
+    <!--const COLORREF COLOR_GRAY192		= RGB(192, 192, 192);-->
+    <Color x:Key="COLOR_GRAY192"  A="255" R="192" G="192" B="192" />
+    <!--const COLORREF COLOR_GRAY195		= RGB(195, 195, 195);   
+    // # Disable Font색상을 25.% grey로-->
+    <Color x:Key="COLOR_GRAY195"  A="255" R="195" G="195" B="195" />
+
+    <!--const COLORREF COLOR_ORANGE104	   	= RGB(255, 104,  32);-->
+    <Color x:Key="COLOR_ORANGE104"  A="255" R="255" G="104" B="32" />
+    <!--const COLORREF COLOR_ORANGE128		= RGB(255, 128,   0);-->
+    <Color x:Key="COLOR_ORANGE128"  A="255" R="255" G="128" B="0" />
+    <!--const COLORREF COLOR_ORANGE100		= RGB(255, 100,   0);-->
+    <Color x:Key="COLOR_ORANGE100"  A="255" R="255" G="100" B="0" />
+
+    <!--const COLORREF COLOR_BROWN			= RGB( 85,  28,   0);-->
+    <Color x:Key="COLOR_BROWN"  A="255" R="85" G="20" B="0" />
+    <!--const COLORREF COLOR_BROWN120		= RGB(120,  63,   0);-->
+    <Color x:Key="COLOR_BROWN120"  A="255" R="120" G="63" B="0" />
+    <!--const COLORREF COLOR_BROWN136		= RGB(136,  91,   0);-->
+    <Color x:Key="COLOR_BROWN136"  A="255" R="136" G="91" B="0" />
+    <!--const COLORREF COLOR_BROWN139		= RGB(139, 105,  72);-->
+    <Color x:Key="COLOR_BROWN139"  A="255" R="139" G="105" B="72" />
+
+    <!-- // #사용 되는 색깔의 정의-->
+    <!-- #define		CLR_BLACK				RGB(0x00, 0x00, 0x00)-->
+    <Color x:Key="CLR_BLACK"  A="255" R="0" G="0" B="0" />
+    <!-- #define		CLR_WHITE				RGB(0xff, 0xff, 0xff)-->
+    <Color x:Key="CLR_WHITE"  A="255" R="255" G="255" B="255" />
+    <!-- #define		CLR_GREEN_DARK			RGB(0x00, 0x64, 0x00)-->
+    <Color x:Key="CLR_GREEN_DARK"  A="255" R="0" G="100" B="0" />
+    <!-- #define		GREEN 					RGB(0x00, 0xAA, 0x00)-->
+    <Color x:Key="GREEN"  A="255" R="0" G="170" B="0" />
+    <!-- #define		CLR_GREEN				RGB(0x00, 0xff, 0x00)-->
+    <Color x:Key="CLR_GREEN"  A="255" R="0" G="255" B="0" />
+    <!-- #define		CLR_GREEN_4				RGB(0x00, 0x8b, 0x00)-->
+    <Color x:Key="CLR_GREEN_4"  A="255" R="0" G="139" B="0" />
+    <!-- #define		CLR_GREEN_LIME			RGB(0x32, 0xcd, 0x32)-->
+    <Color x:Key="CLR_GREEN_LIME"  A="255" R="50" G="205" B="50" />
+    <!-- #define		CLR_ORANGE				RGB(0xff, 0xa5, 0x00)-->
+    <Color x:Key="CLR_ORANGE"  A="255" R="255" G="165" B="0" />
+    <!-- #define		CLR_ORANGE_DARK			RGB(0xff, 0x8c, 0x00)-->
+    <Color x:Key="CLR_ORANGE_DARK"  A="255" R="255" G="140" B="0" />
+    <!-- #define		CLR_RED					RGB(0xff, 0x00, 0x00)-->
+    <Color x:Key="CLR_RED"  A="255" R="255" G="0" B="0" />
+    <!-- #define		CLR_PINK				RGB(0xff, 0xc0, 0xcb)-->
+    <Color x:Key="CLR_PINK"  A="255" R="255" G="192" B="203" />
+    <!-- #define		CLR_PINK_HOT			RGB(0xff, 0x69, 0x4b)-->
+    <Color x:Key="CLR_PINK_HOT"  A="255" R="255" G="105" B="75" />
+    <!-- #define		CLR_PINK_DEEP			RGB(0xff, 0x14, 0x93)-->
+    <Color x:Key="CLR_PINK_DEEP"  A="255" R="255" G="20" B="147" />
+    <!-- #define		CLR_VIOLET				RGB(0xee, 0x88, 0xee)-->
+    <Color x:Key="CLR_VIOLET"  A="255" R="238" G="136" B="238" />
+    <!-- #define		CLR_VIOLET_DARK			RGB(0x94, 0x00, 0xd3)-->
+    <Color x:Key="CLR_VIOLET_DARK"  A="255" R="148" G="0" B="211" />
+    <!-- #define		CLR_BLUE				RGB(0x00, 0x00, 0xff)-->
+    <Color x:Key="CLR_BLUE"  A="255" R="0" G="0" B="255" />
+    <!-- #define		CLR_BLUE_ROYAL			RGB(0x43, 0x6e, 0xee)-->
+    <Color x:Key="CLR_BLUE_ROYAL"  A="255" R="67" G="110" B="238" />
+    <!-- #define		CLR_BLUE_SKY			RGB(0x00, 0xbf, 0xee)-->
+    <Color x:Key="CLR_BLUE_SKY"  A="255" R="0" G="191" B="238" />
+    <!--  #define		CLR_BLUE_STEEL			RGB(0x63, 0xb8, 0xff)-->
+    <Color x:Key="CLR_BLUE_STEEL"  A="255" R="99" G="184" B="255" />
+    <!-- #define		CLR_TURQUOISE			RGB(0x40, 0xe0, 0xd0)-->
+    <Color x:Key="CLR_TURQUOISE"  A="255" R="64" G="224" B="208" />
+    <!-- #define		CLR_BLUE_CADET			RGB(0x5f, 0x9e, 0xa0)-->
+    <Color x:Key="CLR_BLUE_CADET"  A="255" R="95" G="158" B="160" />
+    <!-- #define		CLR_YELLOW				RGB(0xff, 0xff, 0x00)-->
+    <Color x:Key="CLR_YELLOW"  A="255" R="255" G="255" B="0" />
+    <!-- #define		CLR_YELLOW_3			RGB(0xcd, 0xcd, 0x00)-->
+    <Color x:Key="CLR_YELLOW_3"  A="255" R="205" G="205" B="0" />
+    <!-- #define		CLR_YELLOW_4			RGB(0x8b, 0x8b, 0x00)-->
+    <Color x:Key="CLR_YELLOW_4"  A="255" R="139" G="139" B="0" />
+    <!-- #define		CLR_GOLE				RGB(0xff, 0xd7, 0x00)-->
+    <Color x:Key="CLR_GOLE"  A="255" R="255" G="215" B="0" />
+    <!-- #define		CLR_YELLOW_GREEN		RGB(0x9a, 0xcd, 0x32)-->
+    <Color x:Key="CLR_YELLOW_GREEN"  A="255" R="154" G="205" B="48" />
+    <!-- #define		CLR_GOLDENROD			RGB(0xee, 0xdd, 0x82)-->
+    <Color x:Key="CLR_GOLDENROD"  A="255" R="238" G="221" B="130" />
+    <!-- #define		CLR_GRAY_21				RGB(0x36, 0x36, 0x36)-->
+    <Color x:Key="CLR_GRAY_21"  A="255" R="54" G="54" B="54" />
+    <!-- #define		CLR_GRAY_41				RGB(0x69, 0x69, 0x69)-->
+    <Color x:Key="CLR_GRAY_41"  A="255" R="105" G="105" B="105" />
+    <!-- #define		CLR_GRAY_51				RGB(0x81, 0x81, 0x81)-->
+    <Color x:Key="CLR_GRAY_51"  A="255" R="129" G="129" B="129" />
+    <!-- #define		CLR_GRAY_71				RGB(0xb5, 0xb5, 0xb5)-->
+    <Color x:Key="CLR_GRAY_71"  A="255" R="181" G="181" B="181" />
+    <!-- #define		CLR_GRAY_DARK			RGB(0xa9, 0xa9, 0xa9)-->
+    <Color x:Key="CLR_GRAY_DARK"  A="255" R="169" G="169" B="169" />
+    <!-- #define		GRAY					RGB(0x44,0x44,0x44)-->
+    <Color x:Key="GRAY"  A="255" R="68" G="68" B="68" />
+    <Color x:Key="CLR_NORMAL"  A="255" R="0" G="255" B="0" />
+    <Color x:Key="CLR_DISABLE"  A="255" R="255" G="0" B="0" />
+    <Color x:Key="CLR_ENABLE"  A="255" R="255" G="165" B="187" />
+    <Color x:Key="CLR_LINKED"  A="255" R="181" G="181" B="181" />
+    <Color x:Key="CLR_EXCLUDE"  A="255" R="238" G="221" B="130" />
+
+    <!--상태 범례-->
+    <!--가용 - 0, 104, 47-->
+    <Color x:Key="Available"  A="255" R="0" G="104" B="47" />
+    <!--기능저하 - 184, 140, 0-->
+    <Color x:Key="DegradationOfFunction"  A="255" R="184" G="140" B="0" />
+    <!--비가용 - 158, 0, 0-->
+    <Color x:Key="Unavailable"  A="255" R="158" G="0" B="0" />
+    <!--비정상(전원꺼짐) - 113, 113, 113-->
+    <Color x:Key="DoNotknow"  A="255" R="113" G="113" B="113" />
+    <!--비정상(미연동) - 0, 79, 138-->
+    <Color x:Key="Unchecked"  A="255" R="0" G="79" B="138" />
+    <!--점검 비대상(점검 불가) - 64, 64, 64-->
+    <Color x:Key="NotChecked"  A="255" R="64" G="64" B="64" />
+    <!-- 비정상(전원꺼짐) -->
+    <Color x:Key="PowerOff"  A="255" R="88" G="88" B="200" />
+
+    <!-- 체계 장비 구성 상태 범례-->
+    <!-- 공통 -->
+    <Color x:Key="Common"  A="255" R="217" G="217" B="217" />
+    <!-- 대상 장비 -->
+    <Color x:Key="TargetEquipment"  A="255" R="0" G="79" B="138" />
+    <!-- 제외 장비 -->
+    <Color x:Key="ExceptEquipment"  A="255" R="127" G="127" B="127" />
+    <!-- 타이틀 색상-->
+    <Color x:Key="TitleColor"  A="255" R="0" G="32" B="96" />
+
+
+    <!--[ColorDefine.h] 종점 -->
+
+    <!-- // #브러시 -->
+    <!--DynamicResource lineA_color-->
+    <!-- // #MLAH 브러시: Begin -->
+    <!--상태 범례-->
+    <!--가용 - 0, 104, 47-->
+    <SolidColorBrush x:Key="MLAH_COLOR_Available_Brush" Color="{StaticResource Available}"></SolidColorBrush>
+    <!--기능저하 - 184, 140, 0-->
+    <SolidColorBrush x:Key="MLAH_COLOR_DegradationOfFunction_Brush" Color="{StaticResource DegradationOfFunction}"></SolidColorBrush>
+    <!--비가용 - 158, 0, 0-->
+    <SolidColorBrush x:Key="MLAH_COLOR_Unavailable_Brush" Color="{StaticResource Unavailable}"></SolidColorBrush>
+    <!--비정상(전원꺼짐) - 113, 113, 113-->
+    <SolidColorBrush x:Key="MLAH_COLOR_DoNotknow_Brush" Color="{StaticResource DoNotknow}"></SolidColorBrush>
+    <!--비정상(미연동) - 0, 79, 138-->
+    <SolidColorBrush x:Key="MLAH_COLOR_Unchecked_Brush" Color="{StaticResource Unchecked}"></SolidColorBrush>
+    <!--점검 비대상(점검 불가) - 64, 64, 64-->
+    <SolidColorBrush x:Key="MLAH_COLOR_NotChecked_Brush" Color="{StaticResource NotChecked}"></SolidColorBrush>
+    <!-- 비정상(전원꺼짐) -->
+    <SolidColorBrush x:Key="MLAH_COLOR_PowerOff_Brush" Color="{StaticResource PowerOff}"></SolidColorBrush>
+
+    <!-- 체계 장비 구성 상태 범례-->
+    <!-- 공통 -->
+    <SolidColorBrush x:Key="MLAH_COLOR_Common_Brush" Color="{StaticResource Common}"></SolidColorBrush>
+    <!-- 대상 장비 -->
+    <SolidColorBrush x:Key="MLAH_COLOR_TargetEquipment_Brush" Color="{StaticResource TargetEquipment}"></SolidColorBrush>
+    <!-- 제외 장비 -->
+    <SolidColorBrush x:Key="MLAH_COLOR_ExceptEquipment_Brush" Color="{StaticResource ExceptEquipment}"></SolidColorBrush>
+    <!-- 타이틀 색상-->
+    <SolidColorBrush x:Key="MLAH_COLOR_TitleColor_Brush" Color="{StaticResource TitleColor}"></SolidColorBrush>
+
+
+
+    <!--<SolidColorBrush x:Key="MLAH_COLOR_POPUP_DLG_BG_Brush" Color="{StaticResource MLAH_COLOR_POPUP_DLG_BG}"></SolidColorBrush>-->
+    <SolidColorBrush x:Key="MLAH_COLOR_BG_Brush" Color="{StaticResource MLAH_COLOR_BG}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_BLACK_Brush" Color="{StaticResource MLAH_COLOR_BLACK}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_RED_Brush" Color="{StaticResource MLAH_COLOR_RED}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_GREEN_Brush" Color="{StaticResource MLAH_COLOR_GREEN}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_ORANGE_Brush" Color="{StaticResource MLAH_COLOR_ORANGE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_YELLOW_Brush" Color="{StaticResource MLAH_COLOR_YELLOW}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_GRAY_Brush" Color="{StaticResource MLAH_COLOR_GRAY}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_DEFAULT_TEXT_Brush" Color="{StaticResource MLAH_COLOR_DEFAULT_TEXT}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_WHITE_Brush" Color="{StaticResource MLAH_COLOR_WHITE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_SELECTABLE_TEXT_Brush" Color="{StaticResource MLAH_COLOR_SELECTABLE_TEXT}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_DEFAULT_PEN_Brush" Color="{StaticResource MLAH_COLOR_DEFAULT_PEN}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_DEFAULT_BRUSH_Brush" Color="{StaticResource MLAH_COLOR_DEFAULT_BRUSH}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_DATA_DISP_AREA_BG_Brush" Color="{StaticResource MLAH_COLOR_DATA_DISP_AREA_BG}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_DATA_AREA_FG_Brush" Color="{StaticResource MLAH_COLOR_DATA_AREA_FG}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_ENVELOPE_MAIN_DATA_Brush" Color="{StaticResource MLAH_COLOR_ENVELOPE_MAIN_DATA}"></SolidColorBrush>
+    <!--ENVELOPE_COMP_DATA == YELLOW 와 같은값-->
+    <SolidColorBrush x:Key="MLAH_COLOR_ENVELOPE_COMP_DATA_Brush" Color="{StaticResource MLAH_COLOR_YELLOW}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_OWNSHIP_HDG_PEN_Brush" Color="{StaticResource MLAH_COLOR_OWNSHIP_HDG_PEN}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_BRIGHT_GRAY_Brush" Color="{StaticResource MLAH_COLOR_BRIGHT_GRAY}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_LIGHT_BLUE_Brush" Color="{StaticResource MLAH_COLOR_LIGHT_BLUE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_DARK_VIOLET_Brush" Color="{StaticResource MLAH_COLOR_DARK_VIOLET}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_GREEN_TEXT_Brush" Color="{StaticResource MLAH_COLOR_GREEN_TEXT}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_VIOLET_Brush" Color="{StaticResource MLAH_COLOR_VIOLET}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MLAH_COLOR_Value_Brush" Color="{StaticResource MLAH_COLOR_GREEN_TEXT}"></SolidColorBrush>
+
+
+
+    <!-- 상단영역/좌측영역/가운데영역을 각각 ControlArea, DataArea, GraphArea 로 지정함 -->
+    <!-- MLAH 정의 컬러값: key suffix 는 ~Brush, ~Color 를 붙일 것-->
+
+    <!--기본 배경색-->
+    <SolidColorBrush x:Key="DefaultBg_Brush" Color="{StaticResource MLAH_COLOR_BG}"></SolidColorBrush>
+    <!--기본 배경색2-->
+    <SolidColorBrush x:Key="DefaultBg_Brush2" Color="{StaticResource MLAH_COLOR_BG2}"></SolidColorBrush>
+    <!--기본 글자색-->
+    <SolidColorBrush x:Key="DefaultFg_Brush" Color="{StaticResource MLAH_COLOR_WHITE}"></SolidColorBrush>
+    <!-- 컨트롤 영역 배경색 -->
+    <SolidColorBrush x:Key="ControlAreaBg_Brush" Color="{StaticResource MLAH_COLOR_DATA_AREA_FG}"></SolidColorBrush>
+    <!-- 데이터 영역 배경색 -->
+    <SolidColorBrush x:Key="DataAreaBg_Brush" Color="{StaticResource MLAH_COLOR_DATA_DISP_AREA_BG}"></SolidColorBrush>
+    <!-- 그래프 영역 배경색 -->
+    <SolidColorBrush x:Key="GraphAreaBg_Brush" Color="{StaticResource MLAH_COLOR_BG}"></SolidColorBrush>
+    <!--팝업창 배경색-->
+    <SolidColorBrush x:Key="PopUpDlgBg_Brush" Color="{StaticResource MLAH_COLOR_POPUP_DLG_BG}"></SolidColorBrush>
+    <!--터치패널 버튼색 1-->
+    <SolidColorBrush x:Key="TouchPanelDlgButton_Brush1" Color="{StaticResource MLAH_COLOR_TouchPanelDlgButton_Brush1 }"></SolidColorBrush>
+    <!--터치패널 버튼색 2-->
+    <SolidColorBrush x:Key="TouchPanelDlgButton_Brush2" Color="{StaticResource MLAH_COLOR_TouchPanelDlgButton_Brush2 }"></SolidColorBrush>
+    <!--터치패널 버튼색 1-->
+    <SolidColorBrush x:Key="EquipControlButton_Brush1" Color="{StaticResource MLAH_COLOR_EquipControlButton_Brush1 }"></SolidColorBrush>
+    <!--운용자숙달훈련 버튼 색1-->
+    <SolidColorBrush x:Key="OperatorMasteringTrainingBg_Brush1" Color="{StaticResource MLAH_COLOR_OperatorMasteringTrainingBg_Brush1}"></SolidColorBrush>
+    <!--운용자숙달훈련 버튼 색2-->
+    <SolidColorBrush x:Key="OperatorMasteringTrainingBg_Brush2" Color="{StaticResource MLAH_COLOR_OperatorMasteringTrainingBg_Brush2}"></SolidColorBrush>
+    <!-- // #MLAH 브러시: End -->
+
+    <!-- // #ColorDefine..h 브러시: Begin -->
+    <SolidColorBrush x:Key="GLOBAL_FONT_COLOR_Brush" Color="{StaticResource GLOBAL_FONT_COLOR}"></SolidColorBrush>
+
+
+    <!-- // #기본 Color Define -->
+    <SolidColorBrush x:Key="COLOR_WHITE_Brush" Color="{StaticResource COLOR_WHITE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_BLACK_Brush" Color="{StaticResource COLOR_BLACK}"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="COLOR_RED_Brush" Color="{StaticResource COLOR_RED}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_RED60_Brush" Color="{StaticResource COLOR_RED60}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_RED95_Brush" Color="{StaticResource COLOR_RED95}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_RED150_Brush" Color="{StaticResource COLOR_RED150}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_RED193_Brush" Color="{StaticResource COLOR_RED193}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_RED243_Brush" Color="{StaticResource COLOR_RED243}"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="COLOR_GREEN_Brush" Color="{StaticResource COLOR_GREEN}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN50_Brush" Color="{StaticResource COLOR_GREEN50}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN85_Brush" Color="{StaticResource COLOR_GREEN85}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN102_Brush" Color="{StaticResource COLOR_GREEN102}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN128_Brush" Color="{StaticResource COLOR_GREEN128}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN147_Brush" Color="{StaticResource COLOR_GREEN147}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN192_Brush" Color="{StaticResource COLOR_GREEN192}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN128_255_Brush" Color="{StaticResource COLOR_GREEN128_255}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN224_Brush" Color="{StaticResource COLOR_GREEN224}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN191_Brush" Color="{StaticResource COLOR_GREEN191}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GREEN64_192_Brush" Color="{StaticResource COLOR_GREEN64_192}"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="COLOR_BLUE_Brush" Color="{StaticResource COLOR_BLUE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_BLUEGREEN_Brush" Color="{StaticResource COLOR_BLUEGREEN}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_BLUE64_128_Brush" Color="{StaticResource COLOR_BLUE64_128}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_BLUE90_Brush" Color="{StaticResource COLOR_BLUE90}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_BLUE128_Brush" Color="{StaticResource COLOR_BLUE128}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_BLUE10_10_Brush" Color="{StaticResource COLOR_BLUE10_10}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_BLUE60_Brush" Color="{StaticResource COLOR_BLUE60}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_BLUE79_Brush" Color="{StaticResource COLOR_BLUE79}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_BLUE100_Brush" Color="{StaticResource COLOR_BLUE100}"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="COLOR_YELLOW_Brush" Color="{StaticResource COLOR_YELLOW}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_YELLOW255_128_Brush" Color="{StaticResource COLOR_YELLOW255_128}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_YELLOW255_192_Brush" Color="{StaticResource COLOR_YELLOW255_192}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_YELLOW60_Brush" Color="{StaticResource COLOR_YELLOW60}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_YELLOW95_Brush" Color="{StaticResource COLOR_YELLOW95}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_YELLOW128_Brush" Color="{StaticResource COLOR_YELLOW128}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_YELLOW96_Brush" Color="{StaticResource COLOR_YELLOW96}"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="COLOR_GRAY30_Brush" Color="{StaticResource COLOR_GRAY30}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY49_Brush" Color="{StaticResource COLOR_GRAY49}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY51_Brush" Color="{StaticResource COLOR_GRAY51}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY65_Brush" Color="{StaticResource COLOR_GRAY65}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY79_Brush" Color="{StaticResource COLOR_GRAY79}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY102_Brush" Color="{StaticResource COLOR_GRAY102}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY128_Brush" Color="{StaticResource COLOR_GRAY128}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY153_Brush" Color="{StaticResource COLOR_GRAY153}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY180_Brush" Color="{StaticResource COLOR_GRAY180}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY192_Brush" Color="{StaticResource COLOR_GRAY192}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_GRAY195_Brush" Color="{StaticResource COLOR_GRAY195}"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="COLOR_ORANGE104_Brush" Color="{StaticResource COLOR_ORANGE104}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_ORANGE128_Brush" Color="{StaticResource COLOR_ORANGE128}"></SolidColorBrush>
+    <SolidColorBrush x:Key="COLOR_ORANGE100_Brush" Color="{StaticResource COLOR_ORANGE100}"></SolidColorBrush>
+
+
+
+    <!-- // #사용 되는 색깔의 정의-->
+    <SolidColorBrush x:Key="CLR_BLACK_Brush" Color="{StaticResource CLR_BLACK}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_WHITE_Brush" Color="{StaticResource CLR_WHITE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GREEN_DARK_Brush" Color="{StaticResource CLR_GREEN_DARK}"></SolidColorBrush>
+    <SolidColorBrush x:Key="GREEN_Brush" Color="{StaticResource GREEN}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GREEN_Brush" Color="{StaticResource CLR_GREEN}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GREEN_4_Brush" Color="{StaticResource CLR_GREEN_4}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GREEN_LIME_Brush" Color="{StaticResource CLR_GREEN_LIME}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_ORANGE_Brush" Color="{StaticResource CLR_ORANGE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_ORANGE_DARK_Brush" Color="{StaticResource CLR_ORANGE_DARK}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_RED_Brush" Color="{StaticResource CLR_RED}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_PINK_Brush" Color="{StaticResource CLR_PINK}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_PINK_HOT_Brush" Color="{StaticResource CLR_PINK_HOT}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_PINK_DEEP_Brush" Color="{StaticResource CLR_PINK_DEEP}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_VIOLET_Brush" Color="{StaticResource CLR_VIOLET}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_VIOLET_DARK_Brush" Color="{StaticResource CLR_VIOLET_DARK}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_BLUE_Brush" Color="{StaticResource CLR_BLUE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_BLUE_ROYAL_Brush" Color="{StaticResource CLR_BLUE_ROYAL}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_BLUE_SKY_Brush" Color="{StaticResource CLR_BLUE_SKY}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_BLUE_STEEL_Brush" Color="{StaticResource CLR_BLUE_STEEL}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_TURQUOISE_Brush" Color="{StaticResource CLR_TURQUOISE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_BLUE_CADET_Brush" Color="{StaticResource CLR_BLUE_CADET}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_YELLOW_Brush" Color="{StaticResource CLR_YELLOW}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_YELLOW_3_Brush" Color="{StaticResource CLR_YELLOW_3}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_YELLOW_4_Brush" Color="{StaticResource CLR_YELLOW_4}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GOLE_Brush" Color="{StaticResource CLR_GOLE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_YELLOW_GREENBrush" Color="{StaticResource CLR_YELLOW_GREEN}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GOLDENROD_Brush" Color="{StaticResource CLR_GOLDENROD}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GRAY_21_Brush" Color="{StaticResource CLR_GRAY_21}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GRAY_41_Brush" Color="{StaticResource CLR_GRAY_41}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GRAY_51_Brush" Color="{StaticResource CLR_GRAY_51}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GRAY_71_Brush" Color="{StaticResource CLR_GRAY_71}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_GRAY_DARK_Brush" Color="{StaticResource CLR_GRAY_DARK}"></SolidColorBrush>
+    <SolidColorBrush x:Key="GRAY_Brush" Color="{StaticResource GRAY}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_NORMAL_Brush" Color="{StaticResource CLR_NORMAL}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_DISABLE_Brush" Color="{StaticResource CLR_DISABLE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_ENABLE_Brush" Color="{StaticResource CLR_ENABLE}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_LINKED_Brush" Color="{StaticResource CLR_LINKED}"></SolidColorBrush>
+    <SolidColorBrush x:Key="CLR_EXCLUDE_Brush" Color="{StaticResource CLR_EXCLUDE}"></SolidColorBrush>
+
+    <!-- // #ColorDefine..h 브러시: End -->
+
+    <SolidColorBrush x:Key="fontA_foreground" Color="#ced1d9" />
+    <!--FontA 글자색-->
+    <SolidColorBrush x:Key="fontB_foreground" Color="#a6b4cc" />
+    <!--FontB 글자색-->
+
+    <SolidColorBrush x:Key="lineA_color" Color="#232831" />
+    <!--LineA 색-->
+    <SolidColorBrush x:Key="lineB_color" Color="#ced1d9" Opacity="0.05" />
+    <!--LineB 색-->
+    <SolidColorBrush x:Key="lineC_color" Color="#000000" />
+    <!--LineC 색-->
+
+    <SolidColorBrush x:Key="highLight_color" Color="#a6b4cc" Opacity="0.3" />
+    <!--HighLight 색-->
+    <SolidColorBrush x:Key="cursorOver_color" Color="#a6b4cc" Opacity="0.3" />
+    <!--Cursor Over 색-->
+
+    <SolidColorBrush x:Key="nc_off_color" Color="#3b414b" />
+    <SolidColorBrush x:Key="nc_on_color" Color="#1a1e25" />
+
+    <SolidColorBrush x:Key="white_color" Color="#ced1d9" />
+    <!--흰색-->
+    <SolidColorBrush x:Key="lightgray_color" Color="#a6b4cc"/>
+    <!--연회색-->
+    <SolidColorBrush x:Key="gray_color" Color="#5a6477"/>
+    <!--회색-->
+    <SolidColorBrush x:Key="black_color" Color="#000000"/>
+    <!--검은색-->
+    <SolidColorBrush x:Key="green_color" Color="#00bb00"/>
+    <!--녹색-->
+    <SolidColorBrush x:Key="darkgreen_color" Color="#008000"/>
+    <!--진녹색-->
+    <SolidColorBrush x:Key="yellow_color" Color="#ffd800"/>
+    <!--노란색-->
+    <SolidColorBrush x:Key="darkyellow_color" Color="#ccad00"/>
+    <!--진노란색-->
+    <SolidColorBrush x:Key="error_yellow_color" Color="#eeb600"/>
+    <!--발사관 상태 error, 무장정보 주의 노란색-->
+    <SolidColorBrush x:Key="orange_color" Color="#ff8300"/>
+    <!--주황색-->
+    <SolidColorBrush x:Key="error_orange_color" Color="#ee6100"/>
+    <!--발사관 상태 무장정보 경고 주황색-->
+    <SolidColorBrush x:Key="red_color" Color="#bb0000"/>
+    <!--빨간색-->
+    <SolidColorBrush x:Key="darkred_color" Color="#960000"/>
+    <!--진빨간색-->
+    <SolidColorBrush x:Key="wine_color" Color="#5e0000"/>
+    <!--검붉은색-->
+    <SolidColorBrush x:Key="cyan_color" Color="#00bbff"/>
+    <!--하늘색-->
+    <SolidColorBrush x:Key="bluegreen_color" Color="#00bb83"/>
+    <!--청록색-->
+    <SolidColorBrush x:Key="purple_color" Color="#8300bb"/>
+    <!--보라색-->
+    <SolidColorBrush x:Key="skyblue_color" Color="#00BFFF"/>
+    <!--하늘색-->
+    <!--HSH 데이터링크 사용-->
+
+
+
+    <SolidColorBrush x:Key="InnerShadowN1_30p" Color="#ffffff" Opacity="0.3" />
+    <SolidColorBrush x:Key="InnerShadowN1" Color="#ffffff" Opacity="0.2" />
+    <SolidColorBrush x:Key="InnerShadowN1_10p" Color="#ffffff" Opacity="0.1" />
+    <SolidColorBrush x:Key="nc_off_color_30p" Color="#3b414b" Opacity="0.3" />
+    <SolidColorBrush x:Key="nc_off_color_10p" Color="#3b414b" Opacity="0.1" />
+    <SolidColorBrush x:Key="nc_off_color_60p" Color="#3b414b" Opacity="0.6" />
+    <SolidColorBrush x:Key="SensorPressedColor" Color="#1e344c" />
+    <SolidColorBrush x:Key="MLAH_COLOR_POPUP_DLG_BG_Brush" Color="#232831"/>
+</ResourceDictionary>

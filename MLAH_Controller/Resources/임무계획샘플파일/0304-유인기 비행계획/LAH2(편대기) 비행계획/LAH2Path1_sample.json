@@ -1,0 +1,62 @@
+{
+  "PathID": "0S001001000-LAH2",
+  "AircraftID": 2,
+  "WaypointList": [
+    {
+      "WaypointID": 101,
+      "Coordinate": {
+        "Latitude": 38.07165089,
+        "Longitude": 128.16914178,
+        "Altitude": 400.0
+      },
+      "Speed": 75,
+      "ETA": 0.0,
+      "ECF": 0.0,
+      "NextWaypointID": 102,
+      "Loiter": {},
+      "Attack": {}
+    },
+    {
+      "WaypointID": 102,
+      "Coordinate": {
+        "Latitude": 38.07294676,
+        "Longitude": 128.17541184,
+        "Altitude": 400.0
+      },
+      "Speed": 75,
+      "ETA": 7.6,
+      "ECF": 0.76,
+      "NextWaypointID": 103,
+      "Loiter": {},
+      "Attack": {}
+    },
+    {
+      "WaypointID": 103,
+      "Coordinate": {
+        "Latitude": 38.07424263,
+        "Longitude": 128.18168190,
+        "Altitude": 400.0
+      },
+      "Speed": 75.0,
+      "ETA": 15.2,
+      "ECF": 1.52,
+      "NextWaypointID": 104,
+      "Loiter": {},
+      "Attack": {}
+    },
+    {
+      "WaypointID": 104,
+      "Coordinate": {
+        "Latitude": 38.07553849,
+        "Longitude": 128.18795196,
+        "Altitude": 400.0
+      },
+      "Speed": 75.0,
+      "ETA": 22.8,
+      "ECF": 2.28,
+      "NextWaypointID": 105,
+      "Loiter": {},
+      "Attack": {}
+    }
+  ]
+}

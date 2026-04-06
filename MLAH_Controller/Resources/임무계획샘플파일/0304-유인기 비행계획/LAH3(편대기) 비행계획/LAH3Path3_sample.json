@@ -1,0 +1,16 @@
+{
+  "PathID": "0S001001002-LAH3",
+  "AircraftID": 3,
+  "WaypointList": [
+    {
+      "WaypointID": 209,
+      "Coordinate": {
+        "Latitude": 38.077862,
+        "Longitude": 128.196919,
+        "Altitude": 400.0
+      },
+      "Hovering": 300,
+      "NextWaypointID": 210
+    }
+  ]
+}

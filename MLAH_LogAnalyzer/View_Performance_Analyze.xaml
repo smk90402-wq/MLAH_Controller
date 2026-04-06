@@ -1,0 +1,465 @@
+﻿<UserControl x:Class="MLAH_LogAnalyzer.View_Performance_Analyze"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:local="clr-namespace:MLAH_LogAnalyzer"
+        mc:Ignorable="d" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        Background="{StaticResource MLAH_COLOR_BG_Brush}"  
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+        xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+        xmlns:dxcr="http://schemas.devexpress.com/winfx/2008/xaml/charts/rangecontrolclient"
+        xmlns:dxgn="http://schemas.devexpress.com/winfx/2008/xaml/gantt" 
+        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
+             d:DataContext="{d:DesignInstance Type=local:View_Performance_Analyze, IsDesignTimeCreatable=True}"
+             >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <Style BasedOn="{StaticResource NormalTextBlock}" TargetType="TextBlock"/>
+            
+            <!-- TreeView 스타일 -->
+            <Style x:Key="TreeViewStyle" TargetType="TreeView">
+                <Setter Property="Background" Value="{StaticResource MLAH_COLOR_BG_Brush}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+            
+            <!-- TreeViewItem 스타일 -->
+            <Style x:Key="TreeViewItemStyle" TargetType="TreeViewItem">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Padding" Value="2"/>
+            </Style>
+
+            <dxc:CustomMarker2DModel x:Key="yellowCircleMarker">
+                <dxc:CustomMarker2DModel.PointTemplate>
+                    <ControlTemplate>
+                        <Rectangle Width="10" Height="10" 
+                     Fill="Yellow" 
+                     Stroke="DarkGoldenrod" 
+                     StrokeThickness="1"/>
+                    </ControlTemplate>
+                </dxc:CustomMarker2DModel.PointTemplate>
+            </dxc:CustomMarker2DModel>
+
+          
+        </ResourceDictionary>
+    </UserControl.Resources>
+     <!--리소스 정의 끝--> 
+
+
+    <!--전체 그리드-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--불러오기-->
+        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="700"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <GroupBox BorderBrush="White" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Column="0" Width="150" Height="25" Content="Log 불러오기" Style="{StaticResource NormalButtonStyle}" HorizontalAlignment="Left" Margin="0,0,10,0" PreviewMouseDown="Button_PreviewMouseDown"/>
+
+                    <TextBlock Grid.Row="1" Text="시나리오 이름 : " Foreground="White"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding SelectedScenarioName}" />
+
+
+                    <TextBlock Grid.Row="2" Text="시나리오 시작 시간 : " Foreground="White"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2">
+                        <TextBlock.Text>
+                            <Binding Path="LogStartTime" Converter="{StaticResource UlongToDateTimeConverter}" StringFormat="yyyy-MM-dd HH:mm:ss"/>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Grid>
+
+            </GroupBox>
+
+            <ListView Grid.Row="1" Height="700" Background="{StaticResource MLAH_COLOR_BG_Brush}" ItemsSource="{Binding AllScenarioItems}" Foreground="White" VerticalAlignment="Top" BorderBrush="White">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsChecked}" Margin="5"/>
+                            <TextBlock Text="{Binding ScenarioName}" VerticalAlignment="Center" Margin="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Width="150" Height="25" Content="시나리오 전체 선택" Style="{StaticResource NormalButtonStyle}" HorizontalAlignment="Left" PreviewMouseDown="Button_PreviewMouseDown_1" Margin="10,0,0,0"/>
+                <Button Grid.Column="1" Width="150" Height="25" Content="시나리오 전체 해제" Style="{StaticResource NormalButtonStyle}" HorizontalAlignment="Left" PreviewMouseDown="Button_PreviewMouseDown_2"/>
+            </Grid>
+
+            <TextBlock Grid.Row="3" Style="{StaticResource NormalTextBlock}" Text="Input TimeStamp : " VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
+            <TextBox Grid.Row="3" Style="{StaticResource NormalTextBox}"  Text="{Binding lnputConvertedTime,UpdateSourceTrigger=PropertyChanged}" Width="150" VerticalAlignment="Center" Margin="130,0,0,0" HorizontalAlignment="Left"/>
+            <Button Grid.Row="3" Style="{StaticResource NormalButtonStyle}" Content="변환" Width="50" Height="25" VerticalAlignment="Center" Margin="260,0,0,0" PreviewMouseDown="Button_PreviewMouseDown_3"/>
+
+            <TextBlock Grid.Row="4" Margin="130,0,0,0">
+                <TextBlock.Text>
+                    <Binding Path="ConvertedTime" Converter="{StaticResource UlongToDateTimeConverter}" StringFormat="yyyy-MM-dd HH:mm:ss.fff" />
+                </TextBlock.Text>
+            </TextBlock>
+
+        </Grid>
+
+        <!--우측-->
+        <Grid Grid.Column="1" Grid.RowSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="복합협업 복잡도 = 유무인기 수 X ( 협업기저임무 수 + 개별임무 수 )" Grid.Row="0" BorderBrush="White" BorderThickness="1">
+                <dxg:GridControl Grid.Row="1" x:Name="MessageGridControl" Margin="5,0,5,5" dx:ThemeManager.ThemeName="VS2019Dark" ItemsSource="{Binding CheckedScenariosForDisplay}" SelectedItem="{Binding SelectedScenarioSummary}">
+                    <dxg:GridControl.Columns>
+                        <dxg:GridColumn FieldName="ScenarioName" Header="시나리오 이름" Width="2*" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="ComplexityScore" Header="복합협업 복잡도" Width="*" AllowEditing="False" HorizontalHeaderContentAlignment="Center">
+                            <dxg:GridColumn.HeaderStyle>
+                                <Style TargetType="dxg:GridColumnHeader">
+                                    <Setter Property="Background" Value="#4A4A28"/>
+                                    <Setter Property="BorderBrush" Value="Goldenrod"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                </Style>
+                            </dxg:GridColumn.HeaderStyle>
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <dxe:TextEdit x:Name="PART_Editor"
+                          Background="#2D2D16"
+                          Foreground="LightGreen"
+                          HorizontalContentAlignment="Center"/>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn FieldName="AircraftCount" Header="유무인기 수" Width="*" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="CollaborativeMissions" Header="협업기저임무 수" Width="*" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="IndividualMissions" Header="개별임무 수 (유인기+무인기)" Width="2*" AllowEditing="False"/>
+                    </dxg:GridControl.Columns>
+
+                    <dxg:GridControl.View>
+                        <dxg:TableView ShowGroupPanel="False"
+                            ShowSearchPanelMode="Never"
+                            AllowSorting="True"
+                            AllowGrouping="False"/>
+                    </dxg:GridControl.View>
+                </dxg:GridControl>
+            </GroupBox>
+
+            <GroupBox Header="임무수행 성공률" Grid.Row="1" BorderBrush="White" BorderThickness="1" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    
+                    <Grid Grid.Row="0" Grid.ColumnSpan="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="60" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Run Text="전체 임무수행 성공률 : " Foreground="White"/>
+                        <Run Text="{Binding OverallSuccessRate}" Foreground="Yellow"/>
+                        <Run Text="%"/>
+                        </TextBlock>
+                        <GroupBox Grid.Row="1" BorderBrush="White">
+                            <TextBlock Text="다수 무인기 임무 수행 성공률 :  시뮬레이션 환경에서 기저 행위 10개 이상으로 구성된 복합 협업 시나리오를 10회 이상 수행하여 행위 수행에 대한 평균 성공률 평가" 
+                                       FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </GroupBox>
+                    </Grid>
+
+                    <GroupBox Header="시나리오 선택" Grid.Column="0" Grid.Row="1" BorderBrush="White" BorderThickness="1">
+                        <dx:DXListBox x:Name="ScenarioListBox" SelectionChanged="ScenarioListBox_SelectedIndexChanged"/>
+                    </GroupBox>
+
+                    <GroupBox Header="임무수행 성공률 (시나리오)" Grid.Column="1" Grid.Row="1" BorderBrush="White" BorderThickness="1">
+                        <TextBlock FontSize="50" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <!--<Run Text="{Binding SelectedTimelineMessageName, Converter={StaticResource MessageIdToNameConverter}}" Foreground="Yellow"/>-->
+                            <Run Text="{Binding SelectedScenarioSuccessRate}" Foreground="Yellow"/>
+                            <Run Text="%"/>
+                        </TextBlock>
+                    </GroupBox>
+
+                    <ItemsControl Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding SelectedScenarioUavMetrics}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="1" Columns="3"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <GroupBox Header="{Binding UavName}" BorderBrush="White" BorderThickness="1" Margin="2">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Style="{StaticResource NormalTextBlock}" Text="행위 수행 횟수 : " Foreground="White" Margin="2"/>
+                                        <TextBlock Grid.Column="1" Style="{StaticResource NormalTextBlock}" Text="{Binding TotalRequests}" HorizontalAlignment="Right" Margin="2"/>
+
+                                        <TextBlock Grid.Row="1" Style="{StaticResource NormalTextBlock}" Text="성공 횟수 : " Foreground="White" Margin="2"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource NormalTextBlock}" Text="{Binding MatchedCount}" HorizontalAlignment="Right" Margin="2"/>
+                                    </Grid>
+                                </GroupBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <dxc:ChartControl x:Name="TimelineChart" Grid.Row="2" Grid.ColumnSpan="5" CustomDrawCrosshair="TimelineChart_CustomDrawCrosshair">
+                        <dxc:ChartControl.Diagram>
+                            <dxc:XYDiagram2D x:Name="diagram" Rotated="True" EnableAxisYNavigation="True" PaneOrientation="Horizontal" >
+
+                                <dxc:XYDiagram2D.PaneLayout>
+                                    <dxc:GridLayout>
+                                        <dxc:GridLayout.RowDefinitions>
+                                            <dxc:LayoutDefinition Size="1*" />
+                                            <dxc:LayoutDefinition Size="1*" />
+                                            <dxc:LayoutDefinition Size="1.2*" />
+                                        </dxc:GridLayout.RowDefinitions>
+                                    </dxc:GridLayout>
+                                </dxc:XYDiagram2D.PaneLayout>
+
+                                <dxc:XYDiagram2D.AxisY>
+                                    <dxc:AxisY2D x:Name="axisY" Visible="True" Alignment="Near">
+                                        <dxc:AxisY2D.VisibilityInPanes>
+                                            <dxc:VisibilityInPane Pane="{Binding ElementName=paneUAV1}" Visible="False" />
+                                            <dxc:VisibilityInPane Pane="{Binding ElementName=paneUAV2}" Visible="False" />
+                                        </dxc:AxisY2D.VisibilityInPanes>
+                                        <!--<dxc:AxisY2D.DateTimeScaleOptions>
+                                            <dxc:ManualDateTimeScaleOptions />
+                                        </dxc:AxisY2D.DateTimeScaleOptions>-->
+                                        <dxc:AxisY2D.Label>
+                                            <!--<dxc:AxisLabel TextPattern="{}{V:HH:mm:ss.fff}"/>-->
+                                            <dxc:AxisLabel TextPattern="{}{V:mm:ss.fff}"/>
+                                        </dxc:AxisY2D.Label>
+                                        <dxc:AxisY2D.WholeRange>
+                                            <dxc:Range AutoSideMargins="False"/>
+                                        </dxc:AxisY2D.WholeRange>
+                                        <!--<dxc:AxisY2D.Label>
+                                            <dxc:AxisLabel />
+                                        </dxc:AxisY2D.Label>-->
+                                    </dxc:AxisY2D>
+                                </dxc:XYDiagram2D.AxisY>
+
+                                <dxc:XYDiagram2D.AxisX>
+                                    <dxc:AxisX2D x:Name="primaryAxisX" Visible="True"/>
+                                </dxc:XYDiagram2D.AxisX>
+
+                                <dxc:XYDiagram2D.DefaultPane>
+                                    <dxc:Pane x:Name="paneUAV1">
+                                        <dxc:Pane.Title>
+                                            <dxc:PaneTitle Content="무인기 1 (UAV 1)"/>
+                                        </dxc:Pane.Title>
+                                        <dxc:Pane.AxisYScrollBarOptions>
+                                            <dxc:ScrollBarOptions Visible="False" />
+                                        </dxc:Pane.AxisYScrollBarOptions>
+                                        <dxc:GridLayout.Row>0</dxc:GridLayout.Row>
+                                    </dxc:Pane>
+                                </dxc:XYDiagram2D.DefaultPane>
+
+                                <dxc:XYDiagram2D.Panes>
+                                    <dxc:Pane x:Name="paneUAV2">
+                                        <dxc:Pane.Title>
+                                            <dxc:PaneTitle Content="무인기 2 (UAV 2)"/>
+                                        </dxc:Pane.Title>
+                                        <dxc:Pane.AxisYScrollBarOptions>
+                                            <dxc:ScrollBarOptions Visible="False" />
+                                        </dxc:Pane.AxisYScrollBarOptions>
+                                        <dxc:GridLayout.Row>1</dxc:GridLayout.Row>
+                                    </dxc:Pane>
+                                    <dxc:Pane x:Name="paneUAV3">
+                                        <dxc:Pane.Title>
+                                            <dxc:PaneTitle Content="무인기 3 (UAV 3)"/>
+                                        </dxc:Pane.Title>
+                                        <dxc:GridLayout.Row>2</dxc:GridLayout.Row>
+                                    </dxc:Pane>
+                                </dxc:XYDiagram2D.Panes>
+
+                                <dxc:RangeBarOverlappedSeries2D DataSource="{Binding TimelineSegmentsUAV1}"
+                                                                Pane="{Binding ElementName=paneUAV1}"
+
+                                              ArgumentDataMember="TaskName" ValueDataMember="StartTime" Value2DataMember="EndTime"
+                                              ColorDataMember="Color" BarWidth="0.7" ShowInLegend="False"
+                                                                ArgumentScaleType="Qualitative"
+                                                                ValueScaleType="DateTime"
+                                              CrosshairLabelPattern="{}{State}&#x0a;{MetricDetails}&#x0a;시간: {V1:HH:mm:ss.fff} ~ {V2:HH:mm:ss.fff}"
+                                                                />
+
+                                <!--CrosshairLabelPattern="{}{State}&#x0a;제어: {V1:HH:mm:ss.fff}" -->
+
+                                <!--<dxc:RangeBarOverlappedSeries2D DataSource="{Binding ResponseMarkersUAV1}"
+                                Pane="{Binding ElementName=paneUAV1}"
+                                ArgumentDataMember="TaskName" ValueDataMember="StartTime" Value2DataMember="EndTime"
+                                ColorDataMember="Color" 
+                                BarWidth="0.9" 
+                                ShowInLegend="False"
+                                ArgumentScaleType="Qualitative" ValueScaleType="DateTime"
+                                CrosshairLabelPattern="응답 완료: {V1:HH:mm:ss.fff}" />-->
+
+
+
+
+                                <dxc:RangeBarOverlappedSeries2D DataSource="{Binding TimelineSegmentsUAV2}"
+                                              Pane="{Binding ElementName=paneUAV2}"
+
+                                              ArgumentDataMember="TaskName" ValueDataMember="StartTime" Value2DataMember="EndTime"
+                                              ColorDataMember="Color" BarWidth="0.7" ShowInLegend="False"
+                                                                ArgumentScaleType="Qualitative"
+                                                                ValueScaleType="DateTime"
+                                              CrosshairLabelPattern="{}{State}&#x0a;{MetricDetails}&#x0a;시간: {V1:HH:mm:ss.fff} ~ {V2:HH:mm:ss.fff}"
+                                              />
+
+                                <!--<dxc:RangeBarOverlappedSeries2D DataSource="{Binding ResponseMarkersUAV2}"
+                                Pane="{Binding ElementName=paneUAV2}"
+                                ArgumentDataMember="TaskName" ValueDataMember="StartTime" Value2DataMember="EndTime"
+                                ColorDataMember="Color" BarWidth="0.9" ShowInLegend="False"
+                                ArgumentScaleType="Qualitative" ValueScaleType="DateTime"
+                                CrosshairLabelPattern="응답 완료: {V1:HH:mm:ss.fff}" />-->
+
+                                <dxc:RangeBarOverlappedSeries2D DataSource="{Binding TimelineSegmentsUAV3}"
+                                              Pane="{Binding ElementName=paneUAV3}"
+
+                                              ArgumentDataMember="TaskName" ValueDataMember="StartTime" Value2DataMember="EndTime"
+                                              ColorDataMember="Color" BarWidth="0.7" ShowInLegend="False"
+                                                                ArgumentScaleType="Qualitative"
+                                                                ValueScaleType="DateTime"
+                                              CrosshairLabelPattern="{}{State}&#x0a;{MetricDetails}&#x0a;시간: {V1:HH:mm:ss.fff} ~ {V2:HH:mm:ss.fff}"
+                                              />
+                                <!--CrosshairLabelPattern="{}{State}&#x0a;제어: {V1:HH:mm:ss.fff}&#x0a;응답: {V2:HH:mm:ss.fff}"-->
+
+                                <!--<dxc:RangeBarOverlappedSeries2D DataSource="{Binding ResponseMarkersUAV3}"
+                                Pane="{Binding ElementName=paneUAV3}"
+                                ArgumentDataMember="TaskName" ValueDataMember="StartTime" Value2DataMember="EndTime"
+                                ColorDataMember="Color" BarWidth="0.9" ShowInLegend="False"
+                                ArgumentScaleType="Qualitative" ValueScaleType="DateTime"
+                                CrosshairLabelPattern="응답 완료: {V1:HH:mm:ss.fff}" />-->
+
+
+
+
+
+                            </dxc:XYDiagram2D>
+                        </dxc:ChartControl.Diagram>
+
+                        <dxc:ChartControl.Legend>
+                            <dxc:Legend/>
+                        </dxc:ChartControl.Legend>
+                        
+                        <dxc:ChartControl.CrosshairOptions>
+                            <dxc:CrosshairOptions ShowArgumentLine="False" ShowValueLine="False" LinesMode="Free"
+                                                  SnapMode="NearestArgument" ShowOnlyInFocusedPane="True"
+                                                  CrosshairLabelMode="ShowForNearestSeries" />
+                        </dxc:ChartControl.CrosshairOptions>
+                    </dxc:ChartControl> 
+                </Grid>
+
+            </GroupBox>
+
+            <GroupBox Header="동적 임무 재계획 시간" Grid.Row="0" Grid.Column="1" BorderBrush="White" BorderThickness="1">
+                <dxg:GridControl Grid.Row="1" x:Name="RePlanTimeGrid" Margin="5,0,5,5" dx:ThemeManager.ThemeName="VS2019Dark" ItemsSource="{Binding SelectedScenarioReplanData}" >
+                    <dxg:GridControl.Columns>
+                        <dxg:GridColumn FieldName="ScenarioName" Header="시나리오 이름" Width="*" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="AverageReplanTime" Header="평균 임무 재계획 소요 시간" Width="*" AllowEditing="False">
+                            <dxg:GridColumn.HeaderStyle>
+                                <Style TargetType="dxg:GridColumnHeader">
+                                    <Setter Property="Background" Value="#4A4A28"/>
+                                    <Setter Property="BorderBrush" Value="Goldenrod"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                </Style>
+                            </dxg:GridColumn.HeaderStyle>
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <dxe:TextEdit x:Name="PART_Editor"
+  Background="#2D2D16"
+  Foreground="LightGreen"
+  HorizontalContentAlignment="Center"/>
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+                    </dxg:GridControl.Columns>
+
+                    <dxg:GridControl.View>
+                        <dxg:TableView ShowGroupPanel="False"
+                ShowSearchPanelMode="Never"
+                AllowSorting="True"
+                AllowGrouping="False"/>
+                    </dxg:GridControl.View>
+                </dxg:GridControl>
+            </GroupBox>
+
+            
+
+       
+
+            
+        </Grid>
+
+        
+        
+        
+        
+    </Grid>
+
+
+    
+
+
+
+
+</UserControl>
+
+

@@ -1,0 +1,297 @@
+﻿<UserControl x:Class="MLAH_LogAnalyzer.View_ScoreHome"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:local="clr-namespace:MLAH_LogAnalyzer"
+        mc:Ignorable="d" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        Background="{StaticResource MLAH_COLOR_BG_Brush}"  
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+        xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+        xmlns:dxcr="http://schemas.devexpress.com/winfx/2008/xaml/charts/rangecontrolclient"
+        xmlns:dxgn="http://schemas.devexpress.com/winfx/2008/xaml/gantt" 
+        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
+        d:DataContext="{d:DesignInstance Type=local:View_ScoreHome, IsDesignTimeCreatable=True}"
+        Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <Style BasedOn="{StaticResource NormalTextBlock}" TargetType="TextBlock"/>
+            
+            <!-- TreeView 스타일 -->
+            <Style x:Key="TreeViewStyle" TargetType="TreeView">
+                <Setter Property="Background" Value="{StaticResource MLAH_COLOR_BG_Brush}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+            
+            <!-- TreeViewItem 스타일 -->
+            <Style x:Key="TreeViewItemStyle" TargetType="TreeViewItem">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Padding" Value="2"/>
+            </Style>
+
+            <dxc:CustomMarker2DModel x:Key="yellowCircleMarker">
+                <dxc:CustomMarker2DModel.PointTemplate>
+                    <ControlTemplate>
+                        <Rectangle Width="10" Height="10" 
+                     Fill="Yellow" 
+                     Stroke="DarkGoldenrod" 
+                     StrokeThickness="1"/>
+                    </ControlTemplate>
+                </dxc:CustomMarker2DModel.PointTemplate>
+            </dxc:CustomMarker2DModel>
+
+          
+        </ResourceDictionary>
+    </UserControl.Resources>
+     <!--리소스 정의 끝--> 
+
+
+    <!--전체 그리드-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.ColumnSpan="2" Grid.RowSpan="5" BorderThickness="1" BorderBrush="white"/>
+
+            <!--<RadioButton Grid.Row="0" Style="{StaticResource NormalRadioButtonStyle}" Content="개별 시나리오" IsChecked="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+            <!--<RadioButton Grid.Column="1" Style="{StaticResource NormalRadioButtonStyle}" Content="종합 시나리오" IsChecked="True" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+
+            <TextBlock Grid.Row="0" Style="{StaticResource NormalTextBlock}" Text="Simulation Type : " Foreground="White" Margin="10,0,0,0"/>
+            <TextBlock Grid.Row="1" Style="{StaticResource NormalTextBlock}" Text="Simulation ID : " Foreground="White" Margin="10,0,0,0"/>
+            <TextBlock Grid.Row="2" Style="{StaticResource NormalTextBlock}" Text="Start : " Foreground="White" Margin="10,0,0,0"/>
+            <TextBlock Grid.Row="3" Style="{StaticResource NormalTextBlock}" Text="End : " Foreground="White" Margin="10,0,0,0"/>
+
+            <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource NormalTextBlock}" Text="-" />
+            <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource NormalTextBlock}" Text="{Binding SelectedScenarioName}" />
+            <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource NormalTextBlock}" Text="{Binding LogStartTimeFormatted}" />
+            <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource NormalTextBlock}" Text="{Binding LogEndTimeFormatted}" />
+
+            <GroupBox Header="시나리오 선택" BorderBrush="White" Grid.Column="2" Grid.RowSpan="5">
+                <dxg:GridControl  x:Name="TotalScoreViewSelectGrid" Margin="5,0,5,5" dx:ThemeManager.ThemeName="VS2019Dark" 
+                            ItemsSource="{Binding DataContext.CheckedScenariosForDisplay, 
+                          RelativeSource={RelativeSource AncestorType={x:Type local:View_ScoreMain}}}"
+                          SelectedItem="{Binding DataContext.SelectedScenarioSummary, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type local:View_ScoreMain}}}">
+                    <dxg:GridControl.Columns>
+                        <dxg:GridColumn FieldName="ScenarioName" Header="시나리오 이름" Width="*" AllowEditing="False"/>
+                    </dxg:GridControl.Columns>
+                    <dxg:GridControl.View>
+                        <dxg:TableView ShowGroupPanel="False"
+          ShowSearchPanelMode="Never"
+          AllowSorting="True"
+          AllowGrouping="False"/>
+                    </dxg:GridControl.View>
+                </dxg:GridControl>
+            </GroupBox>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+
+
+            </Grid.RowDefinitions>
+
+            <Border Grid.ColumnSpan="3" Grid.RowSpan="18" BorderThickness="1" BorderBrush="white"/>
+
+            <RadioButton Grid.Row="0" GroupName="ScoreDisplayMode"
+                         Style="{StaticResource NormalRadioButtonStyle}" Content="단일 시나리오" 
+                         IsChecked="{Binding IsSingleScenarioMode, Mode=TwoWay}" 
+                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <RadioButton Grid.Column="1" GroupName="ScoreDisplayMode"
+                         Style="{StaticResource NormalRadioButtonStyle}" Content="시나리오 평균" 
+                         IsChecked="{Binding IsAverageMode, Mode=TwoWay}" 
+                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            <TextBlock Grid.Row="1" Style="{StaticResource NormalTextBlock}" Text="[1] 통신 가용도 : " Foreground="White" Margin="10,0,0,0" FontSize="18"/>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="3" Style="{StaticResource NormalTextBlock}" Text="지휘기와 무인기 간 지형에 의한 가시선(LOS) 확보 시간의 비율" Foreground="Yellow" Margin="30,0,0,0" />
+
+            <TextBlock Grid.Row="4" Style="{StaticResource NormalTextBlock}" Text="[2] 유인기 안전도 : " Foreground="White" Margin="10,0,0,0" FontSize="18"/>
+            <TextBlock Grid.Row="5" Grid.ColumnSpan="3" Style="{StaticResource NormalTextBlock}" Text="임무 수행 중 유인기 - 타겟 간 최소 안전거리 유지 및 가시선(LOS) 확보 시간의 비율" Foreground="Yellow" Margin="30,0,0,0"/>
+
+            <TextBlock Grid.Row="7" Style="{StaticResource NormalTextBlock}" Text="[3] 임무분배 효율도 : " Foreground="White" Margin="10,0,0,0" FontSize="18"/>
+            <TextBlock Grid.Row="8" Grid.ColumnSpan="3" Style="{StaticResource NormalTextBlock}" Text="각 무인기마다의 실제 임무수행시간 균등 분배 정도 비율" Foreground="Yellow" Margin="30,0,0,0"/>
+
+            <TextBlock Grid.Row="10" Style="{StaticResource NormalTextBlock}" Text="[4] 임무 성취도 : " Foreground="White" Margin="10,0,0,0" FontSize="18"/>
+            <TextBlock Grid.Row="11" Grid.ColumnSpan="3" Style="{StaticResource NormalTextBlock}" Text="실제 타겟 식별 - 탐지 - 파괴 비율" Foreground="Yellow" Margin="30,0,0,0"/>
+
+            <TextBlock Grid.Row="13" Style="{StaticResource NormalTextBlock}" Text="[5] 촬영 유효도 : " Foreground="White" Margin="10,0,0,0" FontSize="18"/>
+            <TextBlock Grid.Row="14" Grid.ColumnSpan="3" Style="{StaticResource NormalTextBlock}" Text="요구 공간해상도 대비 실제 촬영된 이미지의 해상도 충족률" Foreground="Yellow" Margin="30,0,0,0"/>
+
+            <TextBlock Grid.Row="16" Style="{StaticResource NormalTextBlock}" Text="[6] 관측 달성도 : " Foreground="White" Margin="10,0,0,0" FontSize="18"/>
+            <TextBlock Grid.Row="17" Grid.ColumnSpan="3" Style="{StaticResource NormalTextBlock}" Text="협업 기저임무마다의 촬영 요구 면적 대비 실제 촬영 면적의 비율" Foreground="Yellow" Margin="30,0,0,0"/>
+
+            <!--<TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource NormalTextBlock}" Text="82" />-->
+
+            <TextBlock Grid.Column="1" Grid.Row="1" Margin="10,0,0,0" FontSize="18">
+                <Run Text="{Binding DisplayCommScore, StringFormat=N0}" /> <Run Text=" %" Foreground="White"/>
+            </TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="4" Margin="10,0,0,0" FontSize="18">
+                <Run Text="{Binding DisplaySafetyScore, StringFormat=N0}" />
+                <Run Text=" %" Foreground="White"/>
+            </TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="7" Margin="10,0,0,0" FontSize="18">
+                <Run Text="{Binding DisplayMissionDistScore, StringFormat=N0}" />
+                <Run Text=" %" Foreground="White"/>
+            </TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="10" Margin="10,0,0,0" FontSize="18">
+                <Run Text="{Binding DisplayMissionSuccessScore, StringFormat=N0}" />
+                <Run Text=" %" Foreground="White"/>
+            </TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="13" Margin="10,0,0,0" FontSize="18">
+                <Run Text="{Binding DisplaySpatialResScore, StringFormat=N0}" />
+                <Run Text=" %" Foreground="White"/>
+            </TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="16" Margin="10,0,0,0" FontSize="18">
+                <Run Text="{Binding DisplayCoverageScore, StringFormat=N0}" />
+                <Run Text=" %" Foreground="White"/>
+            </TextBlock>
+        </Grid>
+
+        <dxc:ChartControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Name="chart" ToolTipEnabled="True" Background="{StaticResource MLAH_COLOR_BG_Brush}" BorderThickness="0" >
+            <dxc:RadarDiagram2D
+        StartAngle="0"
+        ShapeStyle="Polygon"
+        RotationDirection="Clockwise">
+
+                <dxc:RadarDiagram2D.AxisX>
+                    <dxc:RadarAxisX2D>
+
+                        <dxc:RadarAxisX2D.QualitativeScaleOptions>
+                            <dxc:QualitativeScaleOptions />
+                        </dxc:RadarAxisX2D.QualitativeScaleOptions>
+
+                    </dxc:RadarAxisX2D>
+                </dxc:RadarDiagram2D.AxisX>
+
+                <dxc:RadarDiagram2D.AxisY>
+                    <dxc:RadarAxisY2D
+                TickmarksMinorVisible="False"
+                TickmarksVisible="False"
+                Thickness="0" 
+                        GridLinesVisible="True" 
+                        GridLinesMinorVisible="False"
+                        >
+
+                        <dxc:RadarAxisY2D.WholeRange>
+                            <dxc:Range MinValue="0" MaxValue="100"/>
+                        </dxc:RadarAxisY2D.WholeRange>
+
+                        <dxc:RadarAxisY2D.NumericScaleOptions>
+                            <dxc:ContinuousNumericScaleOptions AutoGrid="True" />
+                        </dxc:RadarAxisY2D.NumericScaleOptions>
+
+                    </dxc:RadarAxisY2D>
+                </dxc:RadarDiagram2D.AxisY>
+
+                <!--<dxc:RadarLineSeries2D DataSource="{Binding RadarChart_Selected}" 
+                                       ArgumentDataMember="Category" ValueDataMember="Score" 
+                                       Closed="True" ValueScaleType="Numerical" ArgumentScaleType="Qualitative" 
+                                       MarkerVisible="True"
+                                       DisplayName="Selected Scenario" AnimationAutoStartMode="SetStartState"
+                                       Brush="#FF4472C4" />
+                <dxc:RadarLineSeries2D DataSource="{Binding RadarChart_Average}" 
+                                       ArgumentDataMember="Category" ValueDataMember="Score"  
+                                       Closed="True" ValueScaleType="Numerical" ArgumentScaleType="Qualitative" 
+                                       MarkerVisible="True"
+                                       DisplayName="Average"
+                                       Brush="#FFED7D31" />-->
+                <dxc:RadarLineSeries2D DataSource="{Binding RadarChart_Selected}" 
+                       x:Name="series0" ArgumentDataMember="Category" ValueDataMember="Score" Closed="True" ValueScaleType="Numerical" DisplayName="Selected Scenario"
+                       ArgumentScaleType="Qualitative" MarkerVisible="True" Brush="#FF4472C4">
+                    <!--<dxc:RadarLineSeries2D.LineStyle>
+                        <dxc:LineStyle Thickness="2">
+                            <dxc:LineStyle.DashStyle>
+                                <DashStyle Dashes="4 2"/>
+                            </dxc:LineStyle.DashStyle>
+                        </dxc:LineStyle>
+                    </dxc:RadarLineSeries2D.LineStyle>-->
+                </dxc:RadarLineSeries2D>
+                <dxc:RadarLineSeries2D DataSource="{Binding RadarChart_Average}" 
+                       x:Name="series1" ArgumentDataMember="Category" ValueDataMember="Score" Closed="True" ValueScaleType="Numerical" DisplayName="Average"
+                       AnimationAutoStartMode="SetStartState" ArgumentScaleType="Qualitative" MarkerVisible="True" Brush="#FFED7D31">
+                    <dxc:RadarLineSeries2D.LineStyle>
+                        <dxc:LineStyle Thickness="2">
+                            <dxc:LineStyle.DashStyle>
+                                <DashStyle Dashes="4 2"/>
+                            </dxc:LineStyle.DashStyle>
+                        </dxc:LineStyle>
+                    </dxc:RadarLineSeries2D.LineStyle>
+                    
+                    
+                </dxc:RadarLineSeries2D>
+
+                <!--<dxc:RadarLineSeries2D DataSource="{Binding ScoreChartData}" 
+                                       x:Name="series2" ArgumentDataMember="Category" ValueDataMember="Score" Closed="True" ValueScaleType="Numerical" 
+                                       AnimationAutoStartMode="SetStartState" ArgumentScaleType="Qualitative" MarkerVisible="True" />-->
+            </dxc:RadarDiagram2D>
+            <!--#region Titles-->
+            <!--<dxc:ChartControl.Titles>
+                <dxc:Title
+            HorizontalAlignment="Center">Wind Rose</dxc:Title>
+            </dxc:ChartControl.Titles>-->
+            <!--#endregion-->
+            <dxc:ChartControl.Legend>
+                <dxc:Legend HorizontalPosition="Right" VerticalPosition="Top" />
+            </dxc:ChartControl.Legend>
+        </dxc:ChartControl>
+
+
+
+        <!--DataSource="{DXBinding '$local:WindRoseData.Load()'}"-->
+
+    </Grid>
+
+</UserControl>
+
+

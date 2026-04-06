@@ -1,0 +1,475 @@
+﻿<dx:ThemedWindow x:Class="MLAH_Controller.View_ScenarioObject_PopUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MLAH_Controller"
+        mc:Ignorable="d" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        Height="460" Width="250" 
+        Background="{StaticResource MLAH_COLOR_BG_Brush}"  WindowStartupLocation="CenterScreen"
+        PreviewKeyDown="Window_PreviewKeyDown"
+                 xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                 dx:ThemeManager.ThemeName="Win11Dark"
+                 ControlBoxButtonSet="None"
+                 Title="{Binding PopUpModeText}"
+                 Topmost="True"
+        >
+
+    <dx:ThemedWindow.Resources>
+        <ResourceDictionary>
+            <!--<ControlTemplate x:Key="CustomTitleBarTemplate" TargetType="{x:Type Window}">
+                <Border CornerRadius="1" BorderBrush="{StaticResource COLOR_GRAY102_Brush}" BorderThickness="2" Background="{StaticResource MLAH_COLOR_BG_Brush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                         --><!--사용자 지정 타이틀 바--><!--
+                        <Border Background="#4d4dff" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+                            <TextBlock Text="객체 생성" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+                        </Border>
+
+                         --><!--콘텐츠 표시 영역--><!-- 
+                        <AdornerDecorator Grid.Row="1"  >
+                            <ContentPresenter/>
+                        </AdornerDecorator>
+                    </Grid>
+                </Border>
+            </ControlTemplate>-->
+            <Style BasedOn="{StaticResource NormalTextBlock}" TargetType="TextBlock"/>
+
+            <Style x:Key="SelectableComboBoxItemStyle" TargetType="ComboBoxItem">
+                <Style.Triggers>
+                    <!-- DataTrigger: 바인딩된 Content(문자열)를 검사합니다. -->
+                    <DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}, Converter={StaticResource StringContainsToBooleanConverter}, ConverterParameter=_}" Value="True">
+                        <!-- 조건: Content에 "(O)"가 포함되어 있지 않으면 (Value="False") -->
+                        <!-- Setter: 해당 ComboBoxItem을 비활성화하고 글자색을 회색으로 변경합니다. -->
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="Foreground" Value="White" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </dx:ThemedWindow.Resources>
+     <!--리소스 정의 끝--> 
+
+     <!--컨트롤 템플릿 적용--><!-- 
+    <ThemedWindow.Template>
+        <StaticResource ResourceKey="CustomTitleBarTemplate"/>
+    </ThemedWindow.Template>-->
+
+    <dx:ThemedWindow.DataContext>
+        <Binding Source="{x:Static local:ViewModel_ScenarioObject_PopUp.SingletonInstance}"/>
+    </dx:ThemedWindow.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!--객체 유형-->
+        <TextBlock Grid.Row="0" Text="객체 유형" Foreground="White" Margin="0,5,0,0"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" IsEnabled="{Binding ObjectTypeComboBoxEnable}" SelectedIndex="{Binding ObjectTypeIndex}">
+            <ComboBoxItem Content="No Statement" Visibility="Collapsed"/>
+            <ComboBoxItem Content="유인헬기 (LAH)" />
+            <ComboBoxItem Content="무인기 (UAV)"/>
+            <ComboBoxItem Content="아/적군 객체"/>
+        </ComboBox>
+
+        <!--왼쪽 유인기-->
+        <Grid Grid.Column="0" Grid.Row="1" Background="{StaticResource MLAH_COLOR_BG_Brush}" Visibility="{Binding HelicopterVisible}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Text="객체 번호" Foreground="White" Visibility="{Binding ObjectNumberVisibility}"/>
+            <!--<TextBlock Grid.Row="1" Text="상태" Foreground="White"/>-->
+            <!--<TextBlock Grid.Row="2" Text="지휘기 여부" Foreground="White"/>-->
+            <TextBlock Grid.Row="1" Text="위도 (°)" Foreground="White"/>
+            <TextBlock Grid.Row="2" Text="경도 (°)" Foreground="White"/>
+            <ToggleButton Grid.Row="3" Style="{StaticResource HudToggleIcon_25}" IsEnabled="True" HorizontalAlignment="Right" IsChecked="{Binding POSSelectChecked}"/>
+            <TextBlock Grid.Row="3" Text="고도 (m)" Foreground="White"/>
+            <!--<TextBlock Grid.Row="6" Text="Roll (°)" Foreground="White"/>
+            <TextBlock Grid.Row="7" Text="Pitch (°)" Foreground="White"/>
+            <TextBlock Grid.Row="8" Text="Yaw (°)" Foreground="White"/>-->
+            <!--<TextBlock Grid.Row="6" Text="속력 - X (m/s)" Foreground="White"/>
+            <TextBlock Grid.Row="7" Text="속력 - Y (m/s)" Foreground="White"/>
+            <TextBlock Grid.Row="8" Text="속력 - Z (m/s)" Foreground="White"/>-->
+            <!--<TextBlock Grid.Row="12" Text="각속도 - Roll (°/s)" Foreground="White"/>
+            <TextBlock Grid.Row="13" Text="각속도 - Pitch (°/s)" Foreground="White"/>
+            <TextBlock Grid.Row="14" Text="각속도 - Yaw (°/s)" Foreground="White"/>-->
+            <TextBlock Grid.Row="4" Text="헤딩 (°)" Foreground="White"/>
+            <TextBlock Grid.Row="5" Text="연료량 (L)" Foreground="White"/>
+            <TextBlock Grid.Row="6" Text="연료소모량 (L / Tick)" Foreground="White"/>
+            <!--<TextBlock Grid.Row="17" Text="선택 무장" Foreground="White"/>-->
+            <TextBlock Grid.Row="7" Text="무장 1 - 미니건" Foreground="White"/>
+            <!--<TextBlock Grid.Row="13" Text="피해량" Foreground="White"/>-->
+            
+            <TextBlock Grid.Row="8" Text="무장 2 - 로켓" Foreground="White"/>
+            
+            <!--<TextBlock Grid.Row="16" Text="피해량" Foreground="White"/>-->
+            <TextBlock Grid.Row="9" Text="무장 3 - 미사일" Foreground="White"/>
+            <TextBlock Grid.Row="10" Text="공격 모드" Foreground="White"/>
+            <!--<TextBlock Grid.Row="18" Text="비정상 원인" Foreground="White"/>-->
+        </Grid>
+
+        <!--오른쪽 유인기-->
+        <Grid Grid.Column="1" Grid.Row="1" Background="{StaticResource MLAH_COLOR_BG_Brush}" Visibility="{Binding HelicopterVisible}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                
+                
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding ObjectNumForEdit}" Visibility="{Binding ObjectNumberVisibility}" HorizontalAlignment="Center"/>
+            <!--<ComboBox Grid.Row="1" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding IsAbnormalIndex}" >
+                <ComboBoxItem Content="No Statement" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>-->
+            <!--<ComboBox Grid.Row="2" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding IsLeaderIndex}" IsEnabled="{Binding IsLeaderEnable}">
+                <ComboBoxItem Content="No Statement" Visibility="Collapsed"/>
+                <ComboBoxItem Content="지휘기"/>
+                <ComboBoxItem Content="편대기"/>
+            </ComboBox>-->
+            <TextBox Grid.Row="1" Text="{Binding ObjectLat, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="2" Text="{Binding ObjectLon, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="3" Text="{Binding ObjectAlt, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <!--<TextBox Grid.Row="6" Text="{Binding ObjectRoll, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="7" Text="{Binding ObjectPitch, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="8" Text="{Binding ObjectYaw, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>-->
+            <!--<TextBox Grid.Row="6" Text="{Binding ObjectSpeedX, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="7" Text="{Binding ObjectSpeedY, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="8" Text="{Binding ObjectSpeedZ, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>-->
+            <!--<TextBox Grid.Row="12" Text="{Binding ObjectVelocityRoll, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="13" Text="{Binding ObjectVelocityPitch, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="14" Text="{Binding ObjectVelocityYaw, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>-->
+            <TextBox Grid.Row="4" Text="{Binding ObjectHeading, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="5" Text="{Binding ObjectFuel, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="6" Text="{Binding ObjectFuelConsumption, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F7}}" Style="{StaticResource NormalTextBox}"/>
+            <!--<ComboBox Grid.Row="17" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding HelicopterWeaponIndex}">
+                <ComboBoxItem Content="No Statement"/>
+                <ComboBoxItem Content="기관포"/>
+                <ComboBoxItem Content="유도탄"/>
+                <ComboBoxItem Content="공대지미사일"/>
+            </ComboBox>-->
+            <TextBox Grid.Row="7" Text="{Binding MiniGunRound, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="8" Text="{Binding RocketRound, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="9" Text="{Binding MissileRound, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <!--<TextBox Grid.Row="17" Text="{Binding RocketRound, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>-->
+            <!--<ComboBox Grid.Row="18" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding AbnormalReasonIndex}" IsEnabled="{Binding AbnormalReasonEnable}">
+                <ComboBoxItem Content="-"/>
+                <ComboBoxItem Content="센서 고장"/>
+                <ComboBoxItem Content="장비 고장"/>
+                <ComboBoxItem Content="피격"/>
+            </ComboBox>-->
+            <ComboBox Grid.Row="10" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding AttackFlagIndex}">
+                <ComboBoxItem Content="No Statement" Visibility="Collapsed"/>
+                <ComboBoxItem Content="수동"/>
+                <ComboBoxItem Content="자동"/>   
+            </ComboBox>
+        </Grid>
+
+        
+
+        <!--왼쪽 무인기-->
+        <Grid Grid.Column="0" Grid.Row="1" Background="{StaticResource MLAH_COLOR_BG_Brush}" Visibility="{Binding DroneVisible}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="객체 번호" Foreground="White" Visibility="{Binding ObjectNumberVisibility}"/>
+            <!--<TextBlock Grid.Row="1" Text="상태" Foreground="White"/>-->
+            <TextBlock Grid.Row="1" Text="위도 (°)" Foreground="White"/>
+            <TextBlock Grid.Row="2" Text="경도 (°)" Foreground="White"/>
+            <ToggleButton Grid.Row="3" Style="{StaticResource HudToggleIcon_25}" IsEnabled="True" HorizontalAlignment="Right" IsChecked="{Binding POSSelectChecked}"/>
+            <TextBlock Grid.Row="3" Text="고도 (m)" Foreground="White"/>
+            <!--<TextBlock Grid.Row="5" Text="Roll (°)" Foreground="White"/>
+            <TextBlock Grid.Row="6" Text="Pitch (°)" Foreground="White"/>
+            <TextBlock Grid.Row="7" Text="Yaw (°)" Foreground="White"/>-->
+            
+            <!--<TextBlock Grid.Row="5" Text="속력 - X (m/s)" Foreground="White"/>
+            <TextBlock Grid.Row="6" Text="속력 - Y (m/s)" Foreground="White"/>
+            <TextBlock Grid.Row="7" Text="속력 - Z (m/s)" Foreground="White"/>-->
+            
+            <!--<TextBlock Grid.Row="11" Text="각속도 - Roll (°/s)" Foreground="White"/>
+            <TextBlock Grid.Row="12" Text="각속도 - Pitch (°/s)" Foreground="White"/>
+            <TextBlock Grid.Row="13" Text="각속도 - Yaw (°/s)" Foreground="White"/>-->
+            <TextBlock Grid.Row="4" Text="헤딩 (°)" Foreground="White"/>
+            <TextBlock Grid.Row="5" Text="연료량 (L)" Foreground="White"/>
+            <TextBlock Grid.Row="6" Text="연료소모량 (L / Tick)" Foreground="White"/>
+            <TextBlock Grid.Row="7" Text="식별 픽셀 설정값" Foreground="White"/>
+            <TextBlock Grid.Row="8" Text="탐지 픽셀 설정값" Foreground="White"/>
+            <!--<TextBlock Grid.Row="8" Text="비정상 원인" Foreground="White"/>-->
+            <!--<TextBlock Grid.Row="12" Text="연동 지휘기 번호" Foreground="White" Visibility="{Binding ObjectNumberVisibility}"/>-->
+            <TextBlock Grid.Row="9" Text="개발용(임시)" Foreground="White"/>
+        </Grid>
+
+        <!--오른쪽 무인기-->
+        <Grid Grid.Column="1" Grid.Row="1" Background="{StaticResource MLAH_COLOR_BG_Brush}" Visibility="{Binding DroneVisible}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+
+
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding ObjectNumForEdit}" Visibility="{Binding ObjectNumberVisibility}" HorizontalAlignment="Center"/>
+            <!--<ComboBox Grid.Row="1" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding IsAbnormalIndex}" >
+                <ComboBoxItem Content="No Statement" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>-->
+            <TextBox Grid.Row="1" Text="{Binding ObjectLat, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="2" Text="{Binding ObjectLon, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="3" Text="{Binding ObjectAlt, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <!--<TextBox Grid.Row="5" Text="{Binding ObjectRoll, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="6" Text="{Binding ObjectPitch, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="7" Text="{Binding ObjectYaw, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>-->
+            
+            <!--<TextBox Grid.Row="5" Text="{Binding ObjectSpeedX, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="6" Text="{Binding ObjectSpeedY, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="7" Text="{Binding ObjectSpeedZ, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>-->
+            
+            <!--<TextBox Grid.Row="11" Text="{Binding ObjectVelocityRoll, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="12" Text="{Binding ObjectVelocityPitch, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="13" Text="{Binding ObjectVelocityYaw, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>-->
+            
+            <TextBox Grid.Row="4" Text="{Binding ObjectHeading, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="5" Text="{Binding ObjectFuel, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" Style="{StaticResource NormalTextBox}" IsEnabled="False"/>
+            <TextBox Grid.Row="6" Text="{Binding ObjectFuelConsumption, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F7}}" Style="{StaticResource NormalTextBox}" IsEnabled="False"/>
+            <TextBox Grid.Row="7" Text="{Binding DetectPixel, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="8" Text="{Binding RecogPixel, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <!--<ComboBox Grid.Row="8" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding AbnormalReasonIndex}" IsEnabled="{Binding AbnormalReasonEnable}">
+                <ComboBoxItem Content="-"/>
+                <ComboBoxItem Content="센서 고장"/>
+                <ComboBoxItem Content="장비 고장"/>
+                <ComboBoxItem Content="피격"/>
+            </ComboBox>-->
+            <!--<TextBlock Grid.Row="12" Text="{Binding DroneLinkNumber, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBlock}" HorizontalAlignment="Center" Visibility="{Binding ObjectNumberVisibility}"/>-->
+            <ComboBox Grid.Row="9" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding UAVTestMode}" IsEnabled="True">
+                <ComboBoxItem Content="VF"/>
+                <ComboBoxItem Content="Non VF"/>
+            </ComboBox>
+        </Grid>
+
+        <!--왼쪽 아/적군 객체-->
+        <Grid Grid.Column="0" Grid.Row="1" Background="{StaticResource MLAH_COLOR_BG_Brush}" Visibility="{Binding TargetVisible}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="객체 번호" Foreground="White" Visibility="{Binding ObjectNumberVisibility}"/>
+            <TextBlock Grid.Row="1" Text="위도 (°)" Foreground="White"/>
+            <TextBlock Grid.Row="2" Text="경도 (°)" Foreground="White"/>
+            <ToggleButton Grid.Row="2" Style="{StaticResource HudToggleIcon_25}" IsEnabled="True" HorizontalAlignment="Right" IsChecked="{Binding POSSelectChecked}"/>
+            <TextBlock Grid.Row="3" Text="고도 (m)" Foreground="White"/>
+            <!--<TextBlock Grid.Row="4" Text="모드" Foreground="White"/>-->
+            <TextBlock Grid.Row="4" Text="식별 정보" Foreground="White"/>
+            <TextBlock Grid.Row="5" Text="유형" Foreground="White"/>
+            <TextBlock Grid.Row="6" Text="기종" Foreground="White"/>
+            
+            <!--<TextBlock Grid.Row="7" Text="무장 정보" Foreground="White"/>-->
+            <TextBlock Grid.Row="8" Text="탐지거리 (m)" Foreground="White"/>
+            <TextBlock Grid.Row="9" Text="사정거리 (m)" Foreground="White"/>
+            <TextBlock Grid.Row="10" Text="명중률 (%)" Foreground="White"/>
+            <TextBlock Grid.Row="11" Text="공격 주기 (초)" Foreground="White"/>
+            <TextBlock Grid.Row="12" Text="피해량" Foreground="White"/>
+            <!--<TextBlock Grid.Row="8" Text="적군 유형" Foreground="White"/>
+            <TextBlock Grid.Row="9" Text="적군 분류" Foreground="White"/>-->
+            
+
+
+        </Grid>
+
+        <!--오른쪽 표적-->
+        <Grid Grid.Column="1" Grid.Row="1" Background="{StaticResource MLAH_COLOR_BG_Brush}" Visibility="{Binding TargetVisible}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+                <RowDefinition Height="27"/>
+
+
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding ObjectNumForEdit}" Visibility="{Binding ObjectNumberVisibility}" HorizontalAlignment="Center"/>
+
+            <TextBox Grid.Row="1" Text="{Binding ObjectLat, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="2" Text="{Binding ObjectLon, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="3" Text="{Binding ObjectAlt, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}" />
+            <!--<ToggleButton  Grid.Column="6" Style="{StaticResource styleCTSLSelectToggleButton}" IsChecked="{Binding ViewModel_ASWHMI_TC_APOS_INFO.bIsTargetRelativeSeamapCoordinateRequired}" IsEnabled="{Binding bIsCalc}"/>-->
+            <!--<ComboBox Grid.Row="4" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding ObjectModeIndex}">
+                <ComboBoxItem Content="No Statement" Visibility="Collapsed"/>
+                <ComboBoxItem Content="고정"/>
+                <ComboBoxItem Content="이동"/>
+            </ComboBox>-->
+
+            <ComboBox Grid.Row="4" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding ObjectTargetIdentifyIndex}">
+                <ComboBoxItem Content="No Statement" Visibility="Collapsed"/>
+                <ComboBoxItem Content="아군"/>
+                <ComboBoxItem Content="적군"/>
+            </ComboBox>
+
+            <ComboBox Grid.Row="5" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding ObjectTargetTypeIndex}" ItemsSource="{Binding ObjectTargetTypeComboboxItems}" ItemContainerStyle="{StaticResource SelectableComboBoxItemStyle}" IsEnabled="{Binding ObjectTargetTypeEnable}">
+            </ComboBox>
+
+            <ComboBox Grid.Row="6" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding ObjectTargetPlatfformIndex}" ItemsSource="{Binding ObjectTargetPlatformComboboxItems}" ItemContainerStyle="{StaticResource SelectableComboBoxItemStyle}" IsEnabled="{Binding ObjectTargetPlatformEnable}">
+            </ComboBox>
+
+            <!--<TextBox Grid.Row="4" Text="{Binding ObjectAlt, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="5" Text="{Binding ObjectAlt, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>-->
+
+            <TextBox Grid.Row="8" Text="{Binding DetectRange, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="9" Text="{Binding AttackRange, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="10" Text="{Binding AttackAccuracy, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="11" Text="{Binding AttackDelay, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}" />
+            <TextBox Grid.Row="12" Text="{Binding AttackDamage, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}" />
+
+        </Grid>
+
+        <GroupBox Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="White" Header="무장 정보" Margin="0,190,0,0" Visibility="{Binding TargetVisible}"/>
+
+        <Button Grid.Column="0" Grid.Row="2" Content="{Binding ConfirmButtonText}" Style="{StaticResource NormalButtonStyle}" Margin="5,0,3,0" Height="25">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseDown">
+                    <i:InvokeCommandAction Command="{Binding ConfirmCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <Button Grid.Column="1" Grid.Row="2" Content="취소" Style="{StaticResource NormalButtonStyle}" Height="25" Margin="3,0,5,0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseDown">
+                    <i:InvokeCommandAction Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+    </Grid>
+
+
+
+</dx:ThemedWindow>
+
+

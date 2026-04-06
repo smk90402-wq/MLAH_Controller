@@ -1,0 +1,306 @@
+﻿<UserControl x:Class="MLAH_LogAnalyzer.View_Unit_Map_Communication"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MLAH_LogAnalyzer"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel_Unit_Map_Communication, IsDesignTimeCreatable=True}"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
+        xmlns:core="clr-namespace:Microsoft.Xaml.Behaviors.Core;assembly=Microsoft.Xaml.Behaviors"
+        Background="{StaticResource MLAH_COLOR_BG_Brush}" Loaded="UserControl_Loaded"
+        PreviewKeyDown="UserControl_PreviewKeyDown">
+    <!--<UserControl.DataContext>
+        <Binding Source="{x:Static local:ViewModel_Unit_Map.SingletonInstance}"/>
+    </UserControl.DataContext>-->
+    <UserControl.Resources>
+        <DataTemplate x:Key="ElementTemplate" DataType="{x:Type local:UnitMapObjectInfo}">
+            <Grid>
+                <Border MouseEnter="Element_MouseEnter" MouseLeave="Element_MouseLeave" CacheMode="BitmapCache">
+                <Image Source="{Binding imagesource}" Width="40" Height="40" MouseLeftButtonDown="Element_MouseLeftButtonDown">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform CenterX="20" CenterY="20">
+                                <RotateTransform.Angle>
+                                    <MultiBinding Converter="{StaticResource ConditionalRotationConverter }">
+                                        <Binding Path="Heading" />
+                                        <Binding Path="Type" />
+                                    </MultiBinding>
+                                </RotateTransform.Angle>
+                            </RotateTransform>
+                            <TranslateTransform X="-20" Y="-20" />
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Border>
+                <TextBlock Text="{Binding ID}"
+                       Foreground="Black"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"
+                       Margin="0,0,0,20"  
+                       Visibility="Visible"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RTBSymbolTemplate">
+            <Image Width="30" Height="30" Source="{StaticResource RTB}" />
+        </DataTemplate>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+
+    </UserControl.Resources>
+
+    
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        
+        <Grid Grid.ColumnSpan="2">
+            <dxm:MapControl x:Name="mapControl" CenterPoint="{Binding CenterPoint, Mode=OneWay}" FlowDirection="LeftToRight" IsManipulationEnabled="True" EnableRotation="False"
+                            MaxZoomLevel="15" MinZoomLevel="8"
+                            MouseDown="MapControl_MouseButtonDown"
+                            MouseMove="MapControl_MouseMove"
+                            RenderOptions.BitmapScalingMode="LowQuality"
+
+                            SizeChanged="mapControl_SizeChanged"
+                            ZoomLevel="{Binding CurrentZoomLevel, Mode=TwoWay}"
+                            UseSprings="False"
+                            >
+                <dxm:MapControl.Measurements>
+                    <dxm:Measurements DistanceUnits="{x:Static dxm:MeasureUnit.Meter}" AreaUnits="{x:Static dxm:AreaMeasurementUnit.SquareMeter}">
+                        <dxm:Measurements.ToolbarOptions>
+                            <dxm:MeasurementToolbarOptions Visible="True" VerticalAlignment="Bottom"/>
+                        </dxm:Measurements.ToolbarOptions>
+                    </dxm:Measurements>
+                </dxm:MapControl.Measurements>
+                <dxm:MapControl.Layers>
+                    <dxm:ImageLayer>
+
+                        <dxm:ImageTileDataProvider>
+                            <dxm:ImageTileDataProvider.TileSource>
+                                <local:LocalTileSource/>
+                            </dxm:ImageTileDataProvider.TileSource>
+                        </dxm:ImageTileDataProvider>
+                    </dxm:ImageLayer>
+
+
+              
+
+                    
+
+               
+
+           
+
+                    <dxm:VectorLayer x:Name="INITMissionPolygonLayer" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding INITMissionPolygonList}">
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapPolygonSettings Fill="Blue" Stroke="Black" IsHitTestVisible="False" />
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <!--<dxm:MapMultipointItemMappingInfo Points="Points"/>-->
+                                <dxm:MapMultipointItemMappingInfo Points="Coordinates"/>
+                            </dxm:ListSourceDataAdapter.Mappings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:VectorLayer>
+
+                
+
+                    <dxm:VectorLayer x:Name="INITMissionLineLayer" ShapeFill="CadetBlue" ShapeStroke="White" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False" AllowEditItems="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding INITMissionLineList}">
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapPolylineSettings  Stroke="CadetBlue" IsHitTestVisible="False">
+                                    <!--<dxm:MapPolylineSettings.StrokeStyle>
+                                        <dxm:StrokeStyle 
+                                            Thickness="3"        
+                                            DashArray="4 2"
+                                            DashCap="Round"
+                                            StartLineCap="Round"
+                                            EndLineCap="Round"
+                                            LineJoin="Bevel"/>
+                                    </dxm:MapPolylineSettings.StrokeStyle>-->
+                                </dxm:MapPolylineSettings>
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <!--<dxm:MapMultipointItemMappingInfo Points="Points" />-->
+                                <dxm:MapLineMappingInfo Point1="Point1" Point2="Point2"/>
+                            </dxm:ListSourceDataAdapter.Mappings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:VectorLayer>
+
+                    <dxm:VectorLayer x:Name="INITMissionLinePolygonLayer" ShapeFill="Blue" ShapeStroke="White" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding INITMissionLinePolygonList}">
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapPolygonSettings Stroke="Blue" IsHitTestVisible="False">
+                                    <!--<dxm:MapLineSettings.StrokeStyle>
+                                        <dxm:StrokeStyle 
+                                            Thickness="3"        
+                                            DashArray="4 2"
+                                            DashCap="Round"
+                                            StartLineCap="Round"
+                                            EndLineCap="Round"
+                                            LineJoin="Bevel"/>
+                                    </dxm:MapLineSettings.StrokeStyle>-->
+                                </dxm:MapPolygonSettings>
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <!--<dxm:MapMultipointItemMappingInfo Points="Points" />-->
+                                <dxm:MapMultipointItemMappingInfo Points="Coordinates"/>
+                            </dxm:ListSourceDataAdapter.Mappings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:VectorLayer>
+
+
+                    <dxm:VectorLayer x:Name="INITMissionPointLayer"
+                 EnableSelection="False"
+                 EnableHighlighting="True"
+                 ToolTipEnabled="False">
+                        <dxm:VectorLayer.Data>
+                            <dxm:ListSourceDataAdapter DataSource="{Binding INITMissionPointList}">
+                                <dxm:ListSourceDataAdapter.Mappings>
+                                    <dxm:MapItemMappingInfo Latitude="Latitude" Longitude="Longitude"/>
+                                </dxm:ListSourceDataAdapter.Mappings>
+                                <dxm:ListSourceDataAdapter.ItemSettings>
+                                    <dxm:MapCustomElementSettings>
+                                        <dxm:MapCustomElementSettings.ContentTemplate>
+                                            <DataTemplate>
+                                                <Canvas Width="0" Height="0">
+                                                    <!-- 점 중심을 맞추기 위해 -6, -6 -->
+                                                    <Ellipse Width="12" Height="12"
+                                         Fill="Blue"
+                                         Stroke="White"
+                                         StrokeThickness="1"
+                                         Canvas.Left="-6"
+                                         Canvas.Top="-6"/>
+
+                                                    <!-- 텍스트는 점 아래에 8px 내려서 출력 -->
+                                                    <TextBlock Text="{Binding TagString}"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           Foreground="Black"
+                                           Width="60"
+                                           TextAlignment="Center"
+                                           Canvas.Left="-30"
+                                           Canvas.Top="8"
+                                           TextTrimming="CharacterEllipsis"
+                                           TextWrapping="Wrap"/>
+                                                </Canvas>
+                                            </DataTemplate>
+                                        </dxm:MapCustomElementSettings.ContentTemplate>
+                                    </dxm:MapCustomElementSettings>
+                                </dxm:ListSourceDataAdapter.ItemSettings>
+                            </dxm:ListSourceDataAdapter>
+                        </dxm:VectorLayer.Data>
+                    </dxm:VectorLayer>
+
+
+                    <dxm:VectorLayer x:Name="ObjectDisplayLayer" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding ObjectDisplayList}">
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapCustomElementSettings 
+                      ContentTemplate="{StaticResource ElementTemplate}" />
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <dxm:MapItemMappingInfo Latitude="Location.Latitude" Longitude="Location.Longitude" />
+                            </dxm:ListSourceDataAdapter.Mappings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:VectorLayer>
+
+                    
+
+                    <dxm:VectorLayer x:Name="EvaluationTrackLayer" 
+                         EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding EvaluationTracks}">
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapPolylineSettings IsHitTestVisible="False" />
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <!--<dxm:MapMultipointItemMappingInfo Points="Points" />-->
+                                <dxm:MapLineMappingInfo Point1="Point1" Point2="Point2"/>
+                            </dxm:ListSourceDataAdapter.Mappings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:VectorLayer>
+
+                    <dxm:VectorLayer x:Name="EvaluationUavPositionLayer"
+                         EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding EvaluationUavPositions}">
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapCustomElementSettings ContentTemplate="{StaticResource ElementTemplate}" />
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <dxm:MapItemMappingInfo Latitude="Location.Latitude" Longitude="Location.Longitude" />
+                            </dxm:ListSourceDataAdapter.Mappings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:VectorLayer>
+
+
+                    <dxm:VectorLayer x:Name="EvaluationCommFalseLayer"
+                         ToolTipEnabled="False" EnableSelection="False" EnableHighlighting="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding EvaluationLosFalseTracks}">
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapPolylineSettings Stroke="Red">
+                                    <dxm:MapPolylineSettings.StrokeStyle>
+                                        <dxm:StrokeStyle Thickness="3" />
+                                    </dxm:MapPolylineSettings.StrokeStyle>
+                                </dxm:MapPolylineSettings>
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <dxm:MapLineMappingInfo Point1="Point1" Point2="Point2"/>
+                            </dxm:ListSourceDataAdapter.Mappings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:VectorLayer>
+
+                </dxm:MapControl.Layers>
+                <dxm:MapControl.CoordinatesPanelOptions>
+                    <dxm:CoordinatesPanelOptions Visible="False"/>
+                </dxm:MapControl.CoordinatesPanelOptions>
+                <dxm:MapControl.ScalePanelOptions>
+                    <dxm:ScalePanelOptions ShowMilesScale="False"/>
+                </dxm:MapControl.ScalePanelOptions>
+                <dxm:MapControl.ScrollButtonsOptions>
+                    <dxm:ScrollButtonsOptions Visible="False"/>
+                </dxm:MapControl.ScrollButtonsOptions>
+                <dxm:MapControl.ZoomTrackbarOptions>
+                    <dxm:ZoomTrackbarOptions HorizontalAlignment="Right"/>
+                </dxm:MapControl.ZoomTrackbarOptions>
+
+                
+            </dxm:MapControl>
+
+     
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="70"/>
+                <!--<ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="60"/>-->
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="1" Text="위도 : " Foreground="White" Background="{StaticResource DefaultBg_Brush}" Height="20"/>
+            <TextBlock Grid.Column="2" x:Name="MapLat" Text="{Binding MapCursorLat, StringFormat=F5}"  Background="{StaticResource DefaultBg_Brush}" Height="20" Style="{StaticResource NormalTextBlock}"/>
+            <TextBlock Grid.Column="3" Text="경도 : " Foreground="White" Background="{StaticResource DefaultBg_Brush}" Height="20"/>
+            <TextBlock Grid.Column="4" x:Name="MapLon" Text="{Binding MapCursorLon, StringFormat=F5}"  Background="{StaticResource DefaultBg_Brush}" Height="20" Style="{StaticResource NormalTextBlock}"/>
+            <!--<TextBlock Grid.Column="5" Text="고도 : " Foreground="White" Background="{StaticResource DefaultBg_Brush}" Height="20"/>
+            <TextBlock Grid.Column="6" x:Name="MapAlt" Text="TBD"  Background="{StaticResource DefaultBg_Brush}" Height="20" Style="{StaticResource NormalTextBlock}"/>-->
+        </Grid>
+
+    </Grid>
+    
+
+
+</UserControl>

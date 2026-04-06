@@ -1,0 +1,16 @@
+{
+  "PathID": "0S001001002",
+  "AircraftID": 1,
+  "WaypointList": [
+    {
+      "WaypointID": 9,
+      "Coordinate": {
+        "Latitude": 38.077882,
+        "Longitude": 128.196939,
+        "Altitude": 400.0
+      },
+      "NextWaypointID": 10,
+      "Hovering":  300
+    }
+  ]
+}

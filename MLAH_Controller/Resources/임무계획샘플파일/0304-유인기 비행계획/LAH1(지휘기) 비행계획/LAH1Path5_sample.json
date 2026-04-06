@@ -1,0 +1,70 @@
+{
+  "PathID": "0S001001004",
+  "AircraftID": 1,
+  "WaypointList": [
+    {
+      "WaypointID": 14,
+      "Coordinate": {
+        "Latitude": 38.07234968981542,
+        "Longitude": 128.1938861785841,
+        "Altitude": 400.0
+      },
+      "Speed": 75,
+      "ETA": 0.0,
+      "ECF": 0.0,
+      "NextWaypointID": 15,
+      "Loiter": {
+      },
+      "Attack": {
+      }
+    },
+    {
+      "WaypointID": 15,
+      "Coordinate": {
+        "Latitude": 38.07090210,
+        "Longitude": 128.18794429,
+        "Altitude": 400.0
+      },
+      "Speed": 75,
+      "ETA": 8.9,
+      "ECF": 0.89,
+      "NextWaypointID": 16,
+      "Loiter": {
+      },
+      "Attack": {
+      }
+    },
+    {
+      "WaypointID": 16,
+      "Coordinate": {
+        "Latitude": 38.06945452,
+        "Longitude": 128.18200240,
+        "Altitude": 400.0
+      },
+      "Speed": 75,
+      "ETA": 17.8,
+      "ECF": 1.78,
+      "NextWaypointID": 17,
+      "Loiter": {
+      },
+      "Attack": {
+      }
+    },
+    {
+      "WaypointID": 17,
+      "Coordinate": {
+        "Latitude": 38.06800693128547,
+        "Longitude": 128.1760605167159,
+        "Altitude": 400.0
+      },
+      "Speed": 75.0,
+      "ETA": 26.7,
+      "ECF": 2.67,
+      "NextWaypointID": 0,
+      "Loiter": {
+      },
+      "Attack": {
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLAH_Controller", "MLAH_Controller\MLAH_Controller.csproj", "{BBBDEE83-94AC-4796-B8A2-51F567BFF830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLAH_Mornitoring", "MLAH_Mornitoring\MLAH_Mornitoring.csproj", "{F5690CEC-586A-474F-A6A2-E5294FFCD64F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLAH_Mornitoring_UDP", "MLAH_Mornitoring_UDP\MLAH_Mornitoring_UDP.csproj", "{DE75C4CD-4C9F-40F1-AAC9-62E7C4B39B15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLAH_LogAnalyzer", "MLAH_LogAnalyzer\MLAH_LogAnalyzer.csproj", "{FC4FC531-099C-4327-AB88-7C374641B88E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLAH_Proto", "MLAH_Proto\MLAH_Proto.csproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBBDEE83-94AC-4796-B8A2-51F567BFF830}.Debug|x64.ActiveCfg = Debug|x64
+		{BBBDEE83-94AC-4796-B8A2-51F567BFF830}.Debug|x64.Build.0 = Debug|x64
+		{BBBDEE83-94AC-4796-B8A2-51F567BFF830}.Release|x64.ActiveCfg = Release|x64
+		{BBBDEE83-94AC-4796-B8A2-51F567BFF830}.Release|x64.Build.0 = Release|x64
+		{F5690CEC-586A-474F-A6A2-E5294FFCD64F}.Debug|x64.ActiveCfg = Debug|x64
+		{F5690CEC-586A-474F-A6A2-E5294FFCD64F}.Debug|x64.Build.0 = Debug|x64
+		{F5690CEC-586A-474F-A6A2-E5294FFCD64F}.Release|x64.ActiveCfg = Release|x64
+		{F5690CEC-586A-474F-A6A2-E5294FFCD64F}.Release|x64.Build.0 = Release|x64
+		{DE75C4CD-4C9F-40F1-AAC9-62E7C4B39B15}.Debug|x64.ActiveCfg = Debug|x64
+		{DE75C4CD-4C9F-40F1-AAC9-62E7C4B39B15}.Debug|x64.Build.0 = Debug|x64
+		{DE75C4CD-4C9F-40F1-AAC9-62E7C4B39B15}.Release|x64.ActiveCfg = Release|x64
+		{DE75C4CD-4C9F-40F1-AAC9-62E7C4B39B15}.Release|x64.Build.0 = Release|x64
+		{FC4FC531-099C-4327-AB88-7C374641B88E}.Debug|x64.ActiveCfg = Debug|x64
+		{FC4FC531-099C-4327-AB88-7C374641B88E}.Debug|x64.Build.0 = Debug|x64
+		{FC4FC531-099C-4327-AB88-7C374641B88E}.Release|x64.ActiveCfg = Release|x64
+		{FC4FC531-099C-4327-AB88-7C374641B88E}.Release|x64.Build.0 = Release|x64
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|x64.ActiveCfg = Debug|x64
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|x64.Build.0 = Debug|x64
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|x64.ActiveCfg = Release|x64
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0DE30D22-F798-4BFD-AB90-C5420732DFB1}
+	EndGlobalSection
+EndGlobal

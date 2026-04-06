@@ -1,0 +1,108 @@
+﻿<dx:ThemedWindow x:Class="MLAH_LogAnalyzer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MLAH_LogAnalyzer"
+        mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        dx:ThemeManager.ThemeName="VS2019Dark" WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="Grayscale"
+        Title="LAH MUMT 로그 분석기" Height="1300" Width="2300">
+
+    <Grid Background="{StaticResource MLAH_COLOR_BG_Brush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!--<TabControl Grid.Row="0" Style="{StaticResource NormalVerticalTabControl}">
+
+            <TabItem Header="메시지분석" Style="{StaticResource VerticalNormalTabItem}" IsSelected="True">
+                <local:View_Message_Analyze/>
+            </TabItem>
+
+            <TabItem Header="유용성평가" Style="{StaticResource VerticalNormalTabItem}">
+                <local:View_ScoreMain/>
+            </TabItem>
+
+            <TabItem Header="성능분석" Style="{StaticResource VerticalNormalTabItem}">
+                <local:View_Performance_Analyze/>
+            </TabItem>
+
+            <TabItem Header="분석 데이터 생성" Style="{StaticResource VerticalNormalTabItem}">
+                <local:View_Precompile/>
+            </TabItem>
+
+        </TabControl>-->
+
+        <!--<dx:DXTabControl Grid.Row="0" TabContentCacheMode="CacheAllTabs">
+
+            <dx:DXTabItem Header="메시지분석" IsSelected="True">
+                <local:View_Message_Analyze/>
+            </dx:DXTabItem>
+
+            <dx:DXTabItem Header="유용성평가">
+                <local:View_ScoreMain/>
+            </dx:DXTabItem>
+
+            <dx:DXTabItem Header="성능분석">
+                <local:View_Performance_Analyze/>
+            </dx:DXTabItem>
+
+            <dx:DXTabItem Header="분석 데이터 생성">
+                <local:View_Precompile/>
+            </dx:DXTabItem>
+
+        </dx:DXTabControl>-->
+
+        <dx:DXTabControl Grid.Row="0" TabContentCacheMode="CacheAllTabs">
+
+            <dx:DXTabControl.View>
+                <dx:TabControlScrollView 
+            HeaderLocation="Left" 
+            HeaderOrientation="Horizontal" 
+            />
+            </dx:DXTabControl.View>
+
+            <!--HideButtonShowMode="InAllTabsAndHeader"-->
+
+            <dx:DXTabControl.ItemHeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" 
+                       Width="13" 
+                       TextWrapping="Wrap" 
+                       TextAlignment="Center" 
+                       LineHeight="20"
+                               Height="150"
+                               FontWeight="Bold"
+                       FontSize="13"/>
+                </DataTemplate>
+            </dx:DXTabControl.ItemHeaderTemplate>
+
+            <dx:DXTabItem Header="메시지분석" IsSelected="True">
+                <local:View_Message_Analyze/>
+            </dx:DXTabItem>
+
+            <dx:DXTabItem Header="유용성평가">
+                <local:View_ScoreMain/>
+            </dx:DXTabItem>
+
+            <dx:DXTabItem Header="성능분석">
+                <local:View_Performance_Analyze/>
+            </dx:DXTabItem>
+
+            <dx:DXTabItem Header="분석데이터생성">
+                <local:View_Precompile/>
+            </dx:DXTabItem>
+
+        </dx:DXTabControl>
+
+        <Button Grid.Row="1" Width="60" Height="25" Content="닫기" Style="{StaticResource NormalButtonStyle}" HorizontalAlignment="Right" Margin="0,0,10,0" PreviewMouseDown="Button_PreviewMouseDown"/>
+
+    </Grid>
+</dx:ThemedWindow>

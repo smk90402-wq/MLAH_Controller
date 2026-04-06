@@ -1,0 +1,165 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>False</UseWindowsForms>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <ApplicationIcon>Helicopter_Black.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\1Play.png" />
+    <None Remove="Resources\Images\1Tank.png" />
+    <None Remove="Resources\Images\AddScenario - 복사본 %282%29.png" />
+    <None Remove="Resources\Images\AddScenario - 복사본.png" />
+    <None Remove="Resources\Images\AddScenario.png" />
+    <None Remove="Resources\Images\Cargo_Helicopter - 복사본.png" />
+    <None Remove="Resources\Images\Cargo_Helicopter.png" />
+    <None Remove="Resources\Images\Cargo_Helicopter1.png" />
+    <None Remove="Resources\Images\File_Open.png" />
+    <None Remove="Resources\Images\hatch.png" />
+    <None Remove="Resources\Images\Helicopter.png" />
+    <None Remove="Resources\Images\Helicopter_Abnormal.png" />
+    <None Remove="Resources\Images\Helicopter_Leader.png" />
+    <None Remove="Resources\Images\Hostile.png" />
+    <None Remove="Resources\Images\Hostile_AAG.png" />
+    <None Remove="Resources\Images\Hostile_Panzer.png" />
+    <None Remove="Resources\Images\Hostile_Tank.png" />
+    <None Remove="Resources\Images\KUH.png" />
+    <None Remove="Resources\Images\LAH.png" />
+    <None Remove="Resources\Images\LAH_BLUE.png" />
+    <None Remove="Resources\Images\LAH_RED.png" />
+    <None Remove="Resources\Images\M2010.png" />
+    <None Remove="Resources\Images\MainImage.png" />
+    <None Remove="Resources\Images\Neutral.png" />
+    <None Remove="Resources\Images\OpenScenario - 복사본.png" />
+    <None Remove="Resources\Images\OpenScenario.png" />
+    <None Remove="Resources\Images\Pause.png" />
+    <None Remove="Resources\Images\Play - 복사본 %282%29.png" />
+    <None Remove="Resources\Images\Play - 복사본.png" />
+    <None Remove="Resources\Images\Play.png" />
+    <None Remove="Resources\Images\POS_CLICK.png" />
+    <None Remove="Resources\Images\POS_NORMAL.png" />
+    <None Remove="Resources\Images\RTB.png" />
+    <None Remove="Resources\Images\SaveScenario - 복사본.png" />
+    <None Remove="Resources\Images\SaveScenario.png" />
+    <None Remove="Resources\Images\SHGPUCA-.png-nggid03236-ngg0dyn-152x152x100-00f0w010c011r110f110r010t010.png" />
+    <None Remove="Resources\Images\Stop.png" />
+    <None Remove="Resources\Images\Tank - 복사본.png" />
+    <None Remove="Resources\Images\Tank.png" />
+    <None Remove="Resources\Images\Test_UAV.png" />
+    <None Remove="Resources\Images\Test_UAV2.png" />
+    <None Remove="Resources\Images\UAV.png" />
+    <None Remove="Resources\Images\UAV_Abnormal.png" />
+    <None Remove="Resources\Images\UAV_Selected.png" />
+    <None Remove="Resources\Images\UAV_TopView.png" />
+    <None Remove="Resources\Images\UAV_TopView_Blue.png" />
+    <None Remove="Resources\Images\UAV_TopView_Red.png" />
+    <None Remove="Resources\Images\ZPU-4.png" />
+    <None Remove="유용성평가\View_ScoreCoverage.xaml.bak" />
+    <None Remove="유용성평가\View_ScoreCoverage.xaml.cs.bak" />
+    <None Remove="유용성평가\View_ScoreMain.xaml.cs.bak" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Helicopter_Black.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BitMiracle.LibTiff.NET" Version="2.4.660" />
+    <PackageReference Include="DevExpress.Charts" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Charts.Core" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Data.Desktop" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Images" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Mvvm" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Accordion" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Charts" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Core" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Core.Extensions" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Docking" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Gantt" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Grid" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.LayoutControl" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Ribbon" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Themes.VS2019Dark" Version="25.1.3" />
+    <PackageReference Include="Microsoft-Windows10-APICodePack-Core" Version="1.1.8" />
+    <PackageReference Include="Microsoft-Windows10-APICodePack-Shell" Version="1.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="NetTopologySuite" Version="2.6.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <!--<ItemGroup>
+    <Reference Include="DevExpress.ExpressApp.v25.1">
+      <HintPath>..\..\..\..\..\..\Program Files\DevExpress 25.1\Components\Offline Packages\devexpress.expressapp\25.1.3\lib\net8.0\DevExpress.ExpressApp.v25.1.dll</HintPath>
+    </Reference>
+  </ItemGroup>-->
+
+  <ItemGroup>
+    <PackageReference Include="DevExpress.ExpressApp" Version="25.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\1Play.png" />
+    <Resource Include="Resources\Images\1Tank.png" />
+    <Resource Include="Resources\Images\AddScenario - 복사본 (2).png" />
+    <Resource Include="Resources\Images\AddScenario - 복사본.png" />
+    <Resource Include="Resources\Images\AddScenario.png" />
+    <Resource Include="Resources\Images\Cargo_Helicopter - 복사본.png" />
+    <Resource Include="Resources\Images\Cargo_Helicopter.png" />
+    <Resource Include="Resources\Images\Cargo_Helicopter1.png" />
+    <Resource Include="Resources\Images\File_Open.png" />
+    <Resource Include="Resources\Images\hatch.png" />
+    <Resource Include="Resources\Images\Helicopter.png" />
+    <Resource Include="Resources\Images\Helicopter_Abnormal.png" />
+    <Resource Include="Resources\Images\Helicopter_Leader.png" />
+    <Resource Include="Resources\Images\Hostile.png" />
+    <Resource Include="Resources\Images\Hostile_AAG.png" />
+    <Resource Include="Resources\Images\Hostile_Panzer.png" />
+    <Resource Include="Resources\Images\Hostile_Tank.png" />
+    <Resource Include="Resources\Images\KUH.png" />
+    <Resource Include="Resources\Images\LAH.png" />
+    <Resource Include="Resources\Images\LAH_BLUE.png" />
+    <Resource Include="Resources\Images\LAH_RED.png" />
+    <Resource Include="Resources\Images\M2010.png" />
+    <Resource Include="Resources\Images\MainImage.png" />
+    <Resource Include="Resources\Images\Neutral.png" />
+    <Resource Include="Resources\Images\OpenScenario - 복사본.png" />
+    <Resource Include="Resources\Images\OpenScenario.png" />
+    <Resource Include="Resources\Images\Pause.png" />
+    <Resource Include="Resources\Images\Play - 복사본 (2).png" />
+    <Resource Include="Resources\Images\Play - 복사본.png" />
+    <Resource Include="Resources\Images\Play.png" />
+    <Resource Include="Resources\Images\POS_CLICK.png" />
+    <Resource Include="Resources\Images\POS_NORMAL.png" />
+    <Resource Include="Resources\Images\RTB.png" />
+    <Resource Include="Resources\Images\SaveScenario - 복사본.png" />
+    <Resource Include="Resources\Images\SaveScenario.png" />
+    <Resource Include="Resources\Images\SHGPUCA-.png-nggid03236-ngg0dyn-152x152x100-00f0w010c011r110f110r010t010.png" />
+    <Resource Include="Resources\Images\Stop.png" />
+    <Resource Include="Resources\Images\Tank - 복사본.png" />
+    <Resource Include="Resources\Images\Tank.png" />
+    <Resource Include="Resources\Images\Test_UAV.png" />
+    <Resource Include="Resources\Images\Test_UAV2.png" />
+    <Resource Include="Resources\Images\UAV.png" />
+    <Resource Include="Resources\Images\UAV_Abnormal.png" />
+    <Resource Include="Resources\Images\UAV_Selected.png" />
+    <Resource Include="Resources\Images\UAV_TopView.png" />
+    <Resource Include="Resources\Images\UAV_TopView_Blue.png" />
+    <Resource Include="Resources\Images\UAV_TopView_Red.png" />
+    <Resource Include="Resources\Images\ZPU-4.png" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="REM --- 단일 파일 복사 (Xcopy) ---&#xD;&#xA;REM 파일을 출력 폴더로 복사합니다.&#xD;&#xA;xcopy /y &quot;$(ProjectDir)Resources\srtm_62_05.tif&quot; &quot;$(TargetDir)\&quot;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;REM --- 불필요한 언어 리소스 폴더 삭제 ---&#xD;&#xA;REM 'ko' 폴더를 제외한 모든 언어 리소스 폴더(*.resources.dll을 포함하는)를 삭제합니다.&#xD;&#xA;if exist &quot;$(TargetDir)&quot; (&#xD;&#xA;    pushd &quot;$(TargetDir)&quot;&#xD;&#xA;    for /d %25%25i in (*) do (&#xD;&#xA;        if exist &quot;%25%25i\*.resources.dll&quot; (&#xD;&#xA;            if /I not &quot;%25%25i&quot;==&quot;ko&quot; (&#xD;&#xA;                rmdir /s /q &quot;%25%25i&quot;&#xD;&#xA;            )&#xD;&#xA;        )&#xD;&#xA;    )&#xD;&#xA;    popd&#xD;&#xA;)" />
+  </Target>
+
+</Project>

@@ -1,0 +1,56 @@
+﻿<dx:ThemedWindow x:Class="MLAH_Controller.View_AlertPopUp"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+      mc:Ignorable="d" 
+      Height="150" Width="200"
+      WindowStyle="None" 
+      IsHitTestVisible="True"
+      MouseDown="ViewModel_DialogBase_MouseDown" 
+        dx:ThemeManager.ThemeName="VS2019Dark"
+                 Top="300" Left="1600"
+      ResizeMode="NoResize" WindowStartupLocation="Manual" Topmost="True" IsVisibleChanged="Window_IsVisibleChanged">
+    
+    <dx:ThemedWindow.Background>
+        <StaticResource ResourceKey="DefaultBg_Brush"/>
+    </dx:ThemedWindow.Background>
+
+    <dx:ThemedWindow.HeaderContent>
+        <Border x:Name="FlashHeaderBorder" Background="DarkRed">
+            <TextBlock Text="경보" Foreground="White" FontWeight="Bold" Padding="5,2"/>
+        </Border>
+    </dx:ThemedWindow.HeaderContent>
+
+    <dx:ThemedWindow.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <ColorAnimation Storyboard.TargetName="FlashHeaderBorder"
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                    From="Red" To="DarkRed" Duration="0:0:0.7"
+                                    AutoReverse="True" RepeatBehavior="Forever" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </dx:ThemedWindow.Triggers>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="30"/>
+            <!--<RowDefinition Height="30"/>-->
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <!--<Border Grid.RowSpan="5" BorderBrush="Gray" BorderThickness="1">
+
+        </Border>-->
+        <TextBlock Name="Description" Grid.Row="1" TextAlignment="Center" FontSize="12" x:FieldModifier="public" Foreground="White"/>
+        <!--<TextBlock Name="Reason" Grid.Row="2" Foreground="Yellow" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" x:FieldModifier="public" />-->
+        <Button x:Name="ConfirmButton" Grid.Row="2" Width="150"  Click="ConfirmEvent" Style="{StaticResource NormalButtonStyle}"/>
+        <!--<TextBlock Name="CountDownText" Grid.Row="5" Foreground="{StaticResource KISS_COLOR_WHITE_Brush}" TextAlignment="Center" VerticalAlignment="Center" FontSize="12"/>-->
+
+    </Grid>
+</dx:ThemedWindow>

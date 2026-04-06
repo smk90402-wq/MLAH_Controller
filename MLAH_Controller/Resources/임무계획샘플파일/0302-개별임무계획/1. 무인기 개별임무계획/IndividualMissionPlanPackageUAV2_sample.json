@@ -1,0 +1,266 @@
+{
+  "IndividualMissionPackageID": "0S001223356",
+  "AircraftID": 2,
+  "IndividualMissionList": [
+    {
+      "IndividualMissionID": "Mission1-UAV2",
+      "IsDone": 0,
+      "RelatedMission": [
+        {
+          "RelativeMissionType": 1,
+          "InputMissionID": "ACP#1_Line",
+          "PriorMissionID": null
+        }
+      ],
+      "IndividualMissionInfo": [
+        {
+          "IndividualMissionType": 2,
+          "PatternType": 2,
+          "AutoZoomIn": true,
+          "CoordinateList": [],
+          "LineList": [
+            {
+              "Width": 334,
+              "CoordinateList": [
+                {
+                  "Latitude": 38.071630887825954,
+                  "Longitude": 128.1691217790121,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.07551849487669,
+                  "Longitude": 128.1879319566935,
+                  "Altitude": 600
+                }
+              ]
+            }
+          ],
+          "AreaList": [],
+          "TargetID": "",
+          "RelatedIndividualMissionID": ""
+        }
+      ],
+      "PathID": null
+    },
+    {
+      "IndividualMissionID": "Mission2-UAV2",
+      "IsDone": 0,
+      "RelatedMission": [
+        {
+          "RelativeMissionType": 1,
+          "InputMissionID": "WaitArea_Line",
+          "PriorMissionID": null
+        }
+      ],
+      "IndividualMissionInfo": [
+        {
+          "IndividualMissionType": 2,
+          "PatternType": 2,
+          "AutoZoomIn": true,
+          "CoordinateList": [],
+          "LineList": [
+            {
+              "Width": 334,
+              "CoordinateList": [
+                {
+                  "Latitude": 38.075518494876675,
+                  "Longitude": 128.1879319566935,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.077882,
+                  "Longitude": 128.196939,
+                  "Altitude": 600
+                }
+              ]
+            }
+          ],
+          "AreaList": [],
+          "TargetID": "",
+          "RelatedIndividualMissionID": ""
+        }
+      ],
+      "PathID": null
+    },
+    {
+      "IndividualMissionID": "Mission3-UAV2",
+      "IsDone": 0,
+      "RelatedMission": [
+        {
+          "RelativeMissionType": 1,
+          "InputMissionID": "WaitArea",
+          "PriorMissionID": null
+        }
+      ],
+      "IndividualMissionInfo": [
+        {
+          "IndividualMissionType": 1,
+          "PatternType": 1,
+          "AutoZoomIn": true,
+          "CoordinateList": [],
+          "LineList": [],
+          "AreaList": [
+            {
+              "IsHole": 0,
+              "CoordinateList": [
+                {
+                  "Latitude": 38.07914702908755,
+                  "Longitude": 128.19641631652414,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.07893271866596,
+                  "Longitude": 128.19842294009203,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.08351774907337,
+                  "Longitude": 128.19902999457133,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.083702966195425,
+                  "Longitude": 128.1970892704593,
+                  "Altitude": 600
+                }
+              ]
+            }
+          ],
+          "TargetID": "",
+          "RelatedIndividualMissionID": ""
+        }
+      ],
+      "PathID": null
+    },
+    {
+      "IndividualMissionID": "Mission4-UAV2",
+      "IsDone": 0,
+      "RelatedMission": [
+        {
+          "RelativeMissionType": 1,
+          "InputMissionID": "MissionArea",
+          "PriorMissionID": null
+        }
+      ],
+      "IndividualMissionInfo": [
+        {
+          "IndividualMissionType": 1,
+          "PatternType": 1,
+          "AutoZoomIn": true,
+          "CoordinateList": [],
+          "LineList": [],
+          "AreaList": [
+            {
+              "IsHole": 0,
+              "CoordinateList": [
+                {
+                  "Latitude": 38.08726762629316,
+                  "Longitude": 128.19319957305126,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.087654097619904,
+                  "Longitude": 128.201943628535,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.08922533701409,
+                  "Longitude": 128.2018034395317,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.08881718920145,
+                  "Longitude": 128.19329032479374,
+                  "Altitude": 600
+                }
+              ]
+            }
+          ],
+          "TargetID": "",
+          "RelatedIndividualMissionID": ""
+        }
+      ],
+      "PathID": null
+    },
+    {
+      "IndividualMissionID": "Mission5-UAV2",
+      "IsDone": 0,
+      "RelatedMission": [
+        {
+          "RelativeMissionType": 1,
+          "InputMissionID": "ACP#3_Line",
+          "PriorMissionID": null
+        }
+      ],
+      "IndividualMissionInfo": [
+        {
+          "IndividualMissionType": 2,
+          "PatternType": 2,
+          "AutoZoomIn": true,
+          "CoordinateList": [],
+          "LineList": [
+            {
+              "Width": 334,
+              "CoordinateList": [
+                {
+                  "Latitude": 38.09036671004926,
+                  "Longitude": 128.1933822146,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.072349689815425,
+                  "Longitude": 128.1938861785841,
+                  "Altitude": 600
+                }
+              ]
+            }
+          ],
+          "AreaList": [],
+          "TargetID": "",
+          "RelatedIndividualMissionID": ""
+        }
+      ],
+      "PathID": null
+    },
+    {
+      "IndividualMissionID": "Mission6-UAV2",
+      "IsDone": 0,
+      "RelatedMission": [
+        {
+          "RelativeMissionType": 1,
+          "InputMissionID": "HandOver_Line",
+          "PriorMissionID": null
+        }
+      ],
+      "IndividualMissionInfo": [
+        {
+          "IndividualMissionType": 2,
+          "PatternType": 2,
+          "AutoZoomIn": true,
+          "CoordinateList": [],
+          "LineList": [
+            {
+              "Width": 334,
+              "CoordinateList": [
+                {
+                  "Latitude": 38.072349689815425,
+                  "Longitude": 128.1938861785841,
+                  "Altitude": 600
+                },
+                {
+                  "Latitude": 38.068006931285474,
+                  "Longitude": 128.1760605167159,
+                  "Altitude": 600
+                }
+              ]
+            }
+          ],
+          "AreaList": [],
+          "TargetID": "",
+          "RelatedIndividualMissionID": ""
+        }
+      ],
+      "PathID": null
+    }
+  ]
+}

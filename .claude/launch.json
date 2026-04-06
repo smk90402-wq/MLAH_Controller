@@ -1,0 +1,25 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "MLAH_Controller (메인 시험운용통제)",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "MLAH_Controller/MLAH_Controller.csproj", "-c", "Debug", "-r", "win-x64"]
+    },
+    {
+      "name": "MLAH_Mornitoring (모니터링)",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "MLAH_Mornitoring/MLAH_Mornitoring.csproj", "-c", "Debug"]
+    },
+    {
+      "name": "MLAH_Mornitoring_UDP (UDP 모니터링)",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "MLAH_Mornitoring_UDP/MLAH_Mornitoring_UDP.csproj", "-c", "Debug"]
+    },
+    {
+      "name": "MLAH_LogAnalyzer (로그 분석기)",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "MLAH_LogAnalyzer/MLAH_LogAnalyzer.csproj", "-c", "Debug"]
+    }
+  ]
+}

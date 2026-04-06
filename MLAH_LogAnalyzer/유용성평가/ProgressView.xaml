@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="MLAH_LogAnalyzer.ProgressView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             mc:Ignorable="d" 
+             d:DesignHeight="110" d:DesignWidth="350"
+             Width="350" Height="110"
+             Background="{StaticResource MLAH_COLOR_BG_Brush}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Loading Scenarios..." 
+                   FontSize="16" 
+                   FontWeight="SemiBold"
+                   Foreground="White"/>
+
+        <dxe:ProgressBarEdit x:Name="ProgressBar" Grid.Row="1" 
+                             
+                             Minimum="0" Maximum="100" 
+                             
+                             VerticalAlignment="Center" 
+                             Margin="0,10"
+                             EditValue="0">
+            <dxe:ProgressBarEdit.StyleSettings>
+                <dxe:ProgressBarStyleSettings/>
+            </dxe:ProgressBarEdit.StyleSettings>
+        </dxe:ProgressBarEdit>
+
+        <TextBlock x:Name="StatusText" Grid.Row="2" 
+                   Text="Initializing..." 
+                   Foreground="Gray"
+                   HorizontalAlignment="Right"/>
+    </Grid>
+</UserControl>

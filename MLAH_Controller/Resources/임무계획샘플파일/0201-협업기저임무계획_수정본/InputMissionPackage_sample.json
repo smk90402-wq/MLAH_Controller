@@ -1,0 +1,356 @@
+{
+  "InputMissionPackageID": "0S001223344",
+  "InputMissionPackageType": 1,
+  "InputTimeStamp": "2024-07-26T13:24:40.7055093+09:00",
+  "MainSensor": 1,
+  "AvailableAircraftList": [
+    { "AircraftID": 1 },
+    { "AircraftID": 2 },
+    { "AircraftID": 3 },
+    { "AircraftID": 4 },
+    { "AircraftID": 5 },
+    { "AircraftID": 6 }
+  ],
+  "InputMissionList": [
+    {
+      "InputMissionID": "TakeOver",
+      "InputMissionType": 0,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 0,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.07163088782595,
+            "Longitude": 128.1691217790121,
+            "Altitude": 300.6668238461837
+          }
+        ]
+      }
+    },
+    {
+      "InputMissionID": "ACP#1_Line",
+      "InputMissionType": 1,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 1000,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.07163088782595,
+            "Longitude": 128.1691217790121,
+            "Altitude": 300.6668238461837
+          },
+          {
+            "Latitude": 38.07551849487668,
+            "Longitude": 128.1879319566935,
+            "Altitude": 194.4801524301225
+          }
+        ]
+      }
+    },
+    {
+      "InputMissionID": "ACP#1",
+      "InputMissionType": 0,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 0,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.07551849487668,
+            "Longitude": 128.1879319566935,
+            "Altitude": 194.4801524301225
+          }
+        ]
+      }
+    },
+    {
+      "InputMissionID": "WaitArea_Line",
+      "InputMissionType": 1,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 1000,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.07551849487668,
+            "Longitude": 128.1879319566935,
+            "Altitude": 194.4801524301225
+          },
+          {
+            "Latitude": 38.077882,
+            "Longitude": 128.196939,
+            "Altitude": 194.4801524329518
+          }
+        ]
+      }
+    },
+    {
+      "InputMissionID": "WaitArea",
+      "InputMissionType": 2,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 0,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.07936130524085,
+            "Longitude": 128.1944096812446,
+            "Altitude": 0
+          },
+          {
+            "Latitude": 38.078721,
+            "Longitude": 128.200430,
+            "Altitude": 0
+          },
+          {
+            "Latitude": 38.08333477732175,
+            "Longitude": 128.20097105617,
+            "Altitude": 0
+          },
+          {
+            "Latitude": 38.0838881512633,
+            "Longitude": 128.1951485365563,
+            "Altitude": 0
+          }
+        ]
+      }
+    },
+    {
+      "InputMissionID": "MissionArea",
+      "InputMissionType": 2,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 0,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.08571806290512,
+            "Longitude": 128.1931088251399,
+            "Altitude": 0
+          },
+          {
+            "Latitude": 38.08608285763726,
+            "Longitude": 128.2020838115373,
+            "Altitude": 0
+          },
+          {
+            "Latitude": 38.09079647824562,
+            "Longitude": 128.2016614974014,
+            "Altitude": 0
+          },
+          {
+            "Latitude": 38.09036671004927,
+            "Longitude": 128.1933822146,
+            "Altitude": 0
+          }
+        ]
+      }
+    },
+    {
+      "InputMissionID": "ACP#3_Line",
+      "InputMissionType": 1,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 1000,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.09036671004927,
+            "Longitude": 128.1933822146,
+            "Altitude": 0
+          },
+          {
+            "Latitude": 38.07234968981542,
+            "Longitude": 128.1938861785841,
+            "Altitude": 260.8465893993988
+          }
+        ]
+      }
+    },
+    {
+      "InputMissionID": "ACP#3",
+      "InputMissionType": 0,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 0,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.07234968981542,
+            "Longitude": 128.1938861785841,
+            "Altitude": 260.8465893993988
+          }
+        ]
+      }
+    },
+    {
+      "InputMissionID": "HandOver_Line",
+      "InputMissionType": 1,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 1000,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.07234968981542,
+            "Longitude": 128.1938861785841,
+            "Altitude": 260.8465893993988
+          },
+          {
+            "Latitude": 38.06800693128547,
+            "Longitude": 128.1760605167159,
+            "Altitude": 205.0113230136212
+          }
+        ]
+      }
+    },
+    {
+      "InputMissionID": "HandOver",
+      "InputMissionType": 0,
+      "IsDone": false,
+      "MissionDetail": {
+        "AutoZoomIn": true,
+        "AltitudeLimitList": [
+          {
+            "AircraftType": 1,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          },
+          {
+            "AircraftType": 2,
+            "LowerLimit": 10,
+            "UpperLimit": 3000
+          }
+        ],
+        "Width": 0,
+        "isHole": false,
+        "CoordinateList": [
+          {
+            "Latitude": 38.06800693128547,
+            "Longitude": 128.1760605167159,
+            "Altitude": 205.0113230136212
+          }
+        ]
+      }
+    }
+  ]
+}

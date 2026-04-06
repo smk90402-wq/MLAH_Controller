@@ -1,0 +1,203 @@
+﻿<UserControl x:Class="MLAH_LogAnalyzer.View_Unit_Map_SR"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MLAH_LogAnalyzer"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel_Unit_Map_SR, IsDesignTimeCreatable=True}"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
+        xmlns:core="clr-namespace:Microsoft.Xaml.Behaviors.Core;assembly=Microsoft.Xaml.Behaviors"
+        Background="{StaticResource MLAH_COLOR_BG_Brush}" Loaded="UserControl_Loaded"
+        PreviewKeyDown="UserControl_PreviewKeyDown">
+    <!--<UserControl.DataContext>
+        <Binding Source="{x:Static local:ViewModel_Unit_Map.SingletonInstance}"/>
+    </UserControl.DataContext>-->
+    <UserControl.Resources>
+        <DataTemplate x:Key="ElementTemplate" DataType="{x:Type local:UnitMapObjectInfo}">
+            <Grid>
+                <Border MouseEnter="Element_MouseEnter" MouseLeave="Element_MouseLeave" CacheMode="BitmapCache">
+                    <Image Source="{Binding imagesource}" Width="40" Height="40" MouseLeftButtonDown="Element_MouseLeftButtonDown">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform CenterX="20" CenterY="20">
+                                    <RotateTransform.Angle>
+                                        <MultiBinding Converter="{StaticResource ConditionalRotationConverter }">
+                                            <Binding Path="Heading" />
+                                            <Binding Path="Type" />
+                                        </MultiBinding>
+                                    </RotateTransform.Angle>
+                                </RotateTransform>
+                                <TranslateTransform X="-20" Y="-20" />
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Border>
+                <TextBlock Text="{Binding ID}"
+                       Foreground="Black"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"
+                       Margin="0,0,0,20"  
+                       Visibility="Visible"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RTBSymbolTemplate">
+            <Image Width="30" Height="30" Source="{StaticResource RTB}" />
+        </DataTemplate>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+
+
+    </UserControl.Resources>
+
+    
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        
+        <Grid Grid.ColumnSpan="2">
+            <dxm:MapControl x:Name="mapControl" CenterPoint="{Binding CenterPoint, Mode=OneWay}" FlowDirection="LeftToRight" IsManipulationEnabled="True" EnableRotation="False"
+                            MaxZoomLevel="15" MinZoomLevel="8"
+                            MouseDown="MapControl_MouseButtonDown"
+                            MouseMove="MapControl_MouseMove"
+                            RenderOptions.BitmapScalingMode="LowQuality"
+
+                            SizeChanged="mapControl_SizeChanged"
+                            ZoomLevel="{Binding CurrentZoomLevel, Mode=TwoWay}"
+                            UseSprings="False"
+                            >
+                <dxm:MapControl.Measurements>
+                    <dxm:Measurements DistanceUnits="{x:Static dxm:MeasureUnit.Meter}" AreaUnits="{x:Static dxm:AreaMeasurementUnit.SquareMeter}">
+                        <dxm:Measurements.ToolbarOptions>
+                            <dxm:MeasurementToolbarOptions Visible="True" VerticalAlignment="Bottom"/>
+                        </dxm:Measurements.ToolbarOptions>
+                    </dxm:Measurements>
+                </dxm:MapControl.Measurements>
+                <dxm:MapControl.Layers>
+                    <dxm:ImageLayer>
+
+                        <dxm:ImageTileDataProvider>
+                            <dxm:ImageTileDataProvider.TileSource>
+                                <local:LocalTileSource/>
+                            </dxm:ImageTileDataProvider.TileSource>
+                        </dxm:ImageTileDataProvider>
+                    </dxm:ImageLayer>
+
+                    <!--<dxm:VectorLayer EnableSelection="False" EnableHighlighting="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding MissionDetailLines}" />
+                    </dxm:VectorLayer>-->
+
+                    <dxm:VectorLayer EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding MissionAreas}"/>
+                    </dxm:VectorLayer>
+
+                    <!-- [고품질/저품질 구역 시각화] 이 레이어는 항상 활성 상태로 유지.
+                         ON/OFF는 SRCalculator.cs의 "ON/OFF 스위치" 주석 참고.
+                         SRCalculator에서 빈 데이터를 넣으면 자동으로 안 보임. -->
+                    <dxm:VectorLayer EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding LowQualityRegions}"/>
+                    </dxm:VectorLayer>
+
+                    <dxm:VectorLayer EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding HighQualityRegions}"/>
+                    </dxm:VectorLayer>
+
+                    <dxm:VectorLayer x:Name="TargetPositionLayer"
+                    EnableSelection="False"
+                    EnableHighlighting="False"
+                    ToolTipEnabled="False"
+                    Visibility="{Binding IsTargetVisible, Converter={StaticResource BoolToVis}}">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding EvaluationTargets}">
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapCustomElementSettings ContentTemplate="{StaticResource ElementTemplate}" />
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <dxm:MapItemMappingInfo Latitude="Location.Latitude" Longitude="Location.Longitude" />
+                            </dxm:ListSourceDataAdapter.Mappings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:VectorLayer>
+
+
+                    <dxm:VectorLayer EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding MissionTracks}"/>
+                    </dxm:VectorLayer>
+
+                    <dxm:VectorLayer EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding UavFootprints}"/>
+                    </dxm:VectorLayer>
+                    
+                    
+
+                    <dxm:VectorLayer EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                        <dxm:ListSourceDataAdapter DataSource="{Binding UavPositions}">
+                            <dxm:ListSourceDataAdapter.ItemSettings>
+                                <dxm:MapCustomElementSettings ContentTemplate="{StaticResource ElementTemplate}"/>
+                            </dxm:ListSourceDataAdapter.ItemSettings>
+                            <dxm:ListSourceDataAdapter.Mappings>
+                                <dxm:MapItemMappingInfo Latitude="Location.Latitude" Longitude="Location.Longitude"/>
+                            </dxm:ListSourceDataAdapter.Mappings>
+                        </dxm:ListSourceDataAdapter>
+                    </dxm:VectorLayer>
+
+                </dxm:MapControl.Layers>
+                <dxm:MapControl.CoordinatesPanelOptions>
+                    <dxm:CoordinatesPanelOptions Visible="False"/>
+                </dxm:MapControl.CoordinatesPanelOptions>
+                <dxm:MapControl.ScalePanelOptions>
+                    <dxm:ScalePanelOptions ShowMilesScale="False"/>
+                </dxm:MapControl.ScalePanelOptions>
+                <dxm:MapControl.ScrollButtonsOptions>
+                    <dxm:ScrollButtonsOptions Visible="False"/>
+                </dxm:MapControl.ScrollButtonsOptions>
+                <dxm:MapControl.ZoomTrackbarOptions>
+                    <dxm:ZoomTrackbarOptions HorizontalAlignment="Right"/>
+                </dxm:MapControl.ZoomTrackbarOptions>
+
+                
+            </dxm:MapControl>
+
+     
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+
+            <CheckBox Grid.Column="0" 
+           Content="표적"  Height="30"
+           IsChecked="{Binding IsTargetVisible}" 
+           Foreground="White" 
+           VerticalAlignment="Center" 
+           HorizontalAlignment="Left"
+           Margin="10,0,0,0"/>
+
+            <TextBlock Grid.Column="1" Text="위도 : " Foreground="White" Background="{StaticResource DefaultBg_Brush}" Height="20"/>
+            <TextBlock Grid.Column="2" x:Name="MapLat" Text="{Binding MapCursorLat, StringFormat=F5}"  Background="{StaticResource DefaultBg_Brush}" Height="20" Style="{StaticResource NormalTextBlock}"/>
+            <TextBlock Grid.Column="3" Text="경도 : " Foreground="White" Background="{StaticResource DefaultBg_Brush}" Height="20"/>
+            <TextBlock Grid.Column="4" x:Name="MapLon" Text="{Binding MapCursorLon, StringFormat=F5}"  Background="{StaticResource DefaultBg_Brush}" Height="20" Style="{StaticResource NormalTextBlock}"/>
+            <!--<TextBlock Grid.Column="5" Text="고도 : " Foreground="White" Background="{StaticResource DefaultBg_Brush}" Height="20"/>
+            <TextBlock Grid.Column="6" x:Name="MapAlt" Text="TBD"  Background="{StaticResource DefaultBg_Brush}" Height="20" Style="{StaticResource NormalTextBlock}"/>-->
+        </Grid>
+
+    </Grid>
+    
+
+
+</UserControl>

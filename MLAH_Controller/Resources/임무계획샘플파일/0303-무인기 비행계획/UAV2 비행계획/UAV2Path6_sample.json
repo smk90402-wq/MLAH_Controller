@@ -1,0 +1,616 @@
+{
+  "PathID": "0S002002005",
+  "AircraftID": 5,
+  "IsFormationFlight": 0,
+  "Formation": {},
+  "Waypoints": [
+    {
+      "WaypointID": 459,
+      "Coordinate": {
+        "Latitude": 38.07747509,
+        "Longitude": 128.20202432,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 0.00,
+      "ECF": 0.00,
+      "NextWaypointID": 460,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07369437,
+              "Longitude": 128.19294546,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07656241,
+              "Longitude": 128.19182767,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 460,
+      "Coordinate": {
+        "Latitude": 38.07718575,
+        "Longitude": 128.20083581,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 3.14,
+      "ECF": 0.31,
+      "NextWaypointID": 461,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07628747,
+              "Longitude": 128.19069875,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07341944,
+              "Longitude": 128.19181658,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 461,
+      "Coordinate": {
+        "Latitude": 38.07689639,
+        "Longitude": 128.1996473,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 6.28,
+      "ECF": 0.62,
+      "NextWaypointID": 462,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.0731445,
+              "Longitude": 128.19068771,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07601252,
+              "Longitude": 128.18956984,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 462,
+      "Coordinate": {
+        "Latitude": 38.07660703,
+        "Longitude": 128.19845881,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 9.42,
+      "ECF": 0.93,
+      "NextWaypointID": 463,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07573756,
+              "Longitude": 128.18844094,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07286954,
+              "Longitude": 128.18955885,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 463,
+      "Coordinate": {
+        "Latitude": 38.07631765,
+        "Longitude": 128.19727032,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 12.56,
+      "ECF": 1.24,
+      "NextWaypointID": 464,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07259458,
+              "Longitude": 128.18843,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07546258,
+              "Longitude": 128.18731205,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 464,
+      "Coordinate": {
+        "Latitude": 38.07602827,
+        "Longitude": 128.19608184,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 15.70,
+      "ECF": 1.55,
+      "NextWaypointID": 465,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.0751876,
+              "Longitude": 128.18618317,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07231961,
+              "Longitude": 128.18730116,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 465,
+      "Coordinate": {
+        "Latitude": 38.07573887,
+        "Longitude": 128.19489338,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 18.84,
+      "ECF": 1.86,
+      "NextWaypointID": 466,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07204462,
+              "Longitude": 128.18617232,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.0749126,
+              "Longitude": 128.18505429,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 466,
+      "Coordinate": {
+        "Latitude": 38.07544945,
+        "Longitude": 128.19370492,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 21.98,
+      "ECF": 2.17,
+      "NextWaypointID": 467,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07463759,
+              "Longitude": 128.18392543,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07176963,
+              "Longitude": 128.18504349,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 467,
+      "Coordinate": {
+        "Latitude": 38.07516003,
+        "Longitude": 128.19251647,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 25.12,
+      "ECF": 2.48,
+      "NextWaypointID": 468,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07149462,
+              "Longitude": 128.18391468,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07436258,
+              "Longitude": 128.18279657,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 468,
+      "Coordinate": {
+        "Latitude": 38.07487059,
+        "Longitude": 128.19132804,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 28.26,
+      "ECF": 2.79,
+      "NextWaypointID": 469,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07408755,
+              "Longitude": 128.18166772,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.0712196,
+              "Longitude": 128.18278587,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 469,
+      "Coordinate": {
+        "Latitude": 38.07458114,
+        "Longitude": 128.19013961,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 31.40,
+      "ECF": 3.10,
+      "NextWaypointID": 470,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07094457,
+              "Longitude": 128.18165707,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07381251,
+              "Longitude": 128.18053888,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 470,
+      "Coordinate": {
+        "Latitude": 38.07429168,
+        "Longitude": 128.18895119,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 34.54,
+      "ECF": 3.41,
+      "NextWaypointID": 471,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07353746,
+              "Longitude": 128.17941005,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07066954,
+              "Longitude": 128.18052827,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 471,
+      "Coordinate": {
+        "Latitude": 38.07400221,
+        "Longitude": 128.18776278,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 37.68,
+      "ECF": 3.72,
+      "NextWaypointID": 472,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07039449,
+              "Longitude": 128.17939949,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.0732624,
+              "Longitude": 128.17828123,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 472,
+      "Coordinate": {
+        "Latitude": 38.07371273,
+        "Longitude": 128.18657438,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 40.82,
+      "ECF": 4.03,
+      "NextWaypointID": 473,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.06798733,
+              "Longitude": 128.17715241,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07011943,
+              "Longitude": 128.17827072,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 473,
+      "Coordinate": {
+        "Latitude": 38.07342323,
+        "Longitude": 128.18538599,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 43.96,
+      "ECF": 4.34,
+      "NextWaypointID": 474,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.06984435,
+              "Longitude": 128.17714195,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.07271224,
+              "Longitude": 128.17602361,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    },
+    {
+      "WaypointID": 474,
+      "Coordinate": {
+        "Latitude": 38.07313373,
+        "Longitude": 128.18419761,
+        "Altitude": 600.0
+      },
+      "Speed": 35.0,
+      "ETA": 47.10,
+      "ECF": 4.65,
+      "NextWaypointID": 0,
+      "WaypointPassType": 1,
+      "LoiterProperty": {},
+      "FilmingProperty": {
+        "FieldOfView": 2.2,
+        "SensorType": 1,
+        "OperationMode": 2,
+        "CoordinateOrientation": {},
+        "LineSearch": {
+          "CoordinateList": [
+            {
+              "Latitude": 38.07243715,
+              "Longitude": 128.17489481,
+              "Altitude": 0.0
+            },
+            {
+              "Latitude": 38.06956927,
+              "Longitude": 128.17601319,
+              "Altitude": 0.0
+            }
+          ],
+          "SearchSpeed": 20.0
+        },
+        "AutoTracking": null,
+        "AircraftFixed": {},
+        "AutoScan": {}
+      }
+    }
+  ]
+}

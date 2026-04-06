@@ -1,0 +1,664 @@
+﻿<Window x:Class="MLAH_Controller.View_Object_Set_PopUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MLAH_Controller"
+        mc:Ignorable="d" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        Height="400" Width="950" WindowStyle="None" ResizeMode="NoResize" Topmost="True"
+        AllowsTransparency="True" WindowStartupLocation="CenterScreen"
+        Background="Transparent">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Hud_BaseColor">#E6050A15</Color>
+            <SolidColorBrush x:Key="Hud_BaseBrush" Color="{StaticResource Hud_BaseColor}"/>
+            <SolidColorBrush x:Key="Hud_BorderBrush_On" Color="#B000F0FF"/>
+            <SolidColorBrush x:Key="Hud_BorderBrush_Disabled" Color="#80608090"/>
+            <SolidColorBrush x:Key="Hud_TextBrush" Color="#E0E0E0"/>
+            <SolidColorBrush x:Key="Hud_TextBrush_Disabled" Color="#D0D0D0"/>
+            <SolidColorBrush x:Key="Hud_ArrowBrush_Disabled" Color="#A0A0A0"/>
+            <SolidColorBrush x:Key="Hud_HighlightBrush" Color="#4000F0FF"/>
+            <SolidColorBrush x:Key="SciFi_Cyan" Color="#00F0FF"/>
+
+            <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="#00F0FF"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="#00F0FF" BlurRadius="5" ShadowDepth="0" Opacity="0.6"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="RowLabelTextStyle" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Consolas"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+
+            <Style x:Key="HudComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+                <Setter Property="OverridesDefaultStyle" Value="true"/>
+                <Setter Property="IsTabStop" Value="false"/>
+                <Setter Property="Focusable" Value="false"/>
+                <Setter Property="ClickMode" Value="Press"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border x:Name="templateRoot" 
+                                    Background="{StaticResource Hud_BaseBrush}" 
+                                    BorderBrush="{StaticResource Hud_BorderBrush_On}" 
+                                    BorderThickness="1" 
+                                    CornerRadius="2"
+                                    SnapsToDevicePixels="true">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Path x:Name="arrow" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z" Fill="{StaticResource Hud_BorderBrush_On}"/>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter TargetName="templateRoot" Property="Background" Value="#80000510"/>
+                                    <Setter TargetName="arrow" Property="Fill" Value="White"/>
+                                    <Setter TargetName="templateRoot" Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Color="#00F0FF" BlurRadius="4" ShadowDepth="0"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource Hud_BorderBrush_Disabled}"/>
+                                    <Setter TargetName="templateRoot" Property="Background" Value="#30000000"/>
+                                    <Setter TargetName="arrow" Property="Fill" Value="{StaticResource Hud_ArrowBrush_Disabled}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="HudComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="5,2"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource Hud_HighlightBrush}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{StaticResource Hud_BorderBrush_On}"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="HudComboBoxStyle" TargetType="{x:Type ComboBox}">
+                <Setter Property="Foreground" Value="{StaticResource Hud_TextBrush}"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="SnapsToDevicePixels" Value="true"/>
+                <Setter Property="OverridesDefaultStyle" Value="true"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="ItemContainerStyle" Value="{StaticResource HudComboBoxItemStyle}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ComboBox}">
+                            <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton x:Name="toggleButton" Grid.ColumnSpan="2" Style="{StaticResource HudComboBoxToggleButton}" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <ContentPresenter x:Name="contentPresenter" IsHitTestVisible="false" Margin="10,0,25,0" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <ContentPresenter.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                        </Style>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" Placement="Bottom" PopupAnimation="Slide">
+                                    <Border x:Name="dropDownBorder" Background="#F0050A15" BorderBrush="{StaticResource Hud_BorderBrush_On}" BorderThickness="1" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                        <ScrollViewer x:Name="DropDownScrollViewer">
+                                            <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                                <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                                    <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                                </Canvas>
+                                                <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="toggleButton" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="HudButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="#150080FF"/>
+                <Setter Property="BorderBrush" Value="#6000F0FF"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2" SnapsToDevicePixels="true">
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" Margin="5,0"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter TargetName="border" Property="Background" Value="#4000F0FF"/>
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#00F0FF"/>
+                                    <Setter TargetName="border" Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Color="#00F0FF" BlurRadius="8" ShadowDepth="0" Opacity="0.6"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Setter TargetName="border" Property="Background" Value="#6000F0FF"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="border" Property="Background" Value="#05FFFFFF"/>
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#20FFFFFF"/>
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <ControlTemplate x:Key="CustomTitleBarTemplate" TargetType="{x:Type Window}">
+                <Border CornerRadius="6" BorderBrush="#00F0FF" BorderThickness="1" Background="#E6050A15">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.3"/>
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#2000F0FF" CornerRadius="5,5,0,0" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
+                                    <Rectangle Width="4" Height="16" Fill="#00F0FF" Margin="0,0,8,0"/>
+                                    <TextBlock Text="유/무인기 동적 상황부여" Foreground="White" FontWeight="Bold" FontFamily="Malgun Gothic"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <AdornerDecorator Grid.Row="1">
+                            <ContentPresenter Margin="10"/>
+                        </AdornerDecorator>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Template>
+        <StaticResource ResourceKey="CustomTitleBarTemplate"/>
+    </Window.Template>
+
+    <Window.DataContext>
+        <Binding Source="{x:Static local:ViewModel_Object_Set_PopUp.SingletonInstance}"/>
+    </Window.DataContext>
+
+    <Grid Grid.IsSharedSizeScope="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#1000F0FF" BorderBrush="#3000F0FF" BorderThickness="0,0,0,1" Margin="0,5">
+            <Grid Height="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" SharedSizeGroup="TypeCol"/>
+                    <ColumnDefinition Width="40" SharedSizeGroup="IDCol"/>
+                    <ColumnDefinition Width="110" SharedSizeGroup="HealthStatusCol"/>
+                    <ColumnDefinition Width="110" SharedSizeGroup="FuelWCol"/>
+                    <ColumnDefinition Width="120" SharedSizeGroup="StatusCol"/>
+                    <ColumnDefinition Width="100" SharedSizeGroup="Link1Col"/>
+                    <ColumnDefinition Width="100" SharedSizeGroup="Link2Col"/>
+                    <ColumnDefinition Width="100" SharedSizeGroup="Link3Col"/>
+                    <ColumnDefinition Width="100" SharedSizeGroup="CrashCol"/>
+                    <ColumnDefinition Width="100" SharedSizeGroup="BtnCol"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="유형" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="1" Text="ID" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="2" Text="활성화 상태" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="3" Text="연료 경고" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="4" Text="피격 여부" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="5" Text="DataLink1" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="6" Text="DataLink2" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="7" Text="DataLink3" Style="{StaticResource HeaderTextStyle}"/>
+                <!--<TextBlock Grid.Column="7" Text="연료 위험" Style="{StaticResource HeaderTextStyle}"/>-->
+                <!--<TextBlock Grid.Column="8" Text="연료 없음" Style="{StaticResource HeaderTextStyle}"/>-->
+                <TextBlock Grid.Column="8" Text="추락" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="9" Text="송신" Style="{StaticResource HeaderTextStyle}"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="0,2" IsEnabled="{Binding Heli1Enable}" Opacity="{Binding Heli1Opacity}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="TypeCol"/>
+                <ColumnDefinition SharedSizeGroup="IDCol"/>
+                <ColumnDefinition SharedSizeGroup="HealthStatusCol"/>
+                <ColumnDefinition SharedSizeGroup="FuelWCol"/>
+                <ColumnDefinition SharedSizeGroup="StatusCol"/>
+                <ColumnDefinition SharedSizeGroup="Link1Col"/>
+                <ColumnDefinition SharedSizeGroup="Link2Col"/>
+                <ColumnDefinition SharedSizeGroup="Link3Col"/>
+                <!--<ColumnDefinition SharedSizeGroup="FuelDCol"/>
+                <ColumnDefinition SharedSizeGroup="FuelZCol"/>-->
+                <ColumnDefinition SharedSizeGroup="CrashCol"/>
+                <ColumnDefinition SharedSizeGroup="BtnCol"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="LAH" Style="{StaticResource RowLabelTextStyle}" Foreground="#00F0FF"/>
+            <TextBlock Grid.Column="1" Text="1" Style="{StaticResource RowLabelTextStyle}"/>
+
+            <ComboBox Grid.Column="2" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH1HealthStatus}">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>
+
+            <ComboBox Grid.Column="3" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH1FuelWarning}">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="경고"/>
+                <ComboBoxItem Content="위험"/>
+            </ComboBox>
+
+            <ComboBox Grid.Column="4" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH1Hit}">
+                <ComboBoxItem Content="피격 안됨"/>
+                <ComboBoxItem Content="피격 됨"/>
+            </ComboBox>
+            
+            <ComboBox Grid.Column="5" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH1Link1}">
+                <ComboBoxItem Content="연결"/>
+                <ComboBoxItem Content="두절"/>
+            </ComboBox>
+            
+            <ComboBox Grid.Column="6" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH1Link2}">
+                <ComboBoxItem Content="연결"/>
+                <ComboBoxItem Content="두절"/>
+            </ComboBox>
+            <ComboBox Grid.Column="7" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH1Link3}">
+                <ComboBoxItem Content="연결"/>
+                <ComboBoxItem Content="두절"/>
+            </ComboBox>
+            
+            <!--<ComboBox Grid.Column="7" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH1FuelDanger}">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="위험"/>
+            </ComboBox>
+            <ComboBox Grid.Column="8" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH1FuelZero}">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="없음"/>
+            </ComboBox>-->
+            <ComboBox Grid.Column="8" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH1Crash}">
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="추락"/>
+            </ComboBox>
+
+            <Button Grid.Column="9" Content="SEND" Style="{StaticResource HudButtonStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding LAHSend1Command}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,2" IsEnabled="{Binding Heli2Enable}" Opacity="{Binding Heli2Opacity}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="TypeCol"/>
+                <ColumnDefinition SharedSizeGroup="IDCol"/>
+                <ColumnDefinition SharedSizeGroup="HealthStatusCol"/>
+                <ColumnDefinition SharedSizeGroup="FuelWCol"/>
+                <ColumnDefinition SharedSizeGroup="StatusCol"/>
+                <ColumnDefinition SharedSizeGroup="Link1Col"/>
+                <ColumnDefinition SharedSizeGroup="Link2Col"/>
+                <ColumnDefinition SharedSizeGroup="Link3Col"/>
+                <!--<ColumnDefinition SharedSizeGroup="FuelDCol"/>
+             <ColumnDefinition SharedSizeGroup="FuelZCol"/>-->
+                <ColumnDefinition SharedSizeGroup="CrashCol"/>
+                <ColumnDefinition SharedSizeGroup="BtnCol"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="LAH" Style="{StaticResource RowLabelTextStyle}" Foreground="#00F0FF"/>
+            <TextBlock Grid.Column="1" Text="2" Style="{StaticResource RowLabelTextStyle}"/>
+
+            <ComboBox Grid.Column="2" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2HealthStatus}">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>
+
+            <ComboBox Grid.Column="3" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2FuelWarning}">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="경고"/>
+                <ComboBoxItem Content="위험"/>
+            </ComboBox>
+
+            <ComboBox Grid.Column="4" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2Hit}">
+                <ComboBoxItem Content="피격 안됨"/>
+                <ComboBoxItem Content="피격 됨"/>
+            </ComboBox>
+            <ComboBox Grid.Column="5" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2Link1}">
+                <ComboBoxItem Content="연결"/>
+                <ComboBoxItem Content="두절"/>
+            </ComboBox>
+            <ComboBox Grid.Column="6" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2Link2}">
+                <ComboBoxItem Content="연결"/>
+                <ComboBoxItem Content="두절"/>
+            </ComboBox>
+            <ComboBox Grid.Column="7" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2Link3}">
+                <ComboBoxItem Content="연결"/>
+                <ComboBoxItem Content="두절"/>
+            </ComboBox>
+            <!--<ComboBox Grid.Column="8" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2FuelWarning}">
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="경고"/>
+            </ComboBox>-->
+            <!--<ComboBox Grid.Column="7" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2FuelDanger}">
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="위험"/>
+            </ComboBox>
+            <ComboBox Grid.Column="8" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2FuelZero}">
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="없음"/>
+            </ComboBox>-->
+            <ComboBox Grid.Column="8" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH2Crash}">
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="추락"/>
+            </ComboBox>
+
+            <Button Grid.Column="9" Content="SEND" Style="{StaticResource HudButtonStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding LAHSend2Command}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="0,2" IsEnabled="{Binding Heli3Enable}" Opacity="{Binding Heli3Opacity}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="TypeCol"/>
+                <ColumnDefinition SharedSizeGroup="IDCol"/>
+                <ColumnDefinition SharedSizeGroup="HealthStatusCol"/>
+                <ColumnDefinition SharedSizeGroup="FuelWCol"/>
+                <ColumnDefinition SharedSizeGroup="StatusCol"/>
+                <ColumnDefinition SharedSizeGroup="Link1Col"/>
+                <ColumnDefinition SharedSizeGroup="Link2Col"/>
+                <ColumnDefinition SharedSizeGroup="Link3Col"/>
+                <!--<ColumnDefinition SharedSizeGroup="FuelDCol"/>
+             <ColumnDefinition SharedSizeGroup="FuelZCol"/>-->
+                <ColumnDefinition SharedSizeGroup="CrashCol"/>
+                <ColumnDefinition SharedSizeGroup="BtnCol"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="LAH" Style="{StaticResource RowLabelTextStyle}" Foreground="#00F0FF"/>
+            <TextBlock Grid.Column="1" Text="3" Style="{StaticResource RowLabelTextStyle}"/>
+
+            <ComboBox Grid.Column="2" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3HealthStatus}">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>
+
+            <ComboBox Grid.Column="3" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3FuelWarning}">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="경고"/>
+                <ComboBoxItem Content="위험"/>
+            </ComboBox>
+
+            <ComboBox Grid.Column="4" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3Hit}">
+                <ComboBoxItem Content="피격 안됨"/>
+                <ComboBoxItem Content="피격 됨"/>
+            </ComboBox>
+            <ComboBox Grid.Column="5" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3Link1}">
+                <ComboBoxItem Content="연결"/>
+                <ComboBoxItem Content="두절"/>
+            </ComboBox>
+            <ComboBox Grid.Column="6" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3Link2}">
+                <ComboBoxItem Content="연결"/>
+                <ComboBoxItem Content="두절"/>
+            </ComboBox>
+            <ComboBox Grid.Column="7" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3Link3}">
+                <ComboBoxItem Content="연결"/>
+                <ComboBoxItem Content="두절"/>
+            </ComboBox>
+            <!--<ComboBox Grid.Column="6" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3FuelWarning}">
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="경고"/>
+            </ComboBox>-->
+            <!--<ComboBox Grid.Column="7" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3FuelDanger}">
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="위험"/>
+            </ComboBox>-->
+            <!--<ComboBox Grid.Column="8" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3FuelZero}">
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="없음"/>
+            </ComboBox>-->
+            <ComboBox Grid.Column="8" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding LAH3Crash}">
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="추락"/>
+            </ComboBox>
+
+            <Button Grid.Column="9" Content="SEND" Style="{StaticResource HudButtonStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding LAHSend3Command}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+        <Border Grid.Row="5" Background="#1000F0FF" BorderBrush="#3000F0FF" BorderThickness="0,0,0,1" Margin="0,5">
+            <Grid Height="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="TypeCol"/>
+                    <ColumnDefinition SharedSizeGroup="IDCol"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition SharedSizeGroup="BtnCol"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="유형" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="1" Text="ID" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="2" Text="무인기 활성화" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="3" Text="임무장비 상태" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="4" Text="연료 상태" Style="{StaticResource HeaderTextStyle}"/>
+                <TextBlock Grid.Column="5" Text="송신" Style="{StaticResource HeaderTextStyle}"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="6" Margin="0,2" IsEnabled="{Binding Drone1Enable}" Opacity="{Binding Drone1Opacity}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="TypeCol"/>
+                <ColumnDefinition SharedSizeGroup="IDCol"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition SharedSizeGroup="BtnCol"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="UAV" Style="{StaticResource RowLabelTextStyle}" Foreground="#00F0FF"/>
+            <TextBlock Grid.Column="1" Text="4" Style="{StaticResource RowLabelTextStyle}"/>
+
+            <ComboBox Grid.Column="2" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding UAV1Health}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>
+            <ComboBox Grid.Column="3" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding UAV1Sensor}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>
+            <ComboBox Grid.Column="4" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding UAV1Fuel}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="양호"/>
+                <ComboBoxItem Content="경고"/>
+                <ComboBoxItem Content="위험"/>
+            </ComboBox>
+
+            <Button Grid.Column="5" Content="SEND" Style="{StaticResource HudButtonStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding UAVSend1Command}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="7" Margin="0,2" IsEnabled="{Binding Drone2Enable}" Opacity="{Binding Drone2Opacity}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="TypeCol"/>
+                <ColumnDefinition SharedSizeGroup="IDCol"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition SharedSizeGroup="BtnCol"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="UAV" Style="{StaticResource RowLabelTextStyle}" Foreground="#00F0FF"/>
+            <TextBlock Grid.Column="1" Text="5" Style="{StaticResource RowLabelTextStyle}"/>
+
+            <ComboBox Grid.Column="2" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding UAV2Health}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>
+            <ComboBox Grid.Column="3" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding UAV2Sensor}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>
+            <ComboBox Grid.Column="4" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding UAV2Fuel}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="양호"/>
+                <ComboBoxItem Content="경고"/>
+                <ComboBoxItem Content="위험"/>
+            </ComboBox>
+
+            <Button Grid.Column="5" Content="SEND" Style="{StaticResource HudButtonStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding UAVSend2Command}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="8" Margin="0,2" IsEnabled="{Binding Drone2Enable}" Opacity="{Binding Drone2Opacity}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="TypeCol"/>
+                <ColumnDefinition SharedSizeGroup="IDCol"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition SharedSizeGroup="BtnCol"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="UAV" Style="{StaticResource RowLabelTextStyle}" Foreground="#00F0FF"/>
+            <TextBlock Grid.Column="1" Text="6" Style="{StaticResource RowLabelTextStyle}"/>
+
+            <ComboBox Grid.Column="2" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding UAV3Health}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>
+            <ComboBox Grid.Column="3" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding UAV3Sensor}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="정상"/>
+                <ComboBoxItem Content="비정상"/>
+            </ComboBox>
+            <ComboBox Grid.Column="4" Style="{StaticResource HudComboBoxStyle}" SelectedIndex="{Binding UAV3Fuel}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="Unknown" Visibility="Collapsed"/>
+                <ComboBoxItem Content="양호"/>
+                <ComboBoxItem Content="경고"/>
+                <ComboBoxItem Content="위험"/>
+            </ComboBox>
+
+            <Button Grid.Column="5" Content="SEND" Style="{StaticResource HudButtonStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding UAVSend3Command}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="10" Margin="0,5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+                <Button Content="닫기 (Close)" Style="{StaticResource HudButtonStyle}" Width="100">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown">
+                            <i:InvokeCommandAction Command="{Binding CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>

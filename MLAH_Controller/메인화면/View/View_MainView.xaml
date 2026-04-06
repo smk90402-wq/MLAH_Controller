@@ -1,0 +1,973 @@
+﻿<UserControl x:Class="MLAH_Controller.View_MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:local="clr-namespace:MLAH_Controller" 
+             mc:Ignorable="d" 
+             Height="1330" Width="2560" 
+             d:DataContext="{d:DesignInstance Type=local:ViewModel_MainView, IsDesignTimeCreatable=True}"
+             dx:ThemeManager.ThemeName="Win11Dark">
+
+    <UserControl.Background>
+        <RadialGradientBrush GradientOrigin="0.5,0.4" Center="0.5,0.4" RadiusX="0.8" RadiusY="0.8">
+            <GradientStop Color="#FF1A1E29" Offset="0"/>
+            <GradientStop Color="#FF0B0D12" Offset="1"/>
+        </RadialGradientBrush>
+    </UserControl.Background>
+
+    <UserControl.Resources>
+        <Style x:Key="SciFiHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Malgun Gothic"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+
+            <Setter Property="Foreground" Value="#E0FFFF"/>
+
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#00F0FF" BlurRadius="8" ShadowDepth="0" Opacity="0.5"/>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        </Style>
+
+        <Color x:Key="Holo_Green_On">#00FFAA</Color>
+        <Color x:Key="Holo_Green_Off">#002211</Color>
+        <SolidColorBrush x:Key="Holo_Green_Brush" Color="#00FFAA"/>
+
+        <Color x:Key="Holo_Red_On">#FF3355</Color>
+        <Color x:Key="Holo_Red_Off">#33050B</Color>
+        <SolidColorBrush x:Key="Holo_Red_Brush" Color="#FF3355"/>
+
+        <Storyboard x:Key="BlinkRed">
+            <ColorAnimation Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                            From="{StaticResource Holo_Red_On}" 
+                            To="{StaticResource Holo_Red_Off}" 
+                            Duration="0:0:1.2"
+                            AutoReverse="True" 
+                            RepeatBehavior="Forever">
+                <ColorAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </ColorAnimation.EasingFunction>
+            </ColorAnimation>
+            <ColorAnimation Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Color)"
+                            From="{StaticResource Holo_Red_On}" 
+                            To="{StaticResource Holo_Red_Off}" 
+                            Duration="0:0:1.2"
+                            AutoReverse="True" 
+                            RepeatBehavior="Forever"/>
+        </Storyboard>
+
+        <Storyboard x:Key="BlinkGreen">
+            <ColorAnimation Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                            From="{StaticResource Holo_Green_On}" 
+                            To="{StaticResource Holo_Green_Off}" 
+                            Duration="0:0:1.2"
+                            AutoReverse="True" 
+                            RepeatBehavior="Forever">
+                <ColorAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </ColorAnimation.EasingFunction>
+            </ColorAnimation>
+            <ColorAnimation Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Color)"
+                            From="{StaticResource Holo_Green_On}" 
+                            To="{StaticResource Holo_Green_Off}" 
+                            Duration="0:0:1.2"
+                            AutoReverse="True" 
+                            RepeatBehavior="Forever"/>
+        </Storyboard>
+
+        <SolidColorBrush x:Key="SciFi_Cyan" Color="#00F0FF"/>
+        <SolidColorBrush x:Key="SciFi_DarkBg" Color="#CC0A0E17"/>
+        <SolidColorBrush x:Key="SciFi_Border" Color="#4000F0FF"/>
+        <SolidColorBrush x:Key="Text_Normal" Color="#DDDDDD"/>
+        <SolidColorBrush x:Key="Text_Highlight" Color="White"/>
+
+        <Style x:Key="SciFiButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1AFFFFFF"/>
+            <Setter Property="Foreground" Value="{StaticResource SciFi_Cyan}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SciFi_Cyan}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontFamily" Value="Malgun Gothic"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="6">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="2" Opacity="0.5"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#3300F0FF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="White"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#00F0FF" BlurRadius="20" ShadowDepth="0" Opacity="0.8"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1000F0FF"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#10FFFFFF"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#33FFFFFF"/>
+                                <Setter Property="Foreground" Value="#55FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--<Style x:Key="LedStatusStyle" TargetType="Ellipse">
+            <Setter Property="Width" Value="14"/>
+            <Setter Property="Height" Value="14"/>
+            <Setter Property="Fill" Value="#333333"/>
+            <Setter Property="Stroke" Value="#555555"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="{Binding RelativeSource={RelativeSource AncestorType=Ellipse}, Path=Fill.Color}" 
+                                      BlurRadius="6" ShadowDepth="0" Opacity="0.5"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="Green">
+                    --><!--<Setter Property="Stroke" Value="#00FF00"/>--><!--
+                    <Setter Property="Stroke" Value="ForestGreen"/>
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard x:Name="GreenStoryboard" Storyboard="{StaticResource BlinkGreen}"/>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <StopStoryboard BeginStoryboardName="GreenStoryboard"/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="Red">
+                    --><!--<Setter Property="Stroke" Value="#FF0000"/>--><!--
+                    <Setter Property="Stroke" Value="IndianRed"/>
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard x:Name="RedStoryboard" Storyboard="{StaticResource BlinkRed}"/>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <StopStoryboard BeginStoryboardName="RedStoryboard"/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>-->
+
+        <Style x:Key="LedStatusStyle" TargetType="Ellipse">
+            <Setter Property="Width" Value="12"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+
+            <Setter Property="Fill" Value="#222222"/>
+            <Setter Property="Stroke" Value="#555555"/>
+
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Transparent" BlurRadius="12" ShadowDepth="0" Opacity="0.9"/>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="Green">
+                    <Setter Property="Stroke" Value="{StaticResource Holo_Green_Brush}"/>
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard x:Name="GreenStoryboard" Storyboard="{StaticResource BlinkGreen}"/>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <StopStoryboard BeginStoryboardName="GreenStoryboard"/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="Red">
+                    <Setter Property="Stroke" Value="{StaticResource Holo_Red_Brush}"/>
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard x:Name="RedStoryboard" Storyboard="{StaticResource BlinkRed}"/>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <StopStoryboard BeginStoryboardName="RedStoryboard"/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="StatusLabelStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{StaticResource Text_Normal}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+        </Style>
+
+        <Style x:Key="StatusValueBoxStyle" TargetType="Border">
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="Background" Value="#15FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#20FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+
+        <Style x:Key="StatusTextStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="1" Opacity="0.8"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="6">
+            <Image Source="{StaticResource Main_Image}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Fill" Opacity="0.9" />
+            <Border BorderBrush="{StaticResource SciFi_Cyan}" BorderThickness="0,0,0,2" Opacity="0.3" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Border Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Margin="10,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0" Background="{StaticResource SciFi_DarkBg}" CornerRadius="10,10,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="CTRLHwStatus"/>
+                                    <Binding Path="CTRLSwStatus"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 시험운용통제" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="CTRLHwStatus" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="CTRLSwStatus" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="10,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0"  CornerRadius="10,10,0,0" >
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="SCSimHwStatus"/>
+                                    <Binding Path="SCSimSwStatus"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 전장정보 상황인지 모의" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="SCSimHwStatus" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="SCSimSwStatus" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Margin="10,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0"  CornerRadius="10,10,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="ControlOperSimHwStatus"/>
+                                    <Binding Path="ControlOperSimSwStatus"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 임무통제 및 운용 모의" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="ControlOperSimHwStatus" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="ControlOperSimSwStatus" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" Margin="10,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0"  CornerRadius="10,10,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="DisplaySimHwStatus"/>
+                                    <Binding Path="DisplaySimSwStatus"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 시현 모의" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="DisplaySimHwStatus" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="DisplaySimSwStatus" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Margin="10,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0"  CornerRadius="10,10,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="BattleSimHwStatus1"/>
+                                    <Binding Path="BattleSimSwStatus1"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 전장환경 모의 1" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="BattleSimHwStatus1" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="BattleSimSwStatus1" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Margin="10,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0"  CornerRadius="10,10,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="BattleSimHwStatus2"/>
+                                    <Binding Path="BattleSimSwStatus2"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 전장환경 모의 2" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="BattleSimHwStatus2" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="BattleSimSwStatus2" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Margin="10,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0"  CornerRadius="10,10,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="BattleSimHwStatus3"/>
+                                    <Binding Path="BattleSimSwStatus3"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 전장환경 모의 3" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="BattleSimHwStatus3" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="BattleSimSwStatus3" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="3" Grid.Row="4" Grid.RowSpan="2" Margin="10,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0"  CornerRadius="10,10,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="UAVSimHwStatus1"/>
+                                    <Binding Path="UAVSimSwStatus1"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 무인기 모의 1" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="UAVSimHwStatus1" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="UAVSimSwStatus1" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" Margin="10,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0"  CornerRadius="10,10,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="UAVSimHwStatus2"/>
+                                    <Binding Path="UAVSimSwStatus2"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 무인기 모의 2" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="UAVSimHwStatus2" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="UAVSimSwStatus2" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="5" Grid.Row="4" Grid.RowSpan="2" Margin="10,5,16,5" CornerRadius="10" BorderThickness="1" Background="{StaticResource SciFi_DarkBg}" BorderBrush="{StaticResource SciFi_Border}">
+            <Border.Effect>
+                <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.1"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource SciFi_Border}" BorderThickness="0,0,0,1" Margin="10,0"  CornerRadius="10,10,0,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse Style="{StaticResource LedStatusStyle}" Margin="5,0,10,0">
+                            <Ellipse.Tag>
+                                <MultiBinding Converter="{StaticResource StatusToCombinedStatusConverter}">
+                                    <Binding Path="UAVSimHwStatus3"/>
+                                    <Binding Path="UAVSimSwStatus3"/>
+                                </MultiBinding>
+                            </Ellipse.Tag>
+                        </Ellipse>
+                        <TextBlock Text=" 무인기 모의 3" Style="{StaticResource SciFiHeaderStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="15,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="PWR STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="UAVSimHwStatus3" Converter="{StaticResource HwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="S/W STATUS" Style="{StaticResource StatusLabelStyle}"/>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatusValueBoxStyle}">
+                        <TextBlock Style="{StaticResource StatusTextStyle}">
+                            <TextBlock.DataContext>
+                                <Binding Path="UAVSimSwStatus3" Converter="{StaticResource SwStatusToInfoConverter}"/>
+                            </TextBlock.DataContext>
+                            <TextBlock.Text>
+                                <Binding Path="StatusText"/>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                                <Binding Path="StatusBrush"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="7" Grid.Column="0">
+            <Button Content="SW 원격 제어" Style="{StaticResource SciFiButtonStyle}" Margin="{StaticResource UIELEMENT_MARGIN}" Foreground="White">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding ConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Button Content="시나리오 편집&#x0a;시험운용 통제" Style="{StaticResource SciFiButtonStyle}" Margin="{StaticResource UIELEMENT_MARGIN}" Foreground="White">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding ScenarioButtonCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="7" Grid.Column="2">
+            <Button Content="모니터링(전장환경)" Style="{StaticResource SciFiButtonStyle}" Margin="{StaticResource UIELEMENT_MARGIN}" Foreground="White">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding MornitoringCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="7" Grid.Column="3">
+            <Button Content="모니터링(UDP)" Style="{StaticResource SciFiButtonStyle}" Margin="{StaticResource UIELEMENT_MARGIN}" Foreground="White">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding UDPMornitoringCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="7" Grid.Column="4">
+            <Button Content="시험운용 분석 SW" Style="{StaticResource SciFiButtonStyle}" Margin="{StaticResource UIELEMENT_MARGIN}" PreviewMouseDown="Button_PreviewMouseDown" Foreground="White"/>
+        </Grid>
+
+        <Grid Grid.Row="7" Grid.Column="5">
+            <Button Content="종료" Style="{StaticResource SciFiButtonStyle}" Margin="2,1,16,1" Foreground="#FFFFaaaa" BorderBrush="#FFaa0000">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction Command="{Binding QuitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,145 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+
+package REALTIMEVISUAL.Native.FederateInterface;
+
+service FederateService
+{
+	rpc JoinFederationExecution(JoinFederationExecutionReq) returns(stream Notification) {}
+	rpc ResignFederationExecution(ResignFederationExecutionReq) returns(FERsp) {}
+	rpc RegisterObjectInstance(RegisterObjectInstanceReq) returns(FERsp) {}
+	rpc DeleteObjectInstance(DeleteObjectInstanceReq) returns(FERsp) {}
+	rpc UpdateObject(UpdateObjectReq) returns(google.protobuf.Empty) {}
+	rpc SendMessage(SendMessageReq) returns(google.protobuf.Empty) {}
+	rpc AdvanceTime(TimeAdvanceRequest) returns(google.protobuf.Empty) {}
+}
+
+message JoinFederationExecutionReq
+{
+	string federate_id = 1;
+	string federate_role = 2;
+}
+
+message ResignFederationExecutionReq
+{
+	string federate_id = 1;
+	string federate_role = 2;
+}
+
+message RegisterObjectInstanceReq
+{
+	string object_class_name = 1;
+	string object_instance_name = 2;
+}
+
+message DeleteObjectInstanceReq
+{
+	string object_instance_name = 1;
+}
+
+message UpdateObjectReq
+{
+	string object_instance_name = 1;
+	google.protobuf.Any attribute = 2;
+}
+
+message SendMessageReq
+{
+	string name = 1;
+	google.protobuf.Any parameter = 2;
+}
+
+message Notification
+{
+	enumNotifType notif_type = 1;
+	oneof data {
+		FERsp fe_rsp = 2;
+		FederateDiscovered federate_discovered = 3;
+		FederateRemoved federate_removed = 4;
+		ObjectDiscovered object_discovered = 5;
+		ObjectRemoved object_removed = 6;
+		ObjectReflected object_reflected = 7;
+		MessageReceived message_received = 8;
+		TimeAdvanceGrant time_advance_grant = 9;
+	}
+}
+
+enum enumNotifType
+{
+	NOTIF_FE_RSP = 0;
+	NOTIF_FEDERATE_DISCOVERED = 1;
+	NOTIF_FEDERATE_REMOVED = 2;
+	NOTIF_OBJECT_DISCOVERED = 3;
+	NOTIF_OBJECT_REMOVED = 4;
+	NOTIF_OBJECT_REFLECTED = 5;
+	NOTIF_MESSAGE_RECEIVED = 6;
+	NOTIF_TIME_ADVANCE_GRANT = 7;
+}
+
+message FERsp
+{
+	enumFEResult result = 1;
+}
+
+enum enumFEResult {
+	FE_OK = 0;
+	FE_ERROR_ALREADY_EXIST = 1;
+	FE_ERROR_TIMEOUT = 2;
+	FE_ERROR_ALREADY_EXECUTION_MEMBER = 3;
+	FE_ERROR_INVALID_LOGICAL_TIME = 4;
+	FE_ERROR_UNDEFINED_STATUS = 5;
+	FE_SUBSCRIPTION_TERMINATED = 6;
+}
+
+message FederateInfo
+{
+	string federate_id = 1;
+	string federate_role = 2;
+}
+
+message FederateDiscovered
+{
+	repeated FederateInfo federate = 1;
+}
+
+message FederateRemoved
+{
+	FederateInfo federate = 1;
+}
+
+message ObjectDiscovered
+{
+	string object_class_name = 1;
+	string object_instance_name = 2;
+}
+
+message ObjectRemoved
+{
+	string object_instance_name = 1;
+}
+
+message ObjectReflected
+{
+	string object_instance_name = 1;
+	google.protobuf.Any attribute = 2;
+}
+
+message MessageReceived
+{
+	string name = 1;
+	google.protobuf.Any parameter = 2;
+}
+
+message TimeAdvanceRequest
+{
+	string federate_id = 1;
+	double the_time = 2;
+}
+
+message TimeAdvanceGrant
+{
+	enumFEResult result = 1;
+	double the_time = 2;
+}
