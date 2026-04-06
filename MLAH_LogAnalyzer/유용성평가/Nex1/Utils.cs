@@ -193,69 +193,30 @@ namespace MLAH_LogAnalyzer
                         return false;
                     }
 
-                    // 1-1. 0201에서 inputMissionPackageID 읽어서 plan 파일 경로 결정
-                    string msg0201Path = Path.Combine(sbc3Path, "0201");
-                    string planPath;
-                    if (Directory.Exists(msg0201Path))
+                    // 1-1. InputMissionPlan 폴더에서 모든 json 파일 병합
+                    string planFolder = Path.Combine(sbc3Path, "InputMissionPlan");
+                    if (!Directory.Exists(planFolder))
                     {
-                        JsonElement msg0201Data = MergeJsonFiles(msg0201Path, "0201");
-                        string packageId = "100"; // fallback
-                        if (msg0201Data.ValueKind == JsonValueKind.Array && msg0201Data.GetArrayLength() > 0)
-                        {
-                            var first = msg0201Data[0];
-                            if (first.TryGetProperty("inputMissionPackageID", out JsonElement idElem))
-                            {
-                                packageId = idElem.GetRawText();
-                            }
-                        }
-                        planPath = Path.Combine(sbc3Path, "InputMissionPlan", $"{packageId}.json");
-                        logger($"[Utils] 0201에서 InputMissionPackageID={packageId} 확인");
-                    }
-                    else
-                    {
-                        string planDir = Path.Combine(sbc3Path, "InputMissionPlan");
-                        if (Directory.Exists(planDir))
-                        {
-                            var planFiles = Directory.GetFiles(planDir, "*.json");
-                            if (planFiles.Length == 1)
-                            {
-                                planPath = planFiles[0];
-                                logger($"[Utils] 0201 폴더 없음, InputMissionPlan에서 파일 감지: {Path.GetFileName(planPath)}");
-                            }
-                            else if (planFiles.Length > 1)
-                            {
-                                planPath = planFiles[0];
-                                logger($"[Utils] 0201 폴더 없음, InputMissionPlan에 파일 {planFiles.Length}개 — 첫 번째 사용: {Path.GetFileName(planPath)}");
-                            }
-                            else
-                            {
-                                logger($"[Error] 0201 폴더 없고 InputMissionPlan에 json 파일도 없음");
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            logger($"[Error] 0201 폴더, InputMissionPlan 폴더 모두 없음");
-                            return false;
-                        }
-                    }
-
-                    if (!File.Exists(planPath))
-                    {
-                        logger($"[Error] InputMissionPlan 파일 없음: {planPath}");
+                        logger($"[Error] InputMissionPlan 폴더 없음: {planFolder}");
                         return false;
                     }
+
+                    var planJsonFiles = Directory.GetFiles(planFolder, "*.json");
+                    if (planJsonFiles.Length == 0)
+                    {
+                        logger($"[Error] InputMissionPlan 폴더에 json 파일 없음");
+                        return false;
+                    }
+                    logger($"[Utils] InputMissionPlan 파일 {planJsonFiles.Length}개 병합");
 
                     // 2. 파일 병합 및 로드
                     JsonElement agentData = MergeJsonFiles(agentPath, "0401");
                     JsonElement missionData = MergeJsonFiles(missionPath, "0501");
-
-                    using var planStream = File.OpenRead(planPath);
-                    using var planDoc = JsonDocument.Parse(planStream);
+                    JsonElement planData = MergeInputMissionPlanFiles(planFolder);
 
                     // 3. 데이터 빌드 (기존 BuildScenarioData 활용)
                     // targetFolderPath가 null이어도 처리가능하도록 내부 로직이 되어있음
-                    ScenarioData data = BuildScenarioData(agentData, missionData, planDoc.RootElement, targetFolderPath);
+                    ScenarioData data = BuildScenarioData(agentData, missionData, planData, targetFolderPath);
 
                     //원본 경로 정보 주입 (나중에 중복 체크를 위해)
                     data.SourceLogPath = rawFolderPath;
@@ -329,6 +290,45 @@ namespace MLAH_LogAnalyzer
                 string mergedJson = "[" + string.Join(",", allDataJsonStrings) + "]";
 
                 // 결합된 JSON 문자열을 파싱하여 반환
+                using var mergedDoc = JsonDocument.Parse(mergedJson);
+                return mergedDoc.RootElement.Clone();
+            }
+
+            /// <summary>
+            /// InputMissionPlan 폴더 내의 모든 JSON 파일을 읽어서 inputMissionList 배열을 병합
+            /// </summary>
+            private static JsonElement MergeInputMissionPlanFiles(string planFolder)
+            {
+                var allMissionList = new List<string>();
+
+                var jsonFiles = Directory.GetFiles(planFolder, "*.json")
+                                         .OrderBy(f => f)
+                                         .ToList();
+
+                foreach (var jsonFile in jsonFiles)
+                {
+                    try
+                    {
+                        string jsonContent = File.ReadAllText(jsonFile);
+                        using var doc = JsonDocument.Parse(jsonContent);
+
+                        if (doc.RootElement.TryGetProperty("inputMissionList", out JsonElement missionList) &&
+                            missionList.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (var mission in missionList.EnumerateArray())
+                            {
+                                allMissionList.Add(mission.GetRawText());
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"         경고: {Path.GetFileName(jsonFile)} 파일 읽기 실패 - {ex.Message}");
+                    }
+                }
+
+                string mergedJson = "{\"inputMissionList\":[" + string.Join(",", allMissionList) + "]}";
+
                 using var mergedDoc = JsonDocument.Parse(mergedJson);
                 return mergedDoc.RootElement.Clone();
             }
