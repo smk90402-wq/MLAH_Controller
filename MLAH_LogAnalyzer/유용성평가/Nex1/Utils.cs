@@ -186,7 +186,6 @@ namespace MLAH_LogAnalyzer
                     string sbc3Path = Path.Combine(rawFolderPath, "SBC3");
                     string agentPath = Path.Combine(sbc3Path, "0401");
                     string missionPath = Path.Combine(sbc3Path, "0501");
-                    string planPath = Path.Combine(sbc3Path, "InputMissionPlan", "100.json");
 
                     if (!Directory.Exists(agentPath) || !Directory.Exists(missionPath))
                     {
@@ -194,9 +193,39 @@ namespace MLAH_LogAnalyzer
                         return false;
                     }
 
+                    // 1-1. 0201에서 inputMissionPackageID 읽어서 plan 파일 경로 결정
+                    string msg0201Path = Path.Combine(sbc3Path, "0201");
+                    string planPath;
+                    if (Directory.Exists(msg0201Path))
+                    {
+                        JsonElement msg0201Data = MergeJsonFiles(msg0201Path, "0201");
+                        string packageId = "100"; // fallback
+                        if (msg0201Data.ValueKind == JsonValueKind.Array && msg0201Data.GetArrayLength() > 0)
+                        {
+                            var first = msg0201Data[0];
+                            if (first.TryGetProperty("inputMissionPackageID", out JsonElement idElem))
+                            {
+                                packageId = idElem.GetRawText();
+                            }
+                        }
+                        planPath = Path.Combine(sbc3Path, "InputMissionPlan", $"{packageId}.json");
+                        logger($"[Utils] 0201에서 InputMissionPackageID={packageId} 확인");
+                    }
+                    else
+                    {
+                        planPath = Path.Combine(sbc3Path, "InputMissionPlan", "100.json");
+                        logger($"[Utils] 0201 폴더 없음, 기본값 100.json 사용");
+                    }
+
+                    if (!File.Exists(planPath))
+                    {
+                        logger($"[Error] InputMissionPlan 파일 없음: {planPath}");
+                        return false;
+                    }
+
                     // 2. 파일 병합 및 로드
-                    JsonElement agentData = MergeJsonFiles(agentPath, "0401"); // 기존 메서드 재사용
-                    JsonElement missionData = MergeJsonFiles(missionPath, "0501"); // 기존 메서드 재사용
+                    JsonElement agentData = MergeJsonFiles(agentPath, "0401");
+                    JsonElement missionData = MergeJsonFiles(missionPath, "0501");
 
                     using var planStream = File.OpenRead(planPath);
                     using var planDoc = JsonDocument.Parse(planStream);
