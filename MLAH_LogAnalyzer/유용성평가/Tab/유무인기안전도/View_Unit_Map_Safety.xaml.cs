@@ -51,9 +51,9 @@ namespace MLAH_LogAnalyzer
                 _instance = this;
             }
             //InitializeFocusEffect();
-            //SRTM 리더 초기화
-            string srtmPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "srtm_62_05.tif");
-            ViewModel_Unit_Map_Safety.SingletonInstance.InitializeSrtm(srtmPath);
+            // SRTM 비활성화 - loss 필드 사용
+            //string srtmPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "srtm_62_05.tif");
+            //ViewModel_Unit_Map_Safety.SingletonInstance.InitializeSrtm(srtmPath);
         }
 
         // [성능 최적화용] MouseMove 이벤트 조절을 위한 변수
@@ -203,18 +203,17 @@ namespace MLAH_LogAnalyzer
             vm.MapCursorLat = lat;
             vm.MapCursorLon = lon;
 
-            // 2. [추가] 고도 추출 및 업데이트
-            if (vm.SrtmReaderInstance != null)
-            {
-                short elevation = vm.SrtmReaderInstance.GetElevation(lat, lon);
-
-                // 데이터가 없는 곳(-32768)은 0이나 NaN으로 처리
-                vm.MapCursorAlt = (elevation == -32768) ? 0 : elevation;
-            }
-            else
-            {
-                vm.MapCursorAlt = -32768; // SRTM 로드 실패 시
-            }
+            // SRTM 비활성화 - loss 필드 사용
+            // if (vm.SrtmReaderInstance != null)
+            // {
+            //     short elevation = vm.SrtmReaderInstance.GetElevation(lat, lon);
+            //     vm.MapCursorAlt = (elevation == -32768) ? 0 : elevation;
+            // }
+            // else
+            // {
+            //     vm.MapCursorAlt = -32768;
+            // }
+            vm.MapCursorAlt = 0;
         }
 
         private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)

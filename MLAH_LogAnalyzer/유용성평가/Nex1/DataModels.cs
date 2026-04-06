@@ -51,7 +51,7 @@ namespace MLAH_LogAnalyzer
             }
         }
 
-        // 헬기→무인기 LOS 정보 (RealLAHData 기반, 1=LOS, 0=no LOS, null=데이터 없음)
+        // 헬기→무인기 LOS 정보 (RealLAHData 기반, 1=연결실패, 0=연결됨, null=데이터 없음)
         public int? LosUav4 { get; set; }
         public int? LosUav5 { get; set; }
         public int? LosUav6 { get; set; }

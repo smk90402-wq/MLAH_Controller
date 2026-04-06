@@ -67,8 +67,13 @@ namespace MLAH_LogAnalyzer
             }
             else
             {
-                minTime = data.Min(dp => dp.Timestamp);
-                maxTime = data.Max(dp => dp.Timestamp);
+                minTime = DateTime.MaxValue;
+                maxTime = DateTime.MinValue;
+                foreach (var dp in data)
+                {
+                    if (dp.Timestamp < minTime) minTime = dp.Timestamp;
+                    if (dp.Timestamp > maxTime) maxTime = dp.Timestamp;
+                }
                 if (maxTime <= minTime) maxTime = minTime.AddSeconds(1);
             }
 

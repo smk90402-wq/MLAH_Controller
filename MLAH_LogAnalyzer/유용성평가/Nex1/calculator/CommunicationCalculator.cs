@@ -25,8 +25,8 @@ namespace MLAH_LogAnalyzer
     /// <summary>
     /// 통신가용도 계산기
     /// - 헬기(지휘기) -> 무인기 간 통신 LOS 판정
-    /// - RealLAHData의 loss_uav4/5/6 필드 기반 (1=LOS, 0=no LOS)
-    /// - 점수 = (LOS 성공 타임스탬프 / 전체 타임스탬프) x 100
+    /// - RealLAHData의 loss_uav4/5/6 필드 기반 (1=연결실패, 0=연결됨)
+    /// - 점수 = (연결 성공 타임스탬프 / 전체 타임스탬프) x 100
     /// - 헬기 LOS와 UAV 타임스탬프가 정확히 일치하지 않으므로 최근접 매칭 사용
     /// </summary>
     public static class CommunicationCalculator
@@ -142,7 +142,7 @@ namespace MLAH_LogAnalyzer
                     if (!los.HasValue) continue;
 
                     totalTimestamps++;
-                    if (los.Value == 1) totalConnected++;
+                    if (los.Value == 0) totalConnected++;
                 }
             }
 
@@ -219,7 +219,7 @@ namespace MLAH_LogAnalyzer
                     if (!los.HasValue) continue;
 
                     uavMatched++;
-                    bool hasLos = los.Value == 1;
+                    bool hasLos = los.Value == 0;
 
                     if (!hasLos)
                         result.LOSFalseTimestamps[uavKey].Add(uavEntry.Timestamp);
@@ -257,9 +257,11 @@ namespace MLAH_LogAnalyzer
             _geoInfoCache.Clear();
         }
 
+        // SRTM 비활성화 - loss 필드 사용
         public static async Task<bool> CheckLineOfSight(float lat1, float lon1, float alt1, float lat2, float lon2, float alt2, string srtmFilePath, int numSamples = 1000)
         {
-            return await Task.Run(() => CheckLineOfSightSync(lat1, lon1, alt1, lat2, lon2, alt2, srtmFilePath, numSamples));
+            // return await Task.Run(() => CheckLineOfSightSync(lat1, lon1, alt1, lat2, lon2, alt2, srtmFilePath, numSamples));
+            return await Task.FromResult(true);
         }
 
         private const double EarthRadiusKm = 6371.0;
@@ -272,143 +274,149 @@ namespace MLAH_LogAnalyzer
             return Math.Sqrt(x * x + y * y) * EarthRadiusKm;
         }
 
+        // SRTM 비활성화 - loss 필드 사용
         private static bool CheckLineOfSightSync(float lat1, float lon1, float alt1, float lat2, float lon2, float alt2, string srtmFilePath, int numSamples)
         {
-            try
-            {
-                if (!LoadSRTMData(srtmFilePath))
-                {
-                    Console.WriteLine($"SRTM 파일을 로드할 수 없습니다: {srtmFilePath}");
-                    return false;
-                }
-
-                double totalDistance = FastCalculateDistance(lat1, lon1, lat2, lon2);
-                int optimalSamples = (int)Math.Max(10, totalDistance / 30.0);
-
-                for (int i = 0; i < optimalSamples; i++)
-                {
-                    float fraction = optimalSamples > 1 ? (float)i / (optimalSamples - 1) : 0f;
-                    float currentLat = lat1 + fraction * (lat2 - lat1);
-                    float currentLon = lon1 + fraction * (lon2 - lon1);
-                    float lineAltitude = alt1 + fraction * (alt2 - alt1);
-
-                    float? terrainElevation = GetElevation(currentLat, currentLon, srtmFilePath);
-
-                    if (!terrainElevation.HasValue)
-                        return false;
-
-                    if (terrainElevation.Value > lineAltitude)
-                        return false;
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"LOS 계산 중 오류 발생: {ex.Message}");
-                return false;
-            }
+            // try
+            // {
+            //     if (!LoadSRTMData(srtmFilePath))
+            //     {
+            //         Console.WriteLine($"SRTM 파일을 로드할 수 없습니다: {srtmFilePath}");
+            //         return false;
+            //     }
+            //
+            //     double totalDistance = FastCalculateDistance(lat1, lon1, lat2, lon2);
+            //     int optimalSamples = (int)Math.Max(10, totalDistance / 30.0);
+            //
+            //     for (int i = 0; i < optimalSamples; i++)
+            //     {
+            //         float fraction = optimalSamples > 1 ? (float)i / (optimalSamples - 1) : 0f;
+            //         float currentLat = lat1 + fraction * (lat2 - lat1);
+            //         float currentLon = lon1 + fraction * (lon2 - lon1);
+            //         float lineAltitude = alt1 + fraction * (alt2 - alt1);
+            //
+            //         float? terrainElevation = GetElevation(currentLat, currentLon, srtmFilePath);
+            //
+            //         if (!terrainElevation.HasValue)
+            //             return false;
+            //
+            //         if (terrainElevation.Value > lineAltitude)
+            //             return false;
+            //     }
+            //
+            //     return true;
+            // }
+            // catch (Exception ex)
+            // {
+            //     Console.WriteLine($"LOS 계산 중 오류 발생: {ex.Message}");
+            //     return false;
+            // }
+            return true;
         }
 
+        // SRTM 비활성화 - loss 필드 사용
         public static float? GetElevation(float latitude, float longitude, string srtmFilePath)
         {
-            try
-            {
-                if (!_elevationCache.ContainsKey(srtmFilePath) || !_geoInfoCache.ContainsKey(srtmFilePath))
-                    return null;
-
-                var elevationData = _elevationCache[srtmFilePath];
-                var geoInfo = _geoInfoCache[srtmFilePath];
-
-                double latRange = geoInfo.maxLat - geoInfo.minLat;
-                double lonRange = geoInfo.maxLon - geoInfo.minLon;
-
-                double latRatio = (geoInfo.maxLat - (double)latitude) / latRange;
-                double lonRatio = ((double)longitude - geoInfo.minLon) / lonRange;
-
-                int row = (int)(latRatio * (geoInfo.rows - 1));
-                int col = (int)(lonRatio * (geoInfo.cols - 1));
-
-                if (row < 0 || row >= geoInfo.rows || col < 0 || col >= geoInfo.cols)
-                    return null;
-
-                return elevationData[row, col];
-            }
-            catch
-            {
-                return null;
-            }
+            // try
+            // {
+            //     if (!_elevationCache.ContainsKey(srtmFilePath) || !_geoInfoCache.ContainsKey(srtmFilePath))
+            //         return null;
+            //
+            //     var elevationData = _elevationCache[srtmFilePath];
+            //     var geoInfo = _geoInfoCache[srtmFilePath];
+            //
+            //     double latRange = geoInfo.maxLat - geoInfo.minLat;
+            //     double lonRange = geoInfo.maxLon - geoInfo.minLon;
+            //
+            //     double latRatio = (geoInfo.maxLat - (double)latitude) / latRange;
+            //     double lonRatio = ((double)longitude - geoInfo.minLon) / lonRange;
+            //
+            //     int row = (int)(latRatio * (geoInfo.rows - 1));
+            //     int col = (int)(lonRatio * (geoInfo.cols - 1));
+            //
+            //     if (row < 0 || row >= geoInfo.rows || col < 0 || col >= geoInfo.cols)
+            //         return null;
+            //
+            //     return elevationData[row, col];
+            // }
+            // catch
+            // {
+            //     return null;
+            // }
+            return 0;
         }
 
+        // SRTM 비활성화 - loss 필드 사용
         private static bool LoadSRTMData(string srtmFilePath)
         {
-            if (_elevationCache.ContainsKey(srtmFilePath))
-                return true;
-
-            try
-            {
-                if (!File.Exists(srtmFilePath))
-                {
-                    Console.WriteLine($"SRTM 파일이 존재하지 않습니다: {srtmFilePath}");
-                    return false;
-                }
-
-                var originalOut = Console.Out;
-                var originalErr = Console.Error;
-                try
-                {
-                    Console.SetOut(TextWriter.Null);
-                    Console.SetError(TextWriter.Null);
-
-                    using (Tiff tiff = Tiff.Open(srtmFilePath, "r"))
-                    {
-                        if (tiff == null) return false;
-
-                        var widthField = tiff.GetField(TiffTag.IMAGEWIDTH);
-                        var heightField = tiff.GetField(TiffTag.IMAGELENGTH);
-                        if (widthField == null || widthField.Length == 0 || heightField == null || heightField.Length == 0)
-                            return false;
-
-                        int width = widthField[0].ToInt();
-                        int height = heightField[0].ToInt();
-
-                        double minLon = 125.0, maxLat = 40.0, maxLon = 130.0, minLat = 35.0;
-
-                        var elevationData = new float[height, width];
-
-                        for (int row = 0; row < height; row++)
-                        {
-                            byte[] scanline = new byte[tiff.ScanlineSize()];
-                            tiff.ReadScanline(scanline, row);
-
-                            for (int col = 0; col < width; col++)
-                            {
-                                if (col * 2 + 1 < scanline.Length)
-                                {
-                                    short elevation = (short)(scanline[col * 2] | (scanline[col * 2 + 1] << 8));
-                                    if (elevation == -32768) elevation = 0;
-                                    elevationData[row, col] = elevation;
-                                }
-                            }
-                        }
-
-                        _elevationCache[srtmFilePath] = elevationData;
-                        _geoInfoCache[srtmFilePath] = (minLat, maxLat, minLon, maxLon, height, width);
-
-                        return true;
-                    }
-                }
-                finally
-                {
-                    Console.SetOut(originalOut);
-                    Console.SetError(originalErr);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"SRTM 데이터 로드 중 오류 발생: {ex.Message}");
-                return false;
-            }
+            // if (_elevationCache.ContainsKey(srtmFilePath))
+            //     return true;
+            //
+            // try
+            // {
+            //     if (!File.Exists(srtmFilePath))
+            //     {
+            //         Console.WriteLine($"SRTM 파일이 존재하지 않습니다: {srtmFilePath}");
+            //         return false;
+            //     }
+            //
+            //     var originalOut = Console.Out;
+            //     var originalErr = Console.Error;
+            //     try
+            //     {
+            //         Console.SetOut(TextWriter.Null);
+            //         Console.SetError(TextWriter.Null);
+            //
+            //         using (Tiff tiff = Tiff.Open(srtmFilePath, "r"))
+            //         {
+            //             if (tiff == null) return false;
+            //
+            //             var widthField = tiff.GetField(TiffTag.IMAGEWIDTH);
+            //             var heightField = tiff.GetField(TiffTag.IMAGELENGTH);
+            //             if (widthField == null || widthField.Length == 0 || heightField == null || heightField.Length == 0)
+            //                 return false;
+            //
+            //             int width = widthField[0].ToInt();
+            //             int height = heightField[0].ToInt();
+            //
+            //             double minLon = 125.0, maxLat = 40.0, maxLon = 130.0, minLat = 35.0;
+            //
+            //             var elevationData = new float[height, width];
+            //
+            //             for (int row = 0; row < height; row++)
+            //             {
+            //                 byte[] scanline = new byte[tiff.ScanlineSize()];
+            //                 tiff.ReadScanline(scanline, row);
+            //
+            //                 for (int col = 0; col < width; col++)
+            //                 {
+            //                     if (col * 2 + 1 < scanline.Length)
+            //                     {
+            //                         short elevation = (short)(scanline[col * 2] | (scanline[col * 2 + 1] << 8));
+            //                         if (elevation == -32768) elevation = 0;
+            //                         elevationData[row, col] = elevation;
+            //                     }
+            //                 }
+            //             }
+            //
+            //             _elevationCache[srtmFilePath] = elevationData;
+            //             _geoInfoCache[srtmFilePath] = (minLat, maxLat, minLon, maxLon, height, width);
+            //
+            //             return true;
+            //         }
+            //     }
+            //     finally
+            //     {
+            //         Console.SetOut(originalOut);
+            //         Console.SetError(originalErr);
+            //     }
+            // }
+            // catch (Exception ex)
+            // {
+            //     Console.WriteLine($"SRTM 데이터 로드 중 오류 발생: {ex.Message}");
+            //     return false;
+            // }
+            return true;
         }
     }
 }

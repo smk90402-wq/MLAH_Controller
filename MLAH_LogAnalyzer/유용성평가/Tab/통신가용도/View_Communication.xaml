@@ -113,7 +113,7 @@
                   <dxc:LineSeries2D
                   ArgumentDataMember="Timestamp"
                   ArgumentScaleType="DateTime" 
-                  MarkerSize="10" 
+                  MarkerSize="0" 
                   ValueDataMember="Status" ValueScaleType="Numerical" 
                   CrosshairLabelPattern="UAV {S}: {V}" />
               </dxc:XYDiagram2D.SeriesTemplate>

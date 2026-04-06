@@ -281,7 +281,7 @@ namespace MLAH_LogAnalyzer
             {
                 await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Render);
                 await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
-                await Task.Delay(800);
+                await Task.Delay(100);
                 manager.Close();
             }
         }
@@ -478,11 +478,11 @@ namespace MLAH_LogAnalyzer
 
         private void UpdateDisplayPanels(CommunicationPanelData loadedData)
         {
-            // 1. 초기화 (일괄 교체 방식 - 렌더링 최소화)
-            ChartDataUAV1 = new ObservableCollection<CommunicationDataOutput>();
-            ChartDataUAV2 = new ObservableCollection<CommunicationDataOutput>();
-            ChartDataUAV3 = new ObservableCollection<CommunicationDataOutput>();
-            SelectedScenarioGridData = new ObservableCollection<CommunicationDetailItem>();
+            // 1. 초기화 (기존 컬렉션 재사용 - 바인딩 유지)
+            ChartDataUAV1.Clear();
+            ChartDataUAV2.Clear();
+            ChartDataUAV3.Clear();
+            SelectedScenarioGridData.Clear();
             _currentScenarioTimestamps.Clear();
             ViewModel_Unit_Map_Communication.SingletonInstance.ClearEvaluationData();
 
@@ -526,9 +526,9 @@ namespace MLAH_LogAnalyzer
                     }
                 }
 
-                ChartDataUAV1 = new ObservableCollection<CommunicationDataOutput>(uav1List);
-                ChartDataUAV2 = new ObservableCollection<CommunicationDataOutput>(uav2List);
-                ChartDataUAV3 = new ObservableCollection<CommunicationDataOutput>(uav3List);
+                foreach (var item in uav1List) ChartDataUAV1.Add(item);
+                foreach (var item in uav2List) ChartDataUAV2.Add(item);
+                foreach (var item in uav3List) ChartDataUAV3.Add(item);
             }
 
             // 5. 그리드 데이터 채우기 (일괄 교체 - 렌더링 1회)
@@ -555,7 +555,7 @@ namespace MLAH_LogAnalyzer
                     }
                 }
 
-                SelectedScenarioGridData = new ObservableCollection<CommunicationDetailItem>(gridList);
+                foreach (var item in gridList) SelectedScenarioGridData.Add(item);
             }
 
             // 6. 맵 업데이트 (인덱스 미리 빌드하여 첫 슬라이더 이동 시 부하 방지)
