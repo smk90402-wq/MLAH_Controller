@@ -213,8 +213,31 @@ namespace MLAH_LogAnalyzer
                     }
                     else
                     {
-                        planPath = Path.Combine(sbc3Path, "InputMissionPlan", "100.json");
-                        logger($"[Utils] 0201 폴더 없음, 기본값 100.json 사용");
+                        string planDir = Path.Combine(sbc3Path, "InputMissionPlan");
+                        if (Directory.Exists(planDir))
+                        {
+                            var planFiles = Directory.GetFiles(planDir, "*.json");
+                            if (planFiles.Length == 1)
+                            {
+                                planPath = planFiles[0];
+                                logger($"[Utils] 0201 폴더 없음, InputMissionPlan에서 파일 감지: {Path.GetFileName(planPath)}");
+                            }
+                            else if (planFiles.Length > 1)
+                            {
+                                planPath = planFiles[0];
+                                logger($"[Utils] 0201 폴더 없음, InputMissionPlan에 파일 {planFiles.Length}개 — 첫 번째 사용: {Path.GetFileName(planPath)}");
+                            }
+                            else
+                            {
+                                logger($"[Error] 0201 폴더 없고 InputMissionPlan에 json 파일도 없음");
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            logger($"[Error] 0201 폴더, InputMissionPlan 폴더 모두 없음");
+                            return false;
+                        }
                     }
 
                     if (!File.Exists(planPath))
