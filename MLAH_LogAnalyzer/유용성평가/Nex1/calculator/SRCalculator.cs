@@ -448,6 +448,8 @@ namespace MLAH_LogAnalyzer
         /// </summary>
         private static bool IsFootprintInMissionArea(CameraDataLog cameraLog, Geometry missionPolygon, GeometryFactory geometryFactory)
         {
+            if (!HasValidCorners(cameraLog)) return false;
+
             // 1단계: Bounding Box 빠른 검사
             double minLon = Math.Min(cameraLog.CameraTopLeft.Longitude,  cameraLog.CameraBottomLeft.Longitude);
             double maxLon = Math.Max(cameraLog.CameraTopRight.Longitude, cameraLog.CameraBottomRight.Longitude);

@@ -39,9 +39,9 @@ namespace MLAH_LogAnalyzer
             ObservableCollection<CommunicationDataOutput> data3)
         {
             // 1. 데이터 바인딩
-            ScoreChart1.DataSource = data1;
-            ScoreChart2.DataSource = data2;
-            ScoreChart3.DataSource = data3;
+            if (data1 != null) ScoreChart1.DataSource = data1;
+            if (data2 != null) ScoreChart2.DataSource = data2;
+            if (data3 != null) ScoreChart3.DataSource = data3;
 
             // 2. 범위 적용
             ApplyChartRange(ScoreChart1, data1);

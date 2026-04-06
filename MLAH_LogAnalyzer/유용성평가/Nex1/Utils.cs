@@ -389,8 +389,12 @@ namespace MLAH_LogAnalyzer
                 Dictionary<ulong, uint> timestampToSegmentID = new Dictionary<ulong, uint>();
                 foreach (var mission in missionProgress.EnumerateArray())
                 {
-                    ulong timestamp = mission.GetProperty("timestamp").GetUInt64();
-                    uint missionSegmentID = mission.GetProperty("currentInputMissionID").GetUInt32();
+                    if (!mission.TryGetProperty("timestamp", out JsonElement tsElem) ||
+                        !mission.TryGetProperty("currentInputMissionID", out JsonElement missionIdElem))
+                        continue;
+
+                    ulong timestamp = tsElem.GetUInt64();
+                    uint missionSegmentID = missionIdElem.GetUInt32();
 
                     if (savedSegmentID != missionSegmentID)
                     {
@@ -402,13 +406,28 @@ namespace MLAH_LogAnalyzer
 
                 foreach (var agent in agentStatus.EnumerateArray())
                 {
+                    if (!agent.TryGetProperty("agentStateList", out JsonElement agentStateListElem) ||
+                        agentStateListElem.ValueKind != JsonValueKind.Array)
+                        continue;
+
+                    if (!agent.TryGetProperty("timestamp", out JsonElement agentTsElem))
+                        continue;
+
+                    ulong Timestamp = agentTsElem.GetUInt64();
+
+                    var agentStateArray = agentStateListElem.EnumerateArray().ToArray();
+
                     for (int i = 1; i < 7; i++) //UAV 1 ~ 6
                     {
-                        var agentState = agent.GetProperty("agentStateList")[i - 1];
-                        uint AircraftID = agentState.GetProperty("aircraftID").GetUInt32();
-                        //uint AircraftID = agent.GetProperty("agentStateList")[i - 1].GetProperty("aircraftID").GetUInt32(); //0 based index
+                        if (i - 1 >= agentStateArray.Length)
+                            continue;
 
-                        ulong Timestamp = agent.GetProperty("timestamp").GetUInt64();
+                        var agentState = agentStateArray[i - 1];
+
+                        if (!agentState.TryGetProperty("aircraftID", out JsonElement aircraftIdElem))
+                            continue;
+
+                        uint AircraftID = aircraftIdElem.GetUInt32();
                         uint MissionSegmentID = FindSegmentID(Timestamp, criteriaTimes, timestampToSegmentID);
 
                         //if (MissionSegmentID == 0)// 0 인 경우 임무 시작전. ( missionSegmentID 가 null 인 경우)
@@ -557,7 +576,11 @@ namespace MLAH_LogAnalyzer
                             {
                                 foreach (var lah in lahDataArray.EnumerateArray())
                                 {
-                                    uint aircraftId = lah.GetProperty("ID").GetUInt32();
+                                    if (!lah.TryGetProperty("ID", out JsonElement lahIdElem) ||
+                                        lahIdElem.ValueKind != JsonValueKind.Number)
+                                        continue;
+
+                                    uint aircraftId = lahIdElem.GetUInt32();
                                     if (aircraftId > 3) continue;
 
                                     // LOS 필드는 LAHData 각 항목 안에 존재
@@ -607,11 +630,18 @@ namespace MLAH_LogAnalyzer
                                     else
                                     {
                                         // 0401에 해당 헬기 데이터가 전혀 없을 때만 RealLAHData 위치로 보충
+                                        float lahLat = lah.TryGetProperty("Latitude", out JsonElement lahLatElem) && lahLatElem.ValueKind == JsonValueKind.Number
+                                            ? lahLatElem.GetSingle() : 0f;
+                                        float lahLon = lah.TryGetProperty("Longitude", out JsonElement lahLonElem) && lahLonElem.ValueKind == JsonValueKind.Number
+                                            ? lahLonElem.GetSingle() : 0f;
+                                        float lahAlt = lah.TryGetProperty("Altitude", out JsonElement lahAltElem) && lahAltElem.ValueKind == JsonValueKind.Number
+                                            ? lahAltElem.GetSingle() : 0f;
+
                                         FlightDataLog fdLog = new FlightDataLog
                                         {
-                                            Latitude = lah.GetProperty("Latitude").GetSingle(),
-                                            Longitude = lah.GetProperty("Longitude").GetSingle(),
-                                            Altitude = lah.GetProperty("Altitude").GetSingle()
+                                            Latitude = lahLat,
+                                            Longitude = lahLon,
+                                            Altitude = lahAlt
                                         };
 
                                         var newEntry = new FlightData
@@ -814,14 +844,18 @@ namespace MLAH_LogAnalyzer
                                             else if (targetElement.TryGetProperty("TargetID", out JsonElement tidElem) && tidElem.ValueKind == JsonValueKind.Number)
                                                 targetId = tidElem.GetUInt32();
 
+                                            float tgtLat = targetElement.TryGetProperty("Latitude", out JsonElement tgtLatElem) && tgtLatElem.ValueKind == JsonValueKind.Number ? tgtLatElem.GetSingle() : 0f;
+                                            float tgtLon = targetElement.TryGetProperty("Longitude", out JsonElement tgtLonElem) && tgtLonElem.ValueKind == JsonValueKind.Number ? tgtLonElem.GetSingle() : 0f;
+                                            float tgtAlt = targetElement.TryGetProperty("Altitude", out JsonElement tgtAltElem) && tgtAltElem.ValueKind == JsonValueKind.Number ? tgtAltElem.GetSingle() : 0f;
+
                                             var target = new Target
                                             {
                                                 Type = targetElement.TryGetProperty("Type", out JsonElement typeElem) ? typeElem.GetString() ?? string.Empty : string.Empty,
                                                 Subtype = targetElement.TryGetProperty("SubType", out JsonElement subElem) ? subElem.GetString() ?? string.Empty : string.Empty,
                                                 ID = targetId,
-                                                Latitude = targetElement.GetProperty("Latitude").GetSingle(),
-                                                Longitude = targetElement.GetProperty("Longitude").GetSingle(),
-                                                Altitude = targetElement.GetProperty("Altitude").GetSingle(),
+                                                Latitude = tgtLat,
+                                                Longitude = tgtLon,
+                                                Altitude = tgtAlt,
                                                 Status = ParseTargetStatus(targetElement),
                                                 IsEnemy = targetElement.TryGetProperty("IsEnemy", out JsonElement isEnemyElem) && isEnemyElem.GetBoolean(),
                                                 LAH1LOS = targetElement.TryGetProperty("LAH1LOS", out JsonElement lah1Elem) && lah1Elem.GetBoolean(),
@@ -867,12 +901,19 @@ namespace MLAH_LogAnalyzer
             {
                 var missionDetailList = new List<MissionDetail>();
 
-                var inputMissionList = inputMissionPlan.GetProperty("inputMissionList");
+                if (!inputMissionPlan.TryGetProperty("inputMissionList", out JsonElement inputMissionList) ||
+                    inputMissionList.ValueKind != JsonValueKind.Array)
+                    return missionDetailList;
 
                 foreach (var inputMission in inputMissionList.EnumerateArray())
                 {
-                    uint missionSegmentID = inputMission.GetProperty("inputMissionID").GetUInt32();
-                    var missionDetailJson = inputMission.GetProperty("missionDetail");
+                    if (!inputMission.TryGetProperty("inputMissionID", out JsonElement missionIdElem))
+                        continue;
+
+                    uint missionSegmentID = missionIdElem.GetUInt32();
+
+                    if (!inputMission.TryGetProperty("missionDetail", out JsonElement missionDetailJson))
+                        continue;
 
                     var missionDetail = new MissionDetail
                     {
@@ -888,9 +929,12 @@ namespace MLAH_LogAnalyzer
                     {
                         foreach (var lineElement in lineListElement.EnumerateArray())
                         {
+                            uint lineWidth = lineElement.TryGetProperty("width", out JsonElement widthElem) && widthElem.ValueKind == JsonValueKind.Number
+                                ? widthElem.GetUInt32() : 0;
+
                             var line = new LineList
                             {
-                                Width = lineElement.GetProperty("width").GetUInt32(),
+                                Width = lineWidth,
                                 CoordinateList = new List<Coordinate>()
                             };
 
@@ -899,11 +943,15 @@ namespace MLAH_LogAnalyzer
                             {
                                 foreach (var coordElement in coordListElement.EnumerateArray())
                                 {
+                                    float lat = coordElement.TryGetProperty("latitude", out JsonElement latE) && latE.ValueKind == JsonValueKind.Number ? latE.GetSingle() : 0f;
+                                    float lon = coordElement.TryGetProperty("longitude", out JsonElement lonE) && lonE.ValueKind == JsonValueKind.Number ? lonE.GetSingle() : 0f;
+                                    float alt = coordElement.TryGetProperty("altitude", out JsonElement altE) && altE.ValueKind == JsonValueKind.Number ? altE.GetSingle() : 0f;
+
                                     line.CoordinateList.Add(new Coordinate
                                     {
-                                        Latitude = coordElement.GetProperty("latitude").GetSingle(),
-                                        Longitude = coordElement.GetProperty("longitude").GetSingle(),
-                                        Altitude = coordElement.GetProperty("altitude").GetSingle()
+                                        Latitude = lat,
+                                        Longitude = lon,
+                                        Altitude = alt
                                     });
                                 }
                             }
@@ -928,11 +976,15 @@ namespace MLAH_LogAnalyzer
                             {
                                 foreach (var coordElement in coordListElement.EnumerateArray())
                                 {
+                                    float lat = coordElement.TryGetProperty("latitude", out JsonElement latE) && latE.ValueKind == JsonValueKind.Number ? latE.GetSingle() : 0f;
+                                    float lon = coordElement.TryGetProperty("longitude", out JsonElement lonE) && lonE.ValueKind == JsonValueKind.Number ? lonE.GetSingle() : 0f;
+                                    float alt = coordElement.TryGetProperty("altitude", out JsonElement altE) && altE.ValueKind == JsonValueKind.Number ? altE.GetSingle() : 0f;
+
                                     area.CoordinateList.Add(new Coordinate
                                     {
-                                        Latitude = coordElement.GetProperty("latitude").GetSingle(),
-                                        Longitude = coordElement.GetProperty("longitude").GetSingle(),
-                                        Altitude = coordElement.GetProperty("altitude").GetSingle()
+                                        Latitude = lat,
+                                        Longitude = lon,
+                                        Altitude = alt
                                     });
                                 }
                             }
@@ -977,7 +1029,8 @@ namespace MLAH_LogAnalyzer
                     var sortedProgress = missionProgress.EnumerateArray()
                         .Where(p =>
                         {
-                            if (p.TryGetProperty("currentInputMissionID", out JsonElement missionId))
+                            if (p.TryGetProperty("currentInputMissionID", out JsonElement missionId) &&
+                                p.TryGetProperty("timestamp", out _))
                             {
                                 return missionId.GetUInt32() == targetSegmentID;
                             }
@@ -1036,10 +1089,10 @@ namespace MLAH_LogAnalyzer
                             .Where(p =>
                             {
                                 if (p.TryGetProperty("currentInputMissionID", out JsonElement missionId) &&
-                                    p.TryGetProperty("timestamp", out JsonElement ts))
+                                    p.TryGetProperty("timestamp", out JsonElement tsVal))
                                 {
                                     return missionId.GetUInt32() != targetSegmentID &&
-                                           ts.GetUInt64() > lastTimestamp;
+                                           tsVal.GetUInt64() > lastTimestamp;
                                 }
                                 return false;
                             })

@@ -41,6 +41,8 @@ namespace MLAH_LogAnalyzer
         /// </summary>
         private static FlightData? FindClosestLahEntry(ulong timestamp, List<FlightData> lahSorted, List<ulong> lahTimestamps)
         {
+            if (lahTimestamps.Count == 0) return null;
+
             int idx = lahTimestamps.BinarySearch(timestamp);
             if (idx >= 0) return lahSorted[idx]; // 정확 일치
 
@@ -362,8 +364,13 @@ namespace MLAH_LogAnalyzer
                     {
                         if (tiff == null) return false;
 
-                        int width = tiff.GetField(TiffTag.IMAGEWIDTH)[0].ToInt();
-                        int height = tiff.GetField(TiffTag.IMAGELENGTH)[0].ToInt();
+                        var widthField = tiff.GetField(TiffTag.IMAGEWIDTH);
+                        var heightField = tiff.GetField(TiffTag.IMAGELENGTH);
+                        if (widthField == null || widthField.Length == 0 || heightField == null || heightField.Length == 0)
+                            return false;
+
+                        int width = widthField[0].ToInt();
+                        int height = heightField[0].ToInt();
 
                         double minLon = 125.0, maxLat = 40.0, maxLon = 130.0, minLat = 35.0;
 

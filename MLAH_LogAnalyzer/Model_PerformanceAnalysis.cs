@@ -235,9 +235,13 @@ namespace MLAH_LogAnalyzer
             // 0401 비행 데이터 시간 범위도 출력
             if (flightDataList.Count > 0)
             {
-                var fdFirst = flightDataList.Where(f => f.Timestamp > 0).OrderBy(f => f.Timestamp).First();
-                var fdLast = flightDataList.OrderByDescending(f => f.Timestamp).First();
-                Debug.WriteLine($"[MissionStatus] 0401 시간 범위: {fdFirst.Timestamp} ~ {fdLast.Timestamp}");
+                var validFlightData = flightDataList.Where(f => f.Timestamp > 0).OrderBy(f => f.Timestamp);
+                if (validFlightData.Any())
+                {
+                    var fdFirst = validFlightData.First();
+                    var fdLast = flightDataList.OrderByDescending(f => f.Timestamp).First();
+                    Debug.WriteLine($"[MissionStatus] 0401 시간 범위: {fdFirst.Timestamp} ~ {fdLast.Timestamp}");
+                }
             }
 
             // 타겟 데이터 시간순 정렬 (빠른 검색용)
@@ -346,10 +350,11 @@ namespace MLAH_LogAnalyzer
                     .OrderByDescending(m => m.individualMissionID)
                     .FirstOrDefault();
 
-                if (samePkgExecuted != null)
+                if (samePkgExecuted != null
+                    && executedTimeRanges.TryGetValue(samePkgExecuted.individualMissionID, out var samePkgRange))
                 {
                     // 직전 수행 임무의 종료 시점에 배치
-                    markerPosition = executedTimeRanges[samePkgExecuted.individualMissionID].End;
+                    markerPosition = samePkgRange.End;
                 }
                 else
                 {
@@ -361,8 +366,9 @@ namespace MLAH_LogAnalyzer
                         .OrderByDescending(m => m.individualMissionID)
                         .FirstOrDefault();
 
-                    if (anyPrevExecuted != null)
-                        markerPosition = executedTimeRanges[anyPrevExecuted.individualMissionID].End;
+                    if (anyPrevExecuted != null
+                        && executedTimeRanges.TryGetValue(anyPrevExecuted.individualMissionID, out var prevRange))
+                        markerPosition = prevRange.End;
                     else if (missionTimelines.ContainsKey(uavID) && missionTimelines[uavID].Count > 0)
                         markerPosition = missionTimelines[uavID].First().Start; // 최후 폴백: 타임라인 시작
                 }
@@ -808,7 +814,7 @@ namespace MLAH_LogAnalyzer
             if (idx < 0) idx = ~idx;
 
             if (idx == 0) return sortedTargetDataList[0].TargetList ?? new List<Target>();
-            if (idx == sortedTargetDataList.Count) return sortedTargetDataList.Last().TargetList ?? new List<Target>();
+            if (idx >= sortedTargetDataList.Count) return sortedTargetDataList[sortedTargetDataList.Count - 1].TargetList ?? new List<Target>();
 
             long diffBefore = Math.Abs((long)flightTimestamp - (long)targetTimestamps[idx - 1]);
             long diffAfter = Math.Abs((long)flightTimestamp - (long)targetTimestamps[idx]);

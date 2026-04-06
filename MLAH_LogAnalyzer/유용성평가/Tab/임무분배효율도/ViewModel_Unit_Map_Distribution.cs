@@ -228,9 +228,12 @@ namespace MLAH_LogAnalyzer
                             {
                                 calculatedSegments.Add(new MissionDisSegmentData { Points = new List<GeoPoint>(currentPoints), IsPaused = currentIsPaused.Value });
                             }
-                            var lastPoint = currentPoints.Last();
-                            currentPoints.Clear();
-                            currentPoints.Add(lastPoint);
+                            if (currentPoints.Count > 0)
+                            {
+                                var lastPoint = currentPoints.Last();
+                                currentPoints.Clear();
+                                currentPoints.Add(lastPoint);
+                            }
                             currentIsPaused = nextIsPaused;
                         }
                         currentPoints.Add(new GeoPoint(p2.FlightDataLog.Latitude, p2.FlightDataLog.Longitude));

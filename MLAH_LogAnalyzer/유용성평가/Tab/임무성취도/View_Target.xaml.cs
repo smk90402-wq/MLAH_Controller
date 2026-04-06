@@ -241,7 +241,7 @@ namespace MLAH_LogAnalyzer
             SelectedScenarioTargetChartData = new ObservableCollection<TargetChartItem>(chartList);
 
             // 4. 트랙바 설정
-            _timestamps = _cachedScenarioData.FlightData.Select(f => f.Timestamp).Distinct().OrderBy(t => t).ToList();
+            _timestamps = _cachedScenarioData.FlightData?.Select(f => f.Timestamp).Distinct().OrderBy(t => t).ToList() ?? new List<ulong>();
             if (_timestamps.Any())
             {
                 TargetTrackBar.Maximum = _timestamps.Count - 1;
