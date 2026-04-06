@@ -247,6 +247,12 @@ namespace MLAH_LogAnalyzer
                     // ✅ AnalysisResult 로드 부분 삭제
 
                     string fullPath = item.OriginalItem.FullPath;
+                    if (string.IsNullOrEmpty(fullPath))
+                    {
+                        System.Diagnostics.Debug.WriteLine("LoadScenarioDataByPath skipped: fullPath is null or empty.");
+                        UpdateDisplayPanels(null);
+                        return;
+                    }
                     string baseDirectory = Path.GetDirectoryName(fullPath);
 
                     //loaded = await Task.Run(() => {
@@ -327,7 +333,7 @@ namespace MLAH_LogAnalyzer
 
                 CurrentSnapshotTimestampFormatted = displayTimestamp.ToString("HH:mm:ss.fff");
             }
-            catch { CurrentSnapshotTimestampFormatted = "Error"; }
+            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message); CurrentSnapshotTimestampFormatted = "Error"; }
         }
         private void UpdateMapIconsToTimelineIndex(int index)
         {
@@ -542,7 +548,7 @@ namespace MLAH_LogAnalyzer
                     {
                         int totalAttempts = commResult.CommunicationDatas.Count(d => d.AircraftID == uavId);
                         int failCount = kvp.Value.Count;
-                        int successCount = commResult.CommunicationDatas.Count(d => d.AircraftID == uavId && d.Status == 1);
+                        int successCount = commResult.CommunicationDatas.Count(d => d.AircraftID == uavId && d.Status == 0);
                         float availability = (totalAttempts > 0) ? ((float)successCount / totalAttempts * 100.0f) : 0;
 
                         gridList.Add(new CommunicationDetailItem
