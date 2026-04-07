@@ -3390,7 +3390,7 @@ namespace MLAH_Mornitoring_UDP
         public void Clear()
         {
             OptionID = 0;
-            Recommend = false;
+            Recommand = false;
             OptionName = 0;
             SurvivalRate = 0;
             TimeContraction = 0;
@@ -3418,17 +3418,17 @@ namespace MLAH_Mornitoring_UDP
             }
         }
 
-        private bool _Recommend = false;
+        private bool _Recommand = false;
         /// <summary>
         /// 해당 옵션이 추천인지 여부
         /// </summary>
-        public bool Recommend
+        public bool Recommand
         {
-            get { return _Recommend; }
+            get { return _Recommand; }
             set
             {
-                _Recommend = value;
-                OnPropertyChanged("Recommend");
+                _Recommand = value;
+                OnPropertyChanged("Recommand");
             }
         }
 

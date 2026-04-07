@@ -48,10 +48,6 @@ namespace MLAH_Mornitoring_UDP
                             parsedObject = jObj.ToObject<UAVMissionPlan>();
                             messageName = "UAVMissionPlan";
                             break;
-                        case 53113:
-                            parsedObject = jObj.ToObject<MissionPlanOptionInfo>();
-                            messageName = "MissionPlanOptionInfo";
-                            break;
                         case 51310:
                             parsedObject = jObj;
                             messageName = "InputMissionPackageJson";
@@ -355,7 +351,7 @@ namespace MLAH_Mornitoring_UDP
                 option.OptionID = BinaryPrimitives.ReadUInt32BigEndian(span.Slice(offset));
                 offset += 4;
 
-                option.Recommend = span[offset] != 0;
+                option.Recommand = span[offset] != 0;
                 offset += 1;
 
                 option.OptionName = BinaryPrimitives.ReadUInt32BigEndian(span.Slice(offset));
