@@ -51,11 +51,28 @@
         </DataTemplate>
 
         <DataTemplate x:Key="RTBSymbolTemplate">
-            <Image Width="30" Height="30" Source="{StaticResource RTB}">
-                <Image.RenderTransform>
-                    <TranslateTransform X="-15" Y="-15" />
-                </Image.RenderTransform>
-            </Image>
+            <Grid Width="30" Height="30">
+                <Grid.RenderTransform>
+                    <TranslateTransform X="-15" Y="-15"/>
+                </Grid.RenderTransform>
+                <Ellipse Fill="#CC080A10" Stroke="#00F0FF" StrokeThickness="2"/>
+                <!-- 원형 복귀 화살표 (270도 호) -->
+                <Path Stroke="#00F0FF" StrokeThickness="1.5" StrokeStartLineCap="Round">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure StartPoint="15,3" IsClosed="False">
+                                <ArcSegment Point="5,12" Size="12,12" SweepDirection="Counterclockwise" IsLargeArc="True"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+                <!-- 화살표 머리 -->
+                <Path Fill="#00F0FF" Data="M 2,8 L 5,12 L 8,7 Z"/>
+                <!-- RTB 텍스트 -->
+                <TextBlock Text="RTB" Foreground="#00F0FF" FontWeight="Bold" FontSize="7.5"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Margin="0,3,0,0" FontFamily="Consolas"/>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="UnitToolTipTemplate" DataType="{x:Type local:UnitMapObjectInfo}">
