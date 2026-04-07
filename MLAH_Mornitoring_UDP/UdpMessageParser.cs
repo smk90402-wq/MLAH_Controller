@@ -40,6 +40,10 @@ namespace MLAH_Mornitoring_UDP
 
                     switch (messageId)
                     {
+                        case 2:
+                            parsedObject = jObj.ToObject<InitScenario>();
+                            messageName = "InitScenario";
+                            break;
                         case 53111:
                             parsedObject = jObj.ToObject<LAHMissionPlan>();
                             messageName = "LAHMissionPlan";
@@ -94,6 +98,10 @@ namespace MLAH_Mornitoring_UDP
                         case 4:
                             parsedObject = ParseSensorControlCommand(buffer);
                             messageName = "SensorControlCommand";
+                            break;
+                        case 5:
+                            parsedObject = ParseSensorInfo(buffer);
+                            messageName = "SensorInfo";
                             break;
                         case 6:
                             parsedObject = ParseLahStates(buffer);
@@ -156,6 +164,39 @@ namespace MLAH_Mornitoring_UDP
             status.DeviceID = CommonUtil.ReadUInt32BigEndian(buffer, 4);
             status.State = CommonUtil.ReadUInt32BigEndian(buffer, 8);
             return status;
+        }
+
+        public static SensorInfo ParseSensorInfo(byte[] buffer)
+        {
+            // MessageID(4) + UavID(4) + float*5(20) + int(4) + int(4) + float*2+int(12) * 5 = 96 bytes
+            if (buffer.Length < 96) return null;
+            var info = new SensorInfo();
+            int offset = 0;
+            info.MessageID = CommonUtil.ReadUInt32BigEndian(buffer, offset); offset += 4;
+            info.UavID = CommonUtil.ReadUInt32BigEndian(buffer, offset); offset += 4;
+            info.HorizontalFov = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.VerticalFov = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.DiagonalFov = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.SensorCenterLat = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.SensorCenterLon = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.SensorCenterAlt = CommonUtil.ReadInt32BigEndian(buffer, offset); offset += 4;
+            info.SlantRange = CommonUtil.ReadInt32BigEndian(buffer, offset); offset += 4;
+            info.FootPrintCenterLat = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintCenterLon = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintCenterAlt = CommonUtil.ReadInt32BigEndian(buffer, offset); offset += 4;
+            info.FootPrintLeftTopLat = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintLeftTopLon = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintLeftTopAlt = CommonUtil.ReadInt32BigEndian(buffer, offset); offset += 4;
+            info.FootPrintRightTopLat = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintRightTopLon = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintRightTopAlt = CommonUtil.ReadInt32BigEndian(buffer, offset); offset += 4;
+            info.FootPrintRightBottomLat = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintRightBottomLon = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintRightBottomAlt = CommonUtil.ReadInt32BigEndian(buffer, offset); offset += 4;
+            info.FootPrintLeftBottomLat = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintLeftBottomLon = CommonUtil.ReadSingleBigEndian(buffer, offset); offset += 4;
+            info.FootPrintLeftBottomAlt = CommonUtil.ReadInt32BigEndian(buffer, offset);
+            return info;
         }
 
         public static SensorControlCommand ParseSensorControlCommand(byte[] buffer)
