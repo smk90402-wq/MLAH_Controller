@@ -62,7 +62,16 @@ namespace MLAH_Controller
 
                 switch (targetType)
                 {
-                    case TargetType.BattleSim1: BattleSimHwStatus1 = status; break;
+                    // .201: 전장환경1 + 상황인지 (같은 HW)
+                    case TargetType.BattleSim1:
+                        BattleSimHwStatus1 = status;
+                        SCSimHwStatus = status;
+                        break;
+                    case TargetType.SituationAwareness:
+                        SCSimHwStatus = status;
+                        BattleSimHwStatus1 = status;
+                        break;
+
                     case TargetType.BattleSim2: BattleSimHwStatus2 = status; break;
                     case TargetType.BattleSim3: BattleSimHwStatus3 = status; break;
 
@@ -70,15 +79,19 @@ namespace MLAH_Controller
                     case TargetType.UAVSim2: UAVSimHwStatus2 = status; break;
                     case TargetType.UAVSim3: UAVSimHwStatus3 = status; break;
 
-                    case TargetType.MissionControl: ControlOperSimHwStatus = status; break;
-                    case TargetType.DisplaySim: DisplaySimHwStatus = status; break;
-                    case TargetType.SituationAwareness: SCSimHwStatus = status; break;
+                    // .100: 임무통제 + 시현모의 + ICD (같은 HW)
+                    case TargetType.MissionControl:
+                        ControlOperSimHwStatus = status;
+                        DisplaySimHwStatus = status;
+                        break;
+                    case TargetType.DisplaySim:
+                        DisplaySimHwStatus = status;
+                        ControlOperSimHwStatus = status;
+                        break;
 
-                    // 💡 [테스트용 추가] RTVTest2 수신 시 전장환경 모의 1(BattleSim1) LED로 확인
                     case TargetType.RTVTest2:
                         BattleSimHwStatus1 = status;
                         SCSimHwStatus = status;
-                        //System.Diagnostics.Debug.WriteLine($"[TEST] RTVTest2 HW 상태 수신: {status}");
                         break;
                 }
             });
