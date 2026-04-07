@@ -3390,10 +3390,12 @@ namespace MLAH_Mornitoring_UDP
         public void Clear()
         {
             OptionID = 0;
+            Recommend = false;
             OptionName = 0;
             SurvivalRate = 0;
             TimeContraction = 0;
             RecogEffectiveness = 0;
+            FuelWarning = 0;
             Distance = 0;
             Target = 0;
             UAVMissionPlanIDListN = 0;
@@ -3413,6 +3415,20 @@ namespace MLAH_Mornitoring_UDP
             {
                 _OptionID = value;
                 OnPropertyChanged("OptionID");
+            }
+        }
+
+        private bool _Recommend = false;
+        /// <summary>
+        /// 해당 옵션이 추천인지 여부
+        /// </summary>
+        public bool Recommend
+        {
+            get { return _Recommend; }
+            set
+            {
+                _Recommend = value;
+                OnPropertyChanged("Recommend");
             }
         }
 
@@ -3483,6 +3499,22 @@ namespace MLAH_Mornitoring_UDP
             {
                 _RecogEffectiveness = value;
                 OnPropertyChanged("RecogEffectiveness");
+            }
+        }
+
+        private int _FuelWarning = 0;
+        /// <summary>
+        /// 해당 임무계획이 연료의 부족이 존재할 가능성이 있는지 알림
+        /// -1 : 연료주의
+        ///  0 : 연료양호
+        /// </summary>
+        public int FuelWarning
+        {
+            get { return _FuelWarning; }
+            set
+            {
+                _FuelWarning = value;
+                OnPropertyChanged("FuelWarning");
             }
         }
 
@@ -3602,7 +3634,91 @@ namespace MLAH_Mornitoring_UDP
         }
     }
 
+    public class PilotDecision
+    {
+        public uint MessageID = 51331;
+        public byte PresenceVector { get; } = 0x00;
+        public byte[] Timestamp { get; set; } = new byte[5];
+        public bool Ignore;
+        public uint EditOptionsIDConverter;
+    }
 
+    public class MissionUpdatewithoutPilotDecision : CommonBase
+    {
+        public uint MessageID = 53114;
+        public byte PresenceVector { get; } = 0x00;
+        public byte[] Timestamp { get; set; } = new byte[5];
 
+        private uint _UAVMissionPlanIDListN = 0;
+        public uint UAVMissionPlanIDListN
+        {
+            get { return _UAVMissionPlanIDListN; }
+            set
+            {
+                _UAVMissionPlanIDListN = value;
+                OnPropertyChanged("UAVMissionPlanIDListN");
+            }
+        }
+
+        private ObservableCollection<uint> _UAVMissionPlanIDList = new ObservableCollection<uint>();
+        public ObservableCollection<uint> UAVMissionPlanIDList
+        {
+            get { return _UAVMissionPlanIDList; }
+            set
+            {
+                _UAVMissionPlanIDList = value;
+                OnPropertyChanged("UAVMissionPlanIDList");
+            }
+        }
+
+        private uint _LAHMissionPlanIDListN = 0;
+        public uint LAHMissionPlanIDListN
+        {
+            get { return _LAHMissionPlanIDListN; }
+            set
+            {
+                _LAHMissionPlanIDListN = value;
+                OnPropertyChanged("LAHMissionPlanIDListN");
+            }
+        }
+
+        private ObservableCollection<uint> _LAHMissionPlanIDList = new ObservableCollection<uint>();
+        public ObservableCollection<uint> LAHMissionPlanIDList
+        {
+            get { return _LAHMissionPlanIDList; }
+            set
+            {
+                _LAHMissionPlanIDList = value;
+                OnPropertyChanged("LAHMissionPlanIDList");
+            }
+        }
+    }
+
+    public class MissionResultData
+    {
+        public ushort SplitInfo { get; set; }
+        public ushort DataLength { get; set; }
+        public uint SourceID { get; set; }
+        public uint DestID { get; set; }
+        public ushort MessageID { get; set; }
+        public ushort Properties { get; set; }
+        public byte PresenceVector { get; set; }
+        public long Timestamp { get; set; }
+        public uint SystemRecommend { get; set; }
+
+        public string RecommendText
+        {
+            get
+            {
+                switch (SystemRecommend)
+                {
+                    case 1: return "다음 협업기저임무 추천";
+                    case 2: return "현재 협업기저임무 재수행 추천";
+                    case 3: return "모든 협업기저임무 완료";
+                    default: return "알 수 없음";
+                }
+            }
+        }
+    }
 
 }
