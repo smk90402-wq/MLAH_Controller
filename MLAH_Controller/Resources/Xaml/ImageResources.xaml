@@ -44,7 +44,7 @@
     <BitmapImage x:Key="LAH_RED" UriSource="pack://application:,,,/Resources/Images/LAH_RED.png"/>
     <BitmapImage x:Key="LAH_BLUE" UriSource="pack://application:,,,/Resources/Images/LAH_BLUE.png"/>
 
-    <BitmapImage x:Key="Hostile_Tank" UriSource="pack://application:,,,/Resources/Images/Tank_TopView.png"/>
+    <BitmapImage x:Key="Hostile_Tank" UriSource="pack://application:,,,/Resources/Images/BlackTank_TopView.png"/>
     <BitmapImage x:Key="Hostile_Panzer" UriSource="pack://application:,,,/Resources/Images/Hostile_Panzer.png"/>
     <BitmapImage x:Key="Hostile" UriSource="pack://application:,,,/Resources/Images/Hostile.png"/>
     <BitmapImage x:Key="Hostile_AAG" UriSource="pack://application:,,,/Resources/Images/Hostile_AAG.png"/>
