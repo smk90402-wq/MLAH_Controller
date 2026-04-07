@@ -536,149 +536,30 @@ namespace MLAH_Controller
         public async Task SensorInfo_Send(SensorInfo Input)
         {
             var data = SerializeSensorInfo(Input);
-            //await UDPModule.SingletonInstance.SendUDPMessageAsync(data, "192.168.20.101", 50002);
-            _ = Task.Run(() =>
-            {
-                try
-                {
-                    UDPModule.SingletonInstance.SendUDPMessageAsync(data, "192.168.20.101", 50002);
-                }
-                catch (Exception ex)
-                {
-                    // 여기에 예외 로깅 로직 추가
-                    //Debug.WriteLine($"[Error] UDP Send Failed: {ex.Message}");
-                }
-            });
-
-            //await UDPModule.SingletonInstance.SendUDPMessageAsync(data, "192.168.20.102", 50002);
-            _ = Task.Run(() =>
-            {
-                try
-                {
-                    UDPModule.SingletonInstance.SendUDPMessageAsync(data, "192.168.20.102", 50002);
-                }
-                catch (Exception ex)
-                {
-                    // 여기에 예외 로깅 로직 추가
-                    //Debug.WriteLine($"[Error] UDP Send Failed: {ex.Message}");
-                }
-            });
-
-            //await UDPModule.SingletonInstance.SendUDPMessageAsync(data, "192.168.20.103", 50002);
-            _ = Task.Run(() =>
-            {
-                try
-                {
-                    UDPModule.SingletonInstance.SendUDPMessageAsync(data, "192.168.20.103", 50002);
-                }
-                catch (Exception ex)
-                {
-                    // 여기에 예외 로깅 로직 추가
-                    //Debug.WriteLine($"[Error] UDP Send Failed: {ex.Message}");
-                }
-            });
+            // 첫 번째 IP만 pipe 전달 (모니터링용), 나머지는 UDP만
+            await UDPModule.SingletonInstance.SendUDPMessageAsync(data, "192.168.20.101", 50002);
+            _ = UDPModule.SingletonInstance.SendUDPOnlyAsync(data, "192.168.20.102", 50002);
+            _ = UDPModule.SingletonInstance.SendUDPOnlyAsync(data, "192.168.20.103", 50002);
         }
 
         public async Task UAVMalFunction_Send(UAVMalFunctionCommand Input)
         {
-            _ = Task.Run(() =>
+            using (var ms = new MemoryStream())
+            using (var bw = new CommonUtil.BigEndianBinaryWriter(ms))
             {
-                try
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        //using (var bw = new BinaryWriter(ms))
-                        using (var bw = new CommonUtil.BigEndianBinaryWriter(ms))
-                        {
-                            bw.Write(Input.MessageID);
-                            bw.Write(Input.UavID);
-                            bw.Write(Input.Health);
-                            bw.Write(Input.PayloadHealth);
-                            bw.Write(Input.FuelWarning);
+                bw.Write(Input.MessageID);
+                bw.Write(Input.UavID);
+                bw.Write(Input.Health);
+                bw.Write(Input.PayloadHealth);
+                bw.Write(Input.FuelWarning);
+                bw.Flush();
 
-                            // BinaryWriter를 Dispose하거나 Flush하면, 내부 버퍼가 MemoryStream으로 완전히 써집니다.
-                            bw.Flush();
-
-                            // 메모리스트림에 쓰인 전체 데이터를 byte[]로 추출
-                            //byte[] data = ms.ToArray();
-
-                            // 최종적으로 byte[]를 UDP 전송
-                            UDPModule.SingletonInstance.SendUDPMessageAsync(ms.ToArray(), "192.168.20.101", 50002);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // 여기에 예외 로깅 로직 추가
-                    //Debug.WriteLine($"[Error] UDP Send Failed: {ex.Message}");
-                }
-            });
-
-            _ = Task.Run(() =>
-            {
-                try
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        //using (var bw = new BinaryWriter(ms))
-                        using (var bw = new CommonUtil.BigEndianBinaryWriter(ms))
-                        {
-                            bw.Write(Input.MessageID);
-                            bw.Write(Input.UavID);
-                            bw.Write(Input.Health);
-                            bw.Write(Input.PayloadHealth);
-                            bw.Write(Input.FuelWarning);
-
-                            // BinaryWriter를 Dispose하거나 Flush하면, 내부 버퍼가 MemoryStream으로 완전히 써집니다.
-                            bw.Flush();
-
-                            // 메모리스트림에 쓰인 전체 데이터를 byte[]로 추출
-                            //byte[] data = ms.ToArray();
-
-                            // 최종적으로 byte[]를 UDP 전송
-                            UDPModule.SingletonInstance.SendUDPMessageAsync(ms.ToArray(), "192.168.20.102", 50002);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // 여기에 예외 로깅 로직 추가
-                    //Debug.WriteLine($"[Error] UDP Send Failed: {ex.Message}");
-                }
-            });
-
-            _ = Task.Run(() =>
-            {
-                try
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        //using (var bw = new BinaryWriter(ms))
-                        using (var bw = new CommonUtil.BigEndianBinaryWriter(ms))
-                        {
-                            bw.Write(Input.MessageID);
-                            bw.Write(Input.UavID);
-                            bw.Write(Input.Health);
-                            bw.Write(Input.PayloadHealth);
-                            bw.Write(Input.FuelWarning);
-
-                            // BinaryWriter를 Dispose하거나 Flush하면, 내부 버퍼가 MemoryStream으로 완전히 써집니다.
-                            bw.Flush();
-
-                            // 메모리스트림에 쓰인 전체 데이터를 byte[]로 추출
-                            //byte[] data = ms.ToArray();
-
-                            // 최종적으로 byte[]를 UDP 전송
-                            UDPModule.SingletonInstance.SendUDPMessageAsync(ms.ToArray(), "192.168.20.103", 50002);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // 여기에 예외 로깅 로직 추가
-                    //Debug.WriteLine($"[Error] UDP Send Failed: {ex.Message}");
-                }
-            });
+                var data = ms.ToArray();
+                // 첫 번째 IP만 pipe 전달 (모니터링용), 나머지는 UDP만
+                await UDPModule.SingletonInstance.SendUDPMessageAsync(data, "192.168.20.101", 50002);
+                _ = UDPModule.SingletonInstance.SendUDPOnlyAsync(data, "192.168.20.102", 50002);
+                _ = UDPModule.SingletonInstance.SendUDPOnlyAsync(data, "192.168.20.103", 50002);
+            }
         }
 
         //public async Task LAHMalFunctionState_Send(LAHMalFunctionState Input)

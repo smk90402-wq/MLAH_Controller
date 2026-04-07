@@ -631,8 +631,21 @@ namespace MLAH_Controller
                     UdpData = data // 실제로 보낸 데이터(data 파라미터)를 담습니다.
                 };
 
-        
+
                 NamedPipeSenderUDP.Instance.SendData(rawPacket);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"UDP 송신 오류: {ex.Message}");
+            }
+        }
+
+        // UDP만 전송, NamedPipe 전달 없음 (다중 IP 전송 시 중복 모니터링 방지)
+        public async Task SendUDPOnlyAsync(byte[] data, string targetIp, int targetPort)
+        {
+            try
+            {
+                await _sender.SendAsync(data, data.Length, targetIp, targetPort);
             }
             catch (Exception ex)
             {
