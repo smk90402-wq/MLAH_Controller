@@ -151,6 +151,23 @@ namespace MLAH_Controller
                 if (vm.IsTempINITMissionPolygonEditMode) StartEditing(ViewModel_Unit_Map.EditLayerType.TempInitMission);
                 else EndEditing(ViewModel_Unit_Map.EditLayerType.TempInitMission);
             }
+            else if (e.PropertyName == nameof(ViewModel_Unit_Map.FilterFlightRefInfo))
+            {
+                FlightAreaPolygonLayer.Visibility = vm.FilterFlightRefInfo ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                ProhibitedAreaPolygonLayer.Visibility = vm.FilterFlightRefInfo ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                TakeOverPointLayer.Visibility = vm.FilterFlightRefInfo ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                HandOverPointLayer.Visibility = vm.FilterFlightRefInfo ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            }
+            else if (e.PropertyName == nameof(ViewModel_Unit_Map.FilterLAHPlan))
+            {
+                LAHStaticLayer.Visibility = vm.FilterLAHPlan ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                LAHWaypointMarkerLayer.Visibility = vm.FilterLAHPlan ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            }
+            else if (e.PropertyName == nameof(ViewModel_Unit_Map.FilterUAVPlan))
+            {
+                UAVWaypointLayer.Visibility = vm.FilterUAVPlan ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                UAVWaypointMarkerLayer.Visibility = vm.FilterUAVPlan ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            }
         }
 
         private void MapEditor_MapItemEdited(object sender, MapItemEditedEventArgs e)

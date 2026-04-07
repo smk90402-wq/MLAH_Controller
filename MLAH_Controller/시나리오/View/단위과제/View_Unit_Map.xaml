@@ -42,8 +42,8 @@
                FontWeight="Bold"
                HorizontalAlignment="Center"
                VerticalAlignment="Bottom"
-               Margin="0,0,0,20"  
-               Visibility="Visible"/>
+               Margin="0,0,0,20"
+               Visibility="{Binding Source={x:Static local:ViewModel_Unit_Map.SingletonInstance}, Path=FilterEntityID, Converter={StaticResource BoolToVis}}"/>
             </Grid>
         </DataTemplate>
 
@@ -271,10 +271,11 @@
                         </dxm:ListSourceDataAdapter>
                     </dxm:VectorLayer>
 
-                    <dxm:VectorLayer x:Name="LAHStaticLayer" 
-                 EnableSelection="False" 
-                 EnableHighlighting="False" 
-                 ToolTipEnabled="False">
+                    <dxm:VectorLayer x:Name="LAHStaticLayer"
+                 EnableSelection="False"
+                 EnableHighlighting="False"
+                 ToolTipEnabled="False"
+>
                         <!--<dxm:VectorLayer.CacheMode>
                             <BitmapCache RenderAtScale="1"/>
                         </dxm:VectorLayer.CacheMode>-->
@@ -308,9 +309,10 @@
                         </dxm:ListSourceDataAdapter>
                     </dxm:VectorLayer>-->
 
-                    <dxm:VectorLayer x:Name="LAHWaypointMarkerLayer" 
-                 EnableSelection="False" 
-                 EnableHighlighting="False">
+                    <dxm:VectorLayer x:Name="LAHWaypointMarkerLayer"
+                 EnableSelection="False"
+                 EnableHighlighting="False"
+>
                         <dxm:ListSourceDataAdapter DataSource="{Binding LAHWpMarkerList}">
                             <dxm:ListSourceDataAdapter.ItemSettings>
                                 <dxm:MapCustomElementSettings>
@@ -359,7 +361,8 @@
                         </dxm:ListSourceDataAdapter>
                     </dxm:VectorLayer>
 
-                    <dxm:VectorLayer x:Name="UAVWaypointLayer" ShapeStroke="#1E90FF" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                    <dxm:VectorLayer x:Name="UAVWaypointLayer" ShapeStroke="#1E90FF" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False"
+>
                         <dxm:ListSourceDataAdapter DataSource="{Binding UAVWapointList}">
                             <dxm:ListSourceDataAdapter.ItemSettings>
                                 <dxm:MapPolylineSettings IsHitTestVisible="False" />
@@ -384,9 +387,9 @@
                     </dxm:VectorLayer>
 
 
-                    <dxm:VectorLayer x:Name="UAVWaypointMarkerLayer" 
-                 EnableSelection="False" 
-                 EnableHighlighting="False" 
+                    <dxm:VectorLayer x:Name="UAVWaypointMarkerLayer"
+                 EnableSelection="False"
+                 EnableHighlighting="False"
                  ToolTipEnabled="False">
 
                         <dxm:ListSourceDataAdapter DataSource="{Binding UAVWpMarkerList}">
@@ -453,7 +456,8 @@
                         <dxm:MapItemStorage x:Name="INITMissionPolygonEditStorage"/>
                     </dxm:VectorLayer>
 
-                    <dxm:VectorLayer x:Name="FlightAreaPolygonLayer" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                    <dxm:VectorLayer x:Name="FlightAreaPolygonLayer" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False"
+>
                         <dxm:ListSourceDataAdapter DataSource="{Binding FlightAreaPolygonList}">
                             <dxm:ListSourceDataAdapter.Mappings>
                                 <dxm:MapMultipointItemMappingInfo Points="Coordinates"/>
@@ -465,7 +469,8 @@
                         <dxm:MapItemStorage x:Name="FlightAreaEditStorage"/>
                     </dxm:VectorLayer>
 
-                    <dxm:VectorLayer x:Name="ProhibitedAreaPolygonLayer" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                    <dxm:VectorLayer x:Name="ProhibitedAreaPolygonLayer" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False"
+>
                         <dxm:ListSourceDataAdapter DataSource="{Binding ProhibitedAreaPolygonList}">
                             <dxm:ListSourceDataAdapter.Mappings>
                                 <dxm:MapMultipointItemMappingInfo Points="Coordinates"/>
@@ -707,7 +712,8 @@
                     </dxm:VectorLayer>
 
 
-                    <dxm:VectorLayer x:Name="HandOverPointLayer" ShapeFill="Blue" ShapeStroke="White" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False">
+                    <dxm:VectorLayer x:Name="HandOverPointLayer" ShapeFill="Blue" ShapeStroke="White" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False"
+>
                         <dxm:ListSourceDataAdapter DataSource="{Binding HandOverPointList}">
                             <dxm:ListSourceDataAdapter.Mappings>
                                 <dxm:MapItemMappingInfo Latitude="Latitude" Longitude="Longitude"/>
@@ -950,9 +956,57 @@
             <Border Background="#80080A10" BorderBrush="#4000F0FF" BorderThickness="0,1,0,0">
                 <Grid>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-                        <Button x:Name="btnToggleMap" 
-                                Content="Web Map" 
-                                Width="120" Height="28" 
+                        <ToggleButton x:Name="FilterToggle"
+                                      Content="Filter"
+                                      Width="80" Height="28"
+                                      Style="{StaticResource HudButtonStyle}">
+                            <ToggleButton.Effect>
+                                <DropShadowEffect Color="#00F0FF" BlurRadius="5" ShadowDepth="0" Opacity="0.4"/>
+                            </ToggleButton.Effect>
+                        </ToggleButton>
+
+                        <Popup IsOpen="{Binding IsChecked, ElementName=FilterToggle}"
+                               StaysOpen="False"
+                               PlacementTarget="{Binding ElementName=FilterToggle}"
+                               Placement="Top"
+                               AllowsTransparency="True">
+                            <Border Background="#F2080A10"
+                                    BorderBrush="{StaticResource SciFi_Cyan}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Padding="10"
+                                    Margin="0,0,0,5">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#00F0FF" BlurRadius="10" ShadowDepth="0" Opacity="0.3"/>
+                                </Border.Effect>
+                                <StackPanel>
+                                    <TextBlock Text="지도 필터" Foreground="{StaticResource SciFi_Cyan}" FontSize="11" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+                                    <StackPanel>
+                                        <StackPanel.Resources>
+                                            <Style TargetType="CheckBox">
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="FontSize" Value="11"/>
+                                                <Setter Property="Margin" Value="5,3"/>
+                                                <Setter Property="LayoutTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <CheckBox Content="객체 번호" IsChecked="{Binding FilterEntityID}"/>
+                                        <CheckBox Content="비행참조정보" IsChecked="{Binding FilterFlightRefInfo}"/>
+                                        <CheckBox Content="LAH 계획" IsChecked="{Binding FilterLAHPlan}"/>
+                                        <CheckBox Content="UAV 계획" IsChecked="{Binding FilterUAVPlan}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+
+                        <Button x:Name="btnToggleMap"
+                                Content="Web Map"
+                                Width="120" Height="28"
+                                Margin="8,0,0,0"
                                 Style="{StaticResource HudButtonStyle}"
                                 Click="btnToggleMap_Click">
                             <Button.Effect>

@@ -432,15 +432,15 @@ namespace MLAH_Controller
 
                         if (uavInfo.CameraGoalPosition.Count >= 5)
                         {
-                            unit.FootPrintLeftTopLat = (float)uavInfo.CameraGoalPosition[2].Latitude;
-                            unit.FootPrintLeftTopLon = (float)uavInfo.CameraGoalPosition[2].Longitude;
-                            unit.FootPrintLeftTopAlt = (int)uavInfo.CameraGoalPosition[2].Altitude;
-                            unit.FootPrintRightTopLat = (float)uavInfo.CameraGoalPosition[4].Latitude;
-                            unit.FootPrintRightTopLon = (float)uavInfo.CameraGoalPosition[4].Longitude;
-                            unit.FootPrintRightTopAlt = (int)uavInfo.CameraGoalPosition[4].Altitude;
-                            unit.FootPrintLeftBottomLat = (float)uavInfo.CameraGoalPosition[1].Latitude;
-                            unit.FootPrintLeftBottomLon = (float)uavInfo.CameraGoalPosition[1].Longitude;
-                            unit.FootPrintLeftBottomAlt = (int)uavInfo.CameraGoalPosition[1].Altitude;
+                            unit.FootPrintLeftTopLat = (float)uavInfo.CameraGoalPosition[1].Latitude;
+                            unit.FootPrintLeftTopLon = (float)uavInfo.CameraGoalPosition[1].Longitude;
+                            unit.FootPrintLeftTopAlt = (int)uavInfo.CameraGoalPosition[1].Altitude;
+                            unit.FootPrintRightTopLat = (float)uavInfo.CameraGoalPosition[2].Latitude;
+                            unit.FootPrintRightTopLon = (float)uavInfo.CameraGoalPosition[2].Longitude;
+                            unit.FootPrintRightTopAlt = (int)uavInfo.CameraGoalPosition[2].Altitude;
+                            unit.FootPrintLeftBottomLat = (float)uavInfo.CameraGoalPosition[4].Latitude;
+                            unit.FootPrintLeftBottomLon = (float)uavInfo.CameraGoalPosition[4].Longitude;
+                            unit.FootPrintLeftBottomAlt = (int)uavInfo.CameraGoalPosition[4].Altitude;
                             unit.FootPrintRightBottomLat = (float)uavInfo.CameraGoalPosition[3].Latitude;
                             unit.FootPrintRightBottomLon = (float)uavInfo.CameraGoalPosition[3].Longitude;
                             unit.FootPrintRightBottomAlt = (int)uavInfo.CameraGoalPosition[3].Altitude;

@@ -183,15 +183,15 @@ namespace MLAH_Controller
                     FootPrintCenterLat = (float)item.CameraGoalPosition[0].Latitude,
                     FootPrintCenterLon = (float)item.CameraGoalPosition[0].Longitude,
                     FootPrintCenterAlt = (int)item.CameraGoalPosition[0].Altitude,
-                    FootPrintLeftTopLat = (float)item.CameraGoalPosition[2].Latitude,
-                    FootPrintLeftTopLon = (float)item.CameraGoalPosition[2].Longitude,
-                    FootPrintLeftTopAlt = (int)item.CameraGoalPosition[2].Altitude,
-                    FootPrintRightTopLat = (float)item.CameraGoalPosition[4].Latitude,
-                    FootPrintRightTopLon = (float)item.CameraGoalPosition[4].Longitude,
-                    FootPrintRightTopAlt = (int)item.CameraGoalPosition[4].Altitude,
-                    FootPrintLeftBottomLat = (float)item.CameraGoalPosition[1].Latitude,
-                    FootPrintLeftBottomLon = (float)item.CameraGoalPosition[1].Longitude,
-                    FootPrintLeftBottomAlt = (int)item.CameraGoalPosition[1].Altitude,
+                    FootPrintLeftTopLat = (float)item.CameraGoalPosition[1].Latitude,
+                    FootPrintLeftTopLon = (float)item.CameraGoalPosition[1].Longitude,
+                    FootPrintLeftTopAlt = (int)item.CameraGoalPosition[1].Altitude,
+                    FootPrintRightTopLat = (float)item.CameraGoalPosition[2].Latitude,
+                    FootPrintRightTopLon = (float)item.CameraGoalPosition[2].Longitude,
+                    FootPrintRightTopAlt = (int)item.CameraGoalPosition[2].Altitude,
+                    FootPrintLeftBottomLat = (float)item.CameraGoalPosition[4].Latitude,
+                    FootPrintLeftBottomLon = (float)item.CameraGoalPosition[4].Longitude,
+                    FootPrintLeftBottomAlt = (int)item.CameraGoalPosition[4].Altitude,
                     FootPrintRightBottomLat = (float)item.CameraGoalPosition[3].Latitude,
                     FootPrintRightBottomLon = (float)item.CameraGoalPosition[3].Longitude,
                     FootPrintRightBottomAlt = (int)item.CameraGoalPosition[3].Altitude
@@ -782,13 +782,13 @@ namespace MLAH_Controller
                 bw.Write(input.FootPrintRightTopLon);
                 bw.Write(input.FootPrintRightTopAlt);
 
-                bw.Write(input.FootPrintLeftBottomLat);
-                bw.Write(input.FootPrintLeftBottomLon);
-                bw.Write(input.FootPrintLeftBottomAlt);
-
                 bw.Write(input.FootPrintRightBottomLat);
                 bw.Write(input.FootPrintRightBottomLon);
                 bw.Write(input.FootPrintRightBottomAlt);
+
+                bw.Write(input.FootPrintLeftBottomLat);
+                bw.Write(input.FootPrintLeftBottomLon);
+                bw.Write(input.FootPrintLeftBottomAlt);
 
                 bw.Flush();
                 return ms.ToArray();

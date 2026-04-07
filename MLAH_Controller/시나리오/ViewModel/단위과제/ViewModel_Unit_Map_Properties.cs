@@ -600,5 +600,37 @@ namespace MLAH_Controller
                 }
             }
         }
+
+        // ──────────────────────────────────────────────
+        //  지도 레이어 필터
+        // ──────────────────────────────────────────────
+
+        private bool _FilterEntityID = true;
+        public bool FilterEntityID
+        {
+            get => _FilterEntityID;
+            set { _FilterEntityID = value; OnPropertyChanged(nameof(FilterEntityID)); }
+        }
+
+        private bool _FilterFlightRefInfo = true;
+        public bool FilterFlightRefInfo
+        {
+            get => _FilterFlightRefInfo;
+            set { _FilterFlightRefInfo = value; OnPropertyChanged(nameof(FilterFlightRefInfo)); }
+        }
+
+        private bool _FilterLAHPlan = true;
+        public bool FilterLAHPlan
+        {
+            get => _FilterLAHPlan;
+            set { _FilterLAHPlan = value; OnPropertyChanged(nameof(FilterLAHPlan)); }
+        }
+
+        private bool _FilterUAVPlan = true;
+        public bool FilterUAVPlan
+        {
+            get => _FilterUAVPlan;
+            set { _FilterUAVPlan = value; OnPropertyChanged(nameof(FilterUAVPlan)); }
+        }
     }
 }
