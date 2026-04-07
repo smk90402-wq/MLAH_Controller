@@ -797,11 +797,6 @@ namespace MLAH_Controller
                         temp_imagesource = (ImageSource)Application.Current.Resources["Hostile_AAG"];
                     }
                     break;
-                case 9:
-                    {
-                        temp_imagesource = (ImageSource)Application.Current.Resources["Hostile_Soldier"];
-                    }
-                    break;
                 default:
                     {
 
