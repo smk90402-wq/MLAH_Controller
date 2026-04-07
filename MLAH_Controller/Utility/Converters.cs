@@ -1285,8 +1285,8 @@ namespace MLAH_Controller
             var heading = (double)values[0];
             var type = (int)values[1];
 
-            // Type이 1 (UAV) 또는 3 (LAH)일 경우에만 heading 값을 반환
-            if (type == 1 || type == 3)
+            // Type 1(UAV), 3(LAH), 4(장갑차), 5(탱크)일 경우 heading 값을 반환
+            if (type == 1 || type == 3 || type == 4 || type == 5)
             {
                 return heading;
             }
