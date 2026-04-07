@@ -44,8 +44,128 @@
     <BitmapImage x:Key="LAH_RED" UriSource="pack://application:,,,/Resources/Images/LAH_RED.png"/>
     <BitmapImage x:Key="LAH_BLUE" UriSource="pack://application:,,,/Resources/Images/LAH_BLUE.png"/>
 
-    <BitmapImage x:Key="Hostile_Tank" UriSource="pack://application:,,,/Resources/Images/Hostile_Tank.png"/>
-    <BitmapImage x:Key="Hostile_Panzer" UriSource="pack://application:,,,/Resources/Images/Hostile_Panzer.png"/>
+    <!-- Hostile Tank (탱크, type=5): 측면 실루엣 -->
+    <DrawingImage x:Key="Hostile_Tank">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <!-- 궤도 -->
+                <GeometryDrawing Brush="#C03030">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 8,82 Q 8,95 20,95 L 80,95 Q 92,95 92,82 L 92,72 L 8,72 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 차체 -->
+                <GeometryDrawing Brush="#D84040">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 10,72 L 10,52 L 25,42 L 88,42 L 90,48 L 90,72 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 포탑 -->
+                <GeometryDrawing Brush="#E05050">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 36,42 L 38,26 L 64,24 L 64,42 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 포신 -->
+                <GeometryDrawing Brush="#E05050">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 64,29 L 98,25 L 98,32 L 64,35 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Hostile APC (장갑차, type=4): 측면 실루엣 -->
+    <DrawingImage x:Key="Hostile_Panzer">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <!-- 궤도 -->
+                <GeometryDrawing Brush="#C03030">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 8,82 Q 8,95 20,95 L 80,95 Q 92,95 92,82 L 92,72 L 8,72 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 차체 (높고 경사진 전면) -->
+                <GeometryDrawing Brush="#D84040">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 10,72 L 10,35 L 28,18 L 88,18 L 90,25 L 90,72 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 소형 포탑 -->
+                <GeometryDrawing Brush="#E05050">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 55,18 L 56,8 L 72,8 L 72,18 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 짧은 포신 -->
+                <GeometryDrawing Brush="#E05050">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 72,10 L 90,8 L 90,14 L 72,15 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <!-- Hostile Special Forces (특작군인, type=9): 군인 실루엣 -->
+    <DrawingImage x:Key="Hostile_Soldier">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <!-- 헬멧/머리 -->
+                <GeometryDrawing Brush="#D84040">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="45,18" RadiusX="12" RadiusY="11"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 몸통 -->
+                <GeometryDrawing Brush="#D84040">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 32,30 L 28,72 L 40,72 L 42,52 L 48,52 L 50,72 L 62,72 L 58,30 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 왼팔 -->
+                <GeometryDrawing Brush="#D84040">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 32,34 L 18,55 L 24,58 L 36,42 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="1.5"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 오른팔 + 소총 -->
+                <GeometryDrawing Brush="#D84040">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 58,34 L 72,50 L 66,54 L 54,42 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="1.5"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 소총 -->
+                <GeometryDrawing Brush="#501010">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 68,18 L 72,50 L 76,49 L 72,17 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#401010" Thickness="1"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <!-- 다리 -->
+                <GeometryDrawing Brush="#C03030">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M 28,72 L 24,95 L 36,95 L 40,72 Z M 50,72 L 54,95 L 66,95 L 62,72 Z"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen><Pen Brush="#501010" Thickness="2"/></GeometryDrawing.Pen>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
     <BitmapImage x:Key="Hostile" UriSource="pack://application:,,,/Resources/Images/Hostile.png"/>
     <BitmapImage x:Key="Hostile_AAG" UriSource="pack://application:,,,/Resources/Images/Hostile_AAG.png"/>
     <BitmapImage x:Key="KUH" UriSource="pack://application:,,,/Resources/Images/KUH.png"/>
