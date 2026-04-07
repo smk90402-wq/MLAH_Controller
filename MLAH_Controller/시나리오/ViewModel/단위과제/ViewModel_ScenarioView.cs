@@ -1365,7 +1365,9 @@ namespace MLAH_Controller
         {
             ViewModel_ScenarioObject_PopUp.SingletonInstance.PopupMode = VisibilityMode.Add;
             ViewModel_ScenarioObject_PopUp.SingletonInstance.ModeVisibilitySetter(VisibilityMode.Add);
-            ViewModel_ScenarioObject_PopUp.SingletonInstance.POSSelectChecked = true;
+            ViewModel_ScenarioObject_PopUp.SingletonInstance.IsInfoPanelVisible = true;
+            ViewModel_ScenarioObject_PopUp.SingletonInstance.CurrentModeTitle = "신규 객체 위치 설정";
+            ViewModel_ScenarioObject_PopUp.SingletonInstance.CurrentShortcutKey = "A";
             CommonUtil.ShowFadeWindow(ViewName.ScenarioObjectPopUp);
         }
 
@@ -1433,7 +1435,9 @@ namespace MLAH_Controller
         {
             ViewModel_ScenarioObject_PopUp.SingletonInstance.PopupMode = VisibilityMode.Edit;
             ViewModel_ScenarioObject_PopUp.SingletonInstance.ModeVisibilitySetter(VisibilityMode.Edit);
-            ViewModel_ScenarioObject_PopUp.SingletonInstance.POSSelectChecked = true;
+            ViewModel_ScenarioObject_PopUp.SingletonInstance.IsInfoPanelVisible = true;
+            ViewModel_ScenarioObject_PopUp.SingletonInstance.CurrentModeTitle = "객체 위치 수정";
+            ViewModel_ScenarioObject_PopUp.SingletonInstance.CurrentShortcutKey = "A";
             CommonUtil.ShowFadeWindow(ViewName.ScenarioObjectPopUp);
         }
 
