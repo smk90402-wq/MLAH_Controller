@@ -109,6 +109,12 @@ namespace MLAH_Controller
             {
                 vm.InitializeFixedPolygons();}), DispatcherPriority.Background);
 
+            // NEX1 버전이면 Web Map 버튼 숨김
+            if (CommonUtil.IPConfig.IsNex1)
+            {
+                btnToggleMap.Visibility = System.Windows.Visibility.Collapsed;
+            }
+
         
         }
 

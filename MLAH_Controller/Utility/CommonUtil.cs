@@ -286,6 +286,7 @@ namespace MLAH_Controller
             public static string GrpcServerIP { get; private set; } = "192.168.30.78";
             public static string UdpSendIP { get; private set; } = "192.168.30.78";
             public static string UdpRecvIP { get; private set; } = "192.168.20.200";
+            public static bool IsNex1 { get; private set; } = false;
 
             public static void Load()
             {
@@ -299,11 +300,13 @@ namespace MLAH_Controller
                         GrpcServerIP = "192.168.20.200";
                         UdpSendIP = "192.168.20.201";
                         UdpRecvIP = "192.168.20.200";
+                        IsNex1 = true;
                         break;
                     default: // Local
                         GrpcServerIP = "192.168.30.78";
                         UdpSendIP = "192.168.30.78";
                         UdpRecvIP = "192.168.20.200";
+                        IsNex1 = false;
                         break;
                 }
 
