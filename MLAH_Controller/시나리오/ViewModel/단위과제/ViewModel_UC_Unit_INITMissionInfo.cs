@@ -1265,6 +1265,11 @@ namespace MLAH_Controller
             {
                 case 1:
                     {
+                        // 기존 점 제거 (중복 방지)
+                        var pointToRemove = mapVM.INITMissionPointList
+                            .FirstOrDefault(p => p.MissionID == (int)Input.InputMissionID);
+                        if (pointToRemove != null) mapVM.INITMissionPointList.Remove(pointToRemove);
+
                         var InputPoint = new CustomMapPoint();
                         InputPoint.MissionID = (int)Input.InputMissionID;
                         InputPoint.TagString = Input.InputMissionID.ToString();
@@ -1276,6 +1281,16 @@ namespace MLAH_Controller
 
                 case 2:
                     {
+                        // 0. 기존에 이 임무로 그려진 선/회랑/라벨 제거 (중복 방지)
+                        var lineToRemove = mapVM.INITMissionLineList.FirstOrDefault(l => l.MissionId == (int)Input.InputMissionID);
+                        if (lineToRemove != null) mapVM.INITMissionLineList.Remove(lineToRemove);
+
+                        var linePolygonsToRemove = mapVM.INITMissionLinePolygonList.Where(p => p.MissionID == (int)Input.InputMissionID).ToList();
+                        foreach (var p in linePolygonsToRemove) mapVM.INITMissionLinePolygonList.Remove(p);
+
+                        var labelToRemove = mapVM.INITMissionLineLabelList.FirstOrDefault(p => p.MissionID == (int)Input.InputMissionID);
+                        if (labelToRemove != null) mapVM.INITMissionLineLabelList.Remove(labelToRemove);
+
                         // 1. 중심선 객체 생성 (데이터 모델로부터)
                         var drawingLine = new CustomMapLine { MissionId = (int)Input.InputMissionID };
 
