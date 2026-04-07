@@ -959,7 +959,11 @@
                         <ToggleButton x:Name="FilterToggle"
                                       Content="Filter"
                                       Width="80" Height="28"
-                                      Style="{StaticResource HudButtonStyle}">
+                                      Foreground="#00F0FF"
+                                      Background="#40000000"
+                                      BorderBrush="#8000F0FF"
+                                      BorderThickness="1"
+                                      FontSize="12" FontWeight="Bold">
                             <ToggleButton.Effect>
                                 <DropShadowEffect Color="#00F0FF" BlurRadius="5" ShadowDepth="0" Opacity="0.4"/>
                             </ToggleButton.Effect>
