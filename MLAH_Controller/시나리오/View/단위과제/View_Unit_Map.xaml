@@ -24,10 +24,10 @@
             <Grid>
                 <!--CacheMode="BitmapCache"-->
                 <Border MouseEnter="Element_MouseEnter" MouseLeave="Element_MouseLeave" >
-                    <Image Source="{Binding imagesource}" Width="40" Height="40" MouseLeftButtonDown="Element_MouseLeftButtonDown">
+                    <Image Source="{Binding imagesource}" Width="60" Height="60" MouseLeftButtonDown="Element_MouseLeftButtonDown">
                         <Image.RenderTransform>
                             <TransformGroup>
-                                <RotateTransform CenterX="20" CenterY="20">
+                                <RotateTransform CenterX="30" CenterY="30">
                                     <RotateTransform.Angle>
                                         <MultiBinding Converter="{StaticResource ConditionalRotationConverter }">
                                             <Binding Path="Heading" />
@@ -35,7 +35,7 @@
                                         </MultiBinding>
                                     </RotateTransform.Angle>
                                 </RotateTransform>
-                                <TranslateTransform X="-20" Y="-20" />
+                                <TranslateTransform X="-30" Y="-30" />
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
@@ -45,7 +45,7 @@
                FontWeight="Bold"
                HorizontalAlignment="Center"
                VerticalAlignment="Bottom"
-               Margin="0,0,0,20"
+               Margin="0,0,0,30"
                Visibility="{Binding Source={x:Static local:ViewModel_Unit_Map.SingletonInstance}, Path=FilterEntityID, Converter={StaticResource BoolToVisLocal}}"/>
             </Grid>
         </DataTemplate>
