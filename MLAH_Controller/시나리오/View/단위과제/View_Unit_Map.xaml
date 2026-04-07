@@ -55,24 +55,10 @@
                 <Grid.RenderTransform>
                     <TranslateTransform X="-17" Y="-17"/>
                 </Grid.RenderTransform>
-                <!-- 흰색 배경 원 (OSM 위 가시성) -->
-                <Ellipse Fill="White" Stroke="#E04000" StrokeThickness="2.5"/>
-                <!-- 복귀 화살표 (원 테두리 안쪽) -->
-                <Path Stroke="#E04000" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
-                    <Path.Data>
-                        <PathGeometry>
-                            <PathFigure StartPoint="17,4.5" IsClosed="False">
-                                <ArcSegment Point="8,9" Size="13,13" SweepDirection="Counterclockwise" IsLargeArc="True"/>
-                            </PathFigure>
-                        </PathGeometry>
-                    </Path.Data>
-                </Path>
-                <!-- 화살표 머리 -->
-                <Path Fill="#E04000" Data="M 5.5,6 L 8,9.5 L 10,5.5 Z"/>
-                <!-- RTB 텍스트 -->
-                <TextBlock Text="RTB" Foreground="#E04000" FontWeight="ExtraBold" FontSize="10"
+                <Ellipse Fill="White" Stroke="#1565C0" StrokeThickness="2.5"/>
+                <TextBlock Text="RTB" Foreground="#1565C0" FontWeight="ExtraBold" FontSize="10"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Margin="0,3,0,0" FontFamily="Arial"/>
+                           FontFamily="Arial"/>
             </Grid>
         </DataTemplate>
 
