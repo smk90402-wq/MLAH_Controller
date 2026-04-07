@@ -1271,6 +1271,8 @@ namespace MLAH_Controller
             //};
             //View_ScenarioObject_PopUp.SingletonInstance.BeginAnimation(Window.OpacityProperty, fadeOutAnimation);
 
+            POSSelectChecked = false;
+            IsInfoPanelVisible = false;
             View_ScenarioObject_PopUp.SingletonInstance.Hide();
         }
 
@@ -1278,6 +1280,8 @@ namespace MLAH_Controller
 
         public void CancelCommandAction(object param)
         {
+            POSSelectChecked = false;
+            IsInfoPanelVisible = false;
             View_ScenarioObject_PopUp.SingletonInstance.Hide();
         }
 
