@@ -51,27 +51,28 @@
         </DataTemplate>
 
         <DataTemplate x:Key="RTBSymbolTemplate">
-            <Grid Width="30" Height="30">
+            <Grid Width="34" Height="34">
                 <Grid.RenderTransform>
-                    <TranslateTransform X="-15" Y="-15"/>
+                    <TranslateTransform X="-17" Y="-17"/>
                 </Grid.RenderTransform>
-                <Ellipse Fill="#CC080A10" Stroke="#00F0FF" StrokeThickness="2"/>
-                <!-- 원형 복귀 화살표 (270도 호) -->
-                <Path Stroke="#00F0FF" StrokeThickness="1.5" StrokeStartLineCap="Round">
+                <!-- 흰색 배경 원 (OSM 위 가시성) -->
+                <Ellipse Fill="White" Stroke="#E04000" StrokeThickness="2.5"/>
+                <!-- 복귀 화살표 (원 테두리 안쪽) -->
+                <Path Stroke="#E04000" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
                     <Path.Data>
                         <PathGeometry>
-                            <PathFigure StartPoint="15,3" IsClosed="False">
-                                <ArcSegment Point="5,12" Size="12,12" SweepDirection="Counterclockwise" IsLargeArc="True"/>
+                            <PathFigure StartPoint="17,4.5" IsClosed="False">
+                                <ArcSegment Point="8,9" Size="13,13" SweepDirection="Counterclockwise" IsLargeArc="True"/>
                             </PathFigure>
                         </PathGeometry>
                     </Path.Data>
                 </Path>
                 <!-- 화살표 머리 -->
-                <Path Fill="#00F0FF" Data="M 2,8 L 5,12 L 8,7 Z"/>
+                <Path Fill="#E04000" Data="M 5.5,6 L 8,9.5 L 10,5.5 Z"/>
                 <!-- RTB 텍스트 -->
-                <TextBlock Text="RTB" Foreground="#00F0FF" FontWeight="Bold" FontSize="7.5"
+                <TextBlock Text="RTB" Foreground="#E04000" FontWeight="ExtraBold" FontSize="10"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Margin="0,3,0,0" FontFamily="Consolas"/>
+                           Margin="0,3,0,0" FontFamily="Arial"/>
             </Grid>
         </DataTemplate>
 
