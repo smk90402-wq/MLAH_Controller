@@ -779,7 +779,7 @@
                         </dxm:ListSourceDataAdapter>
                     </dxm:VectorLayer>
 
-                    <dxm:VectorLayer x:Name="ObjectDisplayLayer">
+                    <dxm:VectorLayer x:Name="ObjectDisplayLayer" Canvas.ZIndex="200">
                         <dxm:ListSourceDataAdapter DataSource="{Binding ObjectDisplayList}">
                             <dxm:ListSourceDataAdapter.ItemSettings>
                                 <dxm:MapCustomElementSettings 

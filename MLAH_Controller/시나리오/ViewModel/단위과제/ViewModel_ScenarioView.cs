@@ -1365,6 +1365,7 @@ namespace MLAH_Controller
         {
             ViewModel_ScenarioObject_PopUp.SingletonInstance.PopupMode = VisibilityMode.Add;
             ViewModel_ScenarioObject_PopUp.SingletonInstance.ModeVisibilitySetter(VisibilityMode.Add);
+            ViewModel_ScenarioObject_PopUp.SingletonInstance.POSSelectChecked = true;
             CommonUtil.ShowFadeWindow(ViewName.ScenarioObjectPopUp);
         }
 
@@ -1432,6 +1433,7 @@ namespace MLAH_Controller
         {
             ViewModel_ScenarioObject_PopUp.SingletonInstance.PopupMode = VisibilityMode.Edit;
             ViewModel_ScenarioObject_PopUp.SingletonInstance.ModeVisibilitySetter(VisibilityMode.Edit);
+            ViewModel_ScenarioObject_PopUp.SingletonInstance.POSSelectChecked = true;
             CommonUtil.ShowFadeWindow(ViewName.ScenarioObjectPopUp);
         }
 
