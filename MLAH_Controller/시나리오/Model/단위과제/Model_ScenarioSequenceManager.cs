@@ -166,19 +166,21 @@ namespace MLAH_Controller
             // [개선 2] 다른 UDP 송신 작업들도 모두 동일하게 처리
             _ = Task.Run(() => Lah_States_Send(message));
 
+            // SensorInfo는 observation 주기로 바로 전송
+            _ = Task.Run(() => UAVSensorInfoSend(message));
 
             DateTime now = DateTime.Now;
             if ((now - _lastLahStatesSentTime).TotalSeconds >= 5.0)
             {
                 _ = Task.Run(() => LAHMalFunctionState_Send(message));
-                _ = Task.Run(() => UAVStatusSend(message));
+                _ = Task.Run(() => UAVMalFunctionSend(message));
                 _lastLahStatesSentTime = now;
             }
         }
 
 
-        // UAV별 SensorInfo + UAVMalFunctionCommand 일괄 전송
-        public async Task UAVStatusSend(ObservationRequest message)
+        // UAV별 SensorInfo 전송 (observation 주기)
+        public async Task UAVSensorInfoSend(ObservationRequest message)
         {
             if (message?.Uavs == null) return;
 
@@ -212,6 +214,17 @@ namespace MLAH_Controller
                     FootPrintRightBottomAlt = (int)item.CameraGoalPosition[3].Altitude
                 };
 
+                await SensorInfo_Send(input);
+            }
+        }
+
+        // UAV별 MalFunctionCommand 전송 (5초 주기)
+        public async Task UAVMalFunctionSend(ObservationRequest message)
+        {
+            if (message?.Uavs == null) return;
+
+            foreach (var item in message.Uavs)
+            {
                 UAVMalFunctionCommand inputMalfunction = new UAVMalFunctionCommand
                 {
                     MessageID = 8,
@@ -221,7 +234,6 @@ namespace MLAH_Controller
                     FuelWarning = (uint)item.FuelStatus,
                 };
 
-                await SensorInfo_Send(input);
                 await UAVMalFunction_Send(inputMalfunction);
             }
         }
