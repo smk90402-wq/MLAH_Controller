@@ -167,6 +167,21 @@ namespace MLAH_Controller
             _ = Task.Run(() => Lah_States_Send(message));
 
 
+            DateTime now = DateTime.Now;
+            if ((now - _lastLahStatesSentTime).TotalSeconds >= 5.0)
+            {
+                _ = Task.Run(() => LAHMalFunctionState_Send(message));
+                _ = Task.Run(() => UAVStatusSend(message));
+                _lastLahStatesSentTime = now;
+            }
+        }
+
+
+        // UAV별 SensorInfo + UAVMalFunctionCommand 일괄 전송
+        public async Task UAVStatusSend(ObservationRequest message)
+        {
+            if (message?.Uavs == null) return;
+
             foreach (var item in message.Uavs)
             {
                 SensorInfo input = new SensorInfo
@@ -197,57 +212,19 @@ namespace MLAH_Controller
                     FootPrintRightBottomAlt = (int)item.CameraGoalPosition[3].Altitude
                 };
 
-                //var cause = item.Abnormalcause;
-
-                //var inputfuel = 1;
-                //if(cause.Fueldenger == 1)
-                //{
-                //    inputfuel = 3;
-                //}
-                //else if (cause.Fuelwarning == 1)
-                //{
-                //    inputfuel = 2;
-                //}
-                //else if(cause.Fueldenger == 0 && cause.Fuelwarning == 0 && cause.Fuelzero == 0)
-                //{
-                //    inputfuel = 1;
-                //}
-
-
-
                 UAVMalFunctionCommand inputMalfunction = new UAVMalFunctionCommand
                 {
                     MessageID = 8,
                     UavID = (uint)item.Id,
-
-                    //신일 기준 0:알수없음 1:정상 2:비정상
                     Health = (uint)item.HealthStatus,
-
-                    //신일 기준 0:알수없음 1:정상 2:비정상
-                    //전장상황 0:정상 1:비정상
                     PayloadHealth = (uint)item.SensorStatus,
-
-                    //신일 기준 0:알수없음 1:양호 2:경고 3:위험
                     FuelWarning = (uint)item.FuelStatus,
                 };
 
-                //await SensorInfo_Send(input);
-
-                _ = Task.Run(() => SensorInfo_Send(input));
-
-                //류재형 작업
-                _ = Task.Run(() => UAVMalFunction_Send(inputMalfunction));
-            }
-
-            DateTime now = DateTime.Now;
-            if ((now - _lastLahStatesSentTime).TotalSeconds >= 5.0)
-            {
-                //await LAHMalFunctionState_Send(message);
-                _ = Task.Run(() => LAHMalFunctionState_Send(message));
-                _lastLahStatesSentTime = now;
+                await SensorInfo_Send(input);
+                await UAVMalFunction_Send(inputMalfunction);
             }
         }
-
 
         // ViewModel이 UI 갱신을 위해 최신 데이터들을 가져가는 메서드
         public ConcurrentDictionary<uint, SensorControlCommand> GetLatestSensorCommands()
