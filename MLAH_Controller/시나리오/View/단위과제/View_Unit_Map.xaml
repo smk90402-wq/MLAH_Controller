@@ -129,7 +129,7 @@
         
         <Grid Grid.ColumnSpan="2">
             <dxm:MapControl x:Name="mapControl" CenterPoint="38.128774, 127.318005" FlowDirection="LeftToRight" IsManipulationEnabled="True" EnableRotation="False"  
-                            MaxZoomLevel="15" MinZoomLevel="8"
+                            MaxZoomLevel="16" MinZoomLevel="8"
                             MouseDown="MapControl_MouseButtonDown" 
                             MouseMove="MapControl_MouseMove" 
                             RenderOptions.BitmapScalingMode="LowQuality"
