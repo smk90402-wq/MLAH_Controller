@@ -15,7 +15,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,8 +44,6 @@ namespace MLAH_LogAnalyzer
         }
         private static readonly DateTime Epoch = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        private CancellationTokenSource _sliderDebounceCts;
-
         private List<ulong> _timestampsUAV4 = new List<ulong>();
         private List<ulong> _timestampsUAV5 = new List<ulong>();
         private List<ulong> _timestampsUAV6 = new List<ulong>();
@@ -72,7 +69,7 @@ namespace MLAH_LogAnalyzer
                 {
                     _currentIndexUAV4 = value;
                     OnPropertyChanged(nameof(CurrentIndexUAV4));
-                    DebouncedUAVUpdate(4, _timestampsUAV4, value, (t) => CurrentSnapshotTimestampFormatted = t);
+                    UpdateUAVState(4, _timestampsUAV4, value, (t) => CurrentSnapshotTimestampFormatted = t);
                 }
             }
         }
@@ -96,7 +93,7 @@ namespace MLAH_LogAnalyzer
                 {
                     _currentIndexUAV5 = value;
                     OnPropertyChanged(nameof(CurrentIndexUAV5));
-                    DebouncedUAVUpdate(5, _timestampsUAV5, value, (t) => CurrentSnapshotTimestampFormatted1 = t);
+                    UpdateUAVState(5, _timestampsUAV5, value, (t) => CurrentSnapshotTimestampFormatted1 = t);
                 }
             }
         }
@@ -120,7 +117,7 @@ namespace MLAH_LogAnalyzer
                 {
                     _currentIndexUAV6 = value;
                     OnPropertyChanged(nameof(CurrentIndexUAV6));
-                    DebouncedUAVUpdate(6, _timestampsUAV6, value, (t) => CurrentSnapshotTimestampFormatted2 = t);
+                    UpdateUAVState(6, _timestampsUAV6, value, (t) => CurrentSnapshotTimestampFormatted2 = t);
                 }
             }
         }
@@ -469,30 +466,6 @@ namespace MLAH_LogAnalyzer
                 setMax(0);
                 setEnabled(false); // 비활성화
             }
-        }
-
-        private async void DebouncedUAVUpdate(int uavId, List<ulong> timestamps, int index, Action<string> updateLabel)
-        {
-            // 타임스탬프 라벨은 즉시 갱신 (가벼움)
-            if (timestamps != null && index >= 0 && index < timestamps.Count)
-            {
-                ulong ts = timestamps[index];
-                DateTime orig = Epoch.AddMilliseconds(ts).ToLocalTime();
-                if (orig.Year == 2055)
-                    orig = new DateTime(2025, orig.Month, orig.Day, orig.Hour, orig.Minute, orig.Second, orig.Millisecond, orig.Kind);
-                updateLabel(orig.ToString("HH:mm:ss.fff"));
-            }
-
-            _sliderDebounceCts?.Cancel();
-            _sliderDebounceCts = new CancellationTokenSource();
-            var token = _sliderDebounceCts.Token;
-            try
-            {
-                await Task.Delay(50, token);
-                if (!token.IsCancellationRequested)
-                    UpdateUAVState(uavId, timestamps, index, updateLabel);
-            }
-            catch (TaskCanceledException) { }
         }
 
         private void UpdateUAVState(int uavId, List<ulong> timestamps, int index, Action<string> updateLabel)
