@@ -301,9 +301,11 @@ namespace MLAH_LogAnalyzer
             }
             finally
             {
+                this.UpdateLayout();
                 await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Render);
+                await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Loaded);
                 await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
-                await Task.Delay(100);
+                await Task.Delay(300);
                 manager.Close();
             }
         }

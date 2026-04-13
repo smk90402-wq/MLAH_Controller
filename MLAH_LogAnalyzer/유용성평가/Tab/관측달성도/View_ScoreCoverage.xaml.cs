@@ -300,11 +300,11 @@ namespace MLAH_LogAnalyzer
             }
             finally
             {
-                // Render 우선순위: 레이아웃/렌더링 완료 대기
+                this.UpdateLayout();
                 await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Render);
-                // ApplicationIdle: DevExpress 맵/차트 내부 비동기 처리 완료 대기
+                await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Loaded);
                 await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
-                await Task.Delay(800);
+                await Task.Delay(300);
                 manager.Close();
             }
         }

@@ -173,31 +173,22 @@ namespace MLAH_LogAnalyzer
                 }
 
                 UpdatePanels(loaded);
-                await Application.Current.Dispatcher.InvokeAsync(async () =>
-                {
-                    // 3. 사람의 눈이 인식할 수 있도록 0.5초 정도 안전 딜레이 추가 (필요에 따라 조절)
-                    await Task.Delay(800);
-
-                    if (manager.State == SplashScreenState.Shown || manager.State == SplashScreenState.Showing)
-                    {
-                        manager.Close();
-                    }
-                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
                 UpdatePanels(null);
-
-                // 에러 시 즉시 종료 (마찬가지로 상태 확인 후 닫기)
-                if (manager.State != SplashScreenState.Closed && manager.State != SplashScreenState.Closing)
-                {
-                    manager.Close();
-                }
             }
-            //finally { await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Render);
-            //finally { await Task.Delay(300);
-            //finally { manager.Close(); }
+            finally
+            {
+                this.UpdateLayout();
+                await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Render);
+                await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Loaded);
+                await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                await Task.Delay(300);
+                if (manager.State == SplashScreenState.Shown || manager.State == SplashScreenState.Showing)
+                    manager.Close();
+            }
         }
 
         private void UpdatePanels(TargetPanelData data)
