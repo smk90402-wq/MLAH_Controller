@@ -294,12 +294,12 @@ namespace MLAH_LogAnalyzer
                     });
                 }
 
-                UpdateCoverageDisplays(loadedData);
+                await UpdateCoverageDisplays(loadedData);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(parentWindow, $"데이터 로드 중 오류 발생: {ex.Message}", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
-                UpdateCoverageDisplays(null); // 오류 시 UI 클리어
+                await UpdateCoverageDisplays(null); // 오류 시 UI 클리어
             }
             finally
             {
@@ -321,7 +321,7 @@ namespace MLAH_LogAnalyzer
         private AnalysisResult _currentAnalysisResult;
         private ScenarioData _currentScenarioData;
 
-        private async void UpdateCoverageDisplays(CoveragePanelData loadedData)
+        private async Task UpdateCoverageDisplays(CoveragePanelData loadedData)
         {
             // 1. 초기화 (일괄 교체 방식 - 빈 컬렉션으로 교체)
             SelectedScenarioChartData = new ObservableCollection<CoverageChartDataPoint>();
@@ -415,6 +415,25 @@ namespace MLAH_LogAnalyzer
             }
 
             ApplyChartRange();
+
+            // 첫 렌더링 워밍업: 스플래시 닫히기 전에 맵/차트/표적 캐시를 강제 구축
+            // 슬라이더 index 1로 이동 후 0으로 복귀하여 첫 상호작용 비용을 미리 소화
+            if (_timestampsUAV4.Count > 1 || _timestampsUAV5.Count > 1 || _timestampsUAV6.Count > 1)
+            {
+                if (_timestampsUAV4.Count > 1) UpdateUAVState(4, _timestampsUAV4, 1, (t) => CurrentSnapshotTimestampFormatted = t);
+                if (_timestampsUAV5.Count > 1) UpdateUAVState(5, _timestampsUAV5, 1, (t) => CurrentSnapshotTimestampFormatted1 = t);
+                if (_timestampsUAV6.Count > 1) UpdateUAVState(6, _timestampsUAV6, 1, (t) => CurrentSnapshotTimestampFormatted2 = t);
+
+                await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Render);
+                await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+
+                UpdateUAVState(4, _timestampsUAV4, 0, (t) => CurrentSnapshotTimestampFormatted = t);
+                UpdateUAVState(5, _timestampsUAV5, 0, (t) => CurrentSnapshotTimestampFormatted1 = t);
+                UpdateUAVState(6, _timestampsUAV6, 0, (t) => CurrentSnapshotTimestampFormatted2 = t);
+
+                await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.Render);
+                await Dispatcher.InvokeAsync(() => { }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+            }
         }
 
         private void AreaGrid_SelectedItemChanged(object sender, DevExpress.Xpf.Grid.SelectedItemChangedEventArgs e)

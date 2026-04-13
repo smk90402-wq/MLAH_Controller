@@ -84,7 +84,7 @@ namespace MLAH_LogAnalyzer
         private Dictionary<int, UnitMapObjectInfo> _cachedUavIcons = new();
         private Dictionary<int, MapPolygon> _cachedUavFootprints = new();
 
-        public void UpdateTargetsAt(ulong timestamp, List<RealTargetData> targetDataList)
+        public async Task UpdateTargetsAt(ulong timestamp, List<RealTargetData> targetDataList)
         {
             if (targetDataList == null || !targetDataList.Any()) return;
 
@@ -92,7 +92,7 @@ namespace MLAH_LogAnalyzer
             List<Target> currentTargets = SafetyLevelCalculator.FindClosestTargetEntry(timestamp, targetDataList);
             if (currentTargets == null) return;
 
-            Application.Current.Dispatcher.BeginInvoke(() =>
+            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 var currentIds = new HashSet<uint>(currentTargets.Select(t => t.ID));
 
