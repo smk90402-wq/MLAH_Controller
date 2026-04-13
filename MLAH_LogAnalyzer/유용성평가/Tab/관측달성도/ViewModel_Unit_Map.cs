@@ -167,9 +167,8 @@ namespace MLAH_LogAnalyzer
         {
             if (analysisResult == null || scenarioData == null) return;
 
-            Application.Current.Dispatcher.BeginInvoke(() =>
+            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                // 기존 데이터를 안전하게 초기화
                 CoveragePolygons.Clear();
                 EvaluationTracks.Clear();
             });
@@ -195,7 +194,7 @@ namespace MLAH_LogAnalyzer
             });
 
             // 2. [UI 스레드] 연산된 Geometry를 UI 객체(MapPolygon)로 변환하고 통째로 교체
-            Application.Current.Dispatcher.BeginInvoke(() =>
+            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 GeoPoint? firstPointToCenterOn = null;
                 var newCoveragePolygons = new List<MapPolygon>();
