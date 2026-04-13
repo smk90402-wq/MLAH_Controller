@@ -110,10 +110,26 @@ namespace MLAH_LogAnalyzer
                     _currentTimelineIndex = value;
                     OnPropertyChanged(nameof(CurrentTimelineIndex));
                     UpdateTimestampLabel(value);
-                    UpdateChartCrosshair(value);
-                    UpdateMapIconsToTimelineIndex(value);
+                    DebouncedSliderUpdate(value);
                 }
             }
+        }
+
+        private async void DebouncedSliderUpdate(int index)
+        {
+            _sliderDebounceCts?.Cancel();
+            _sliderDebounceCts = new CancellationTokenSource();
+            var token = _sliderDebounceCts.Token;
+            try
+            {
+                await Task.Delay(50, token);
+                if (!token.IsCancellationRequested)
+                {
+                    UpdateChartCrosshair(index);
+                    UpdateMapIconsToTimelineIndex(index);
+                }
+            }
+            catch (TaskCanceledException) { }
         }
 
         private List<ulong> _currentScenarioTimestamps = new List<ulong>();

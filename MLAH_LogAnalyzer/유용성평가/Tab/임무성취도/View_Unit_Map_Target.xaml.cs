@@ -43,7 +43,6 @@ namespace MLAH_LogAnalyzer
         {
             //ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
             InitializeComponent();
-            var _ = new DevExpress.Xpf.Map.MapControl();
             this.DataContext = ViewModel_Unit_Map_Target.SingletonInstance;
             // XAML에서 생성된 첫 번째 인스턴스를 싱글톤으로 설정
             if (_instance == null)

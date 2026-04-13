@@ -85,11 +85,27 @@ namespace MLAH_LogAnalyzer
                     _idx = value;
                     OnPropertyChanged(nameof(CurrentTimelineIndex));
                     UpdateTimestampLabel(value);
-                    UpdateChartCrosshair(value);
-                    UpdateMapIcons(value);
+                    DebouncedSliderUpdate(value);
                 }
             }
         }
+        private async void DebouncedSliderUpdate(int index)
+        {
+            _sliderDebounceCts?.Cancel();
+            _sliderDebounceCts = new CancellationTokenSource();
+            var token = _sliderDebounceCts.Token;
+            try
+            {
+                await Task.Delay(50, token);
+                if (!token.IsCancellationRequested)
+                {
+                    UpdateChartCrosshair(index);
+                    UpdateMapIcons(index);
+                }
+            }
+            catch (TaskCanceledException) { }
+        }
+
         private List<ulong> _timestamps = new List<ulong>();
         private TargetAnalysisResult _cachedResult; // 트랙바 이동 시 사용
 

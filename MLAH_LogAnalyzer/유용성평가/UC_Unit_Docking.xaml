@@ -119,7 +119,7 @@
             </dxdo:DockLayoutManager>
         </DockPanel>-->
 
-        <dx:DXTabControl Grid.Row="0" TabContentCacheMode="CacheAllTabs">
+        <dx:DXTabControl x:Name="MainTabControl" Grid.Row="0" TabContentCacheMode="CacheAllTabs" SelectionChanged="MainTabControl_SelectionChanged">
 
             <dx:DXTabControl.View>
                 <dx:TabControlScrollView 
