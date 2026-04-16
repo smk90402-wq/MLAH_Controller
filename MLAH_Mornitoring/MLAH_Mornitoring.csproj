@@ -45,7 +45,7 @@
 	  <ProjectReference Include="..\MLAH_Proto\MLAH_Proto.csproj" />
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(_IsPublishing)' != 'true'">
 	  <Exec Command="REM --- 불필요한 언어 리소스 폴더 삭제 ---&#xD;&#xA;REM 'ko' 폴더를 제외한 모든 언어 리소스 폴더(*.resources.dll을 포함하는)를 삭제합니다.&#xD;&#xA;if exist &quot;$(TargetDir)&quot; (&#xD;&#xA;    pushd &quot;$(TargetDir)&quot;&#xD;&#xA;    for /d %25%25i in (*) do (&#xD;&#xA;        if exist &quot;%25%25i\*.resources.dll&quot; (&#xD;&#xA;            if /I not &quot;%25%25i&quot;==&quot;ko&quot; (&#xD;&#xA;                rmdir /s /q &quot;%25%25i&quot;&#xD;&#xA;            )&#xD;&#xA;        )&#xD;&#xA;    )&#xD;&#xA;    popd&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;xcopy /Y /S &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)MLAH_Controller\$(OutDir)&quot;&#xD;&#xA;&#xD;&#xA;" />
 	</Target>
 

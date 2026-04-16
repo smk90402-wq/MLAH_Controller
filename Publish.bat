@@ -41,6 +41,11 @@ dotnet publish "%ROOT%\MLAH_Mornitoring_UDP\MLAH_Mornitoring_UDP.csproj" -c Rele
 IF ERRORLEVEL 1 GOTO :FAIL
 
 ECHO.
+ECHO [후처리] Monitoring exe를 Controller 폴더로 복사 (런타임 의존성)...
+COPY /Y "%PUBLISH_DIR%\MLAH_Mornitoring\MLAH_Mornitoring.exe" "%PUBLISH_DIR%\MLAH_Controller\" >NUL
+COPY /Y "%PUBLISH_DIR%\MLAH_Mornitoring_UDP\MLAH_Mornitoring_UDP.exe" "%PUBLISH_DIR%\MLAH_Controller\" >NUL
+
+ECHO.
 ECHO ==========================================================
 ECHO  발행 완료!
 ECHO  결과: %PUBLISH_DIR%

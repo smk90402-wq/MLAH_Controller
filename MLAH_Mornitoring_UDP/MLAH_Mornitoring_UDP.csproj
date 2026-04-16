@@ -35,7 +35,7 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(_IsPublishing)' != 'true'">
 	  <Exec Command="&#xD;&#xA;&#xD;&#xA;xcopy /Y /S &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)MLAH_Controller\$(OutDir)&quot;" />
 	</Target>
 
