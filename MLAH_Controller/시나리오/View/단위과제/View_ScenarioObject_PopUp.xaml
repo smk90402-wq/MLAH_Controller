@@ -267,8 +267,8 @@
             <TextBlock Grid.Row="4" Text="헤딩 (°)" Foreground="White"/>
             <TextBlock Grid.Row="5" Text="연료량 (L)" Foreground="White"/>
             <TextBlock Grid.Row="6" Text="연료소모량 (L / Tick)" Foreground="White"/>
-            <TextBlock Grid.Row="7" Text="식별 픽셀 설정값" Foreground="White"/>
-            <TextBlock Grid.Row="8" Text="탐지 픽셀 설정값" Foreground="White"/>
+            <TextBlock Grid.Row="7" Text="탐지 (ROI) Pixel" Foreground="White"/>
+            <TextBlock Grid.Row="8" Text="식별 (Target) Pixel" Foreground="White"/>
             <!--<TextBlock Grid.Row="8" Text="비정상 원인" Foreground="White"/>-->
             <!--<TextBlock Grid.Row="12" Text="연동 지휘기 번호" Foreground="White" Visibility="{Binding ObjectNumberVisibility}"/>-->
             <TextBlock Grid.Row="9" Text="개발용(임시)" Foreground="White"/>
@@ -324,8 +324,8 @@
             <TextBox Grid.Row="4" Text="{Binding ObjectHeading, UpdateSourceTrigger=PropertyChanged, StringFormat=N1}" Style="{StaticResource NormalTextBox}"/>
             <TextBox Grid.Row="5" Text="{Binding ObjectFuel, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" Style="{StaticResource NormalTextBox}" IsEnabled="False"/>
             <TextBox Grid.Row="6" Text="{Binding ObjectFuelConsumption, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F7}}" Style="{StaticResource NormalTextBox}" IsEnabled="False"/>
-            <TextBox Grid.Row="7" Text="{Binding DetectPixel, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
-            <TextBox Grid.Row="8" Text="{Binding RecogPixel, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="7" Text="{Binding RecogPixel, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
+            <TextBox Grid.Row="8" Text="{Binding DetectPixel, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource NormalTextBox}"/>
             <!--<ComboBox Grid.Row="8" Style="{StaticResource NormalComboBox}" Height="25" Width="115" Margin="{StaticResource UIELEMENT_MARGIN}" SelectedIndex="{Binding AbnormalReasonIndex}" IsEnabled="{Binding AbnormalReasonEnable}">
                 <ComboBoxItem Content="-"/>
                 <ComboBoxItem Content="센서 고장"/>

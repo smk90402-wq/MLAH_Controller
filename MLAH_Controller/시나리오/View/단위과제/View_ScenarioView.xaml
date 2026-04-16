@@ -780,10 +780,10 @@
                            Text="{Binding StatusText}" Foreground="{Binding StatusBrush}"/>
                             </ContentControl>
 
-                            <ContentControl Style="{StaticResource DataFieldStyle}" Tag="탐지 요구 픽셀" 
+                            <ContentControl Style="{StaticResource DataFieldStyle}" Tag="탐지 (ROI) Pixel"
                             Content="{Binding SelectedScenarioObject.RecogPixel}"/>
 
-                            <ContentControl Style="{StaticResource DataFieldStyle}" Tag="식별 요구 픽셀" 
+                            <ContentControl Style="{StaticResource DataFieldStyle}" Tag="식별 (Target) Pixel"
                             Content="{Binding SelectedScenarioObject.DetectPixel}"/>
 
                             <ContentControl Style="{StaticResource DataFieldStyle}" Tag="VF Mode (개발용)" 

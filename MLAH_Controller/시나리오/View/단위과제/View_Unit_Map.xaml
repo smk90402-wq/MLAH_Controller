@@ -368,7 +368,7 @@
                         </dxm:ListSourceDataAdapter>
                     </dxm:VectorLayer>
 
-                    <dxm:VectorLayer x:Name="UAVWaypointLayer" ShapeStroke="#1E90FF" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False"
+                    <dxm:VectorLayer x:Name="UAVWaypointLayer" ShapeStroke="#5A1E90FF" EnableSelection="False" EnableHighlighting="False" ToolTipEnabled="False"
 >
                         <dxm:ListSourceDataAdapter DataSource="{Binding UAVWapointList}">
                             <dxm:ListSourceDataAdapter.ItemSettings>

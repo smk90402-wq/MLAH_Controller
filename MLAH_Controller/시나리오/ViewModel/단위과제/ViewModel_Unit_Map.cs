@@ -1499,8 +1499,8 @@ namespace MLAH_Controller
             var baseColor = new SolidColorBrush(Color.FromArgb(60, 255, 69, 0));
             var baseStyle = new StrokeStyle { Thickness = 4 };
 
-            // 2. [수정] 활성 경로선 (현재 수행 중인 경로) - 진하고 두꺼운 주황색 (Static으로 그림)
-            var activeColor = new SolidColorBrush(Color.FromArgb(255, 255, 69, 0)); // 불투명
+            // 2. [수정] 활성 경로선 (현재 수행 중인 경로) - 반투명 주황색 (웨이포인트 번호 가독성 확보)
+            var activeColor = new SolidColorBrush(Color.FromArgb(140, 255, 69, 0));
             var activeStyle = new StrokeStyle { Thickness = 6 }; // 좀 더 두껍게 강조
 
             // 3. 현재 활성화된(수행 중인) 임무 ID 가져오기
@@ -1626,8 +1626,7 @@ namespace MLAH_Controller
             activeIds[2] = ctrlVM.ControlIndividualID2;
             activeIds[3] = ctrlVM.ControlIndividualID3;
 
-            //var pulseColor = new SolidColorBrush(Colors.White); // 펄스 색상 (밝은 흰색)
-            var pulseColor = new SolidColorBrush(Color.FromArgb(255, 255, 69, 0));
+            var pulseColor = new SolidColorBrush(Color.FromArgb(140, 255, 69, 0));
 
             // 3. 전체 계획을 순회하면서 '현재 ID'와 일치하는 녀석만 PulseList에 추가
             var allPlans = ViewModel_UC_Unit_LAHMissionPlan.SingletonInstance.LAHMissionPlanItemSource;
