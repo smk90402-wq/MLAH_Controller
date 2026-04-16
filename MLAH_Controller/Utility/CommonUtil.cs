@@ -21,6 +21,27 @@ namespace MLAH_Controller
 {
     public  class CommonUtil
     {
+        // 단일 실행 파일 publish(IncludeAllContentForSelfExtract=true)에서는
+        // AppDomain.CurrentDomain.BaseDirectory가 임시 추출 폴더를 가리킨다.
+        // 실제 .exe 옆에 있는 파일(Config.ini, srtm_62_05.tif, 형제 exe 등)을 찾으려면
+        // Environment.ProcessPath 기반 폴더를 써야 한다.
+        public static string ExecutableDirectory
+        {
+            get
+            {
+                string processPath = Environment.ProcessPath;
+                if (!string.IsNullOrEmpty(processPath))
+                {
+                    string dir = Path.GetDirectoryName(processPath);
+                    if (!string.IsNullOrEmpty(dir))
+                    {
+                        return dir + Path.DirectorySeparatorChar;
+                    }
+                }
+                return AppContext.BaseDirectory;
+            }
+        }
+
         public static void ClearCollections(object obj)
         {
             if (obj == null)
@@ -290,7 +311,7 @@ namespace MLAH_Controller
 
             public static void Load()
             {
-                string iniPath = AppDomain.CurrentDomain.BaseDirectory + "Config.ini";
+                string iniPath = ExecutableDirectory + "Config.ini";
                 string ipSetStr = Readini_Click("IPSet", "IPSet", iniPath);
                 int.TryParse(ipSetStr, out int ipSet);
 

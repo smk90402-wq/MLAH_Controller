@@ -298,15 +298,17 @@ namespace MLAH_Controller
 
         private Process StartMornitoringApp()
         {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string monitoringAppPath = Path.Combine(baseDir,"MLAH_Mornitoring.exe");
+            // 단일 실행 파일 publish에서는 AppDomain.BaseDirectory가 추출 폴더를 가리키므로
+            // 형제 exe는 CommonUtil.ExecutableDirectory(실제 exe 경로)로 찾는다.
+            string baseDir = CommonUtil.ExecutableDirectory;
+            string monitoringAppPath = Path.Combine(baseDir, "MLAH_Mornitoring.exe");
             return File.Exists(monitoringAppPath) ? Process.Start(monitoringAppPath) : null;
         }
 
         private Process StartUDPMornitoringApp()
         {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string monitoringAppPath = Path.Combine(baseDir,"MLAH_Mornitoring_UDP.exe");
+            string baseDir = CommonUtil.ExecutableDirectory;
+            string monitoringAppPath = Path.Combine(baseDir, "MLAH_Mornitoring_UDP.exe");
             return File.Exists(monitoringAppPath) ? Process.Start(monitoringAppPath) : null;
         }
 

@@ -71,7 +71,7 @@ namespace MLAH_Controller
             var mainViewModel = ViewModel_MainView.SingletonInstance;
             var scenarioViewModel = ViewModel_ScenarioView.SingletonInstance;
 
-            string strINIFilePath = AppDomain.CurrentDomain.BaseDirectory + "Config.ini";
+            string strINIFilePath = CommonUtil.ExecutableDirectory + "Config.ini";
 
             // Config.ini의 IPSet에 따라 IP 설정 로드 (gRPC/UDP 생성 전에 호출)
             CommonUtil.IPConfig.Load();

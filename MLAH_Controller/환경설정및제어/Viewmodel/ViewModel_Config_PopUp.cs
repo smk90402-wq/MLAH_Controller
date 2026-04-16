@@ -74,7 +74,7 @@ namespace MLAH_Controller
         }
 
         #endregion 생성자 & 콜백
-        private string strINIFilePath = AppDomain.CurrentDomain.BaseDirectory + "Config.ini";
+        private string strINIFilePath = CommonUtil.ExecutableDirectory + "Config.ini";
 
         // PsExec 사용 중단으로 주석 처리
         //PsExecModule ExecModule = new PsExecModule();

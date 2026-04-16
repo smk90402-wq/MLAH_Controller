@@ -62,8 +62,9 @@ namespace MLAH_Controller
 
             //popup.Show();
             // 1. 메인 앱이 실행된 폴더의 경로를 가져옵니다.
-            // (예: ...\MLAH_Controller\bin\x64\Debug\net8.0-windows...)
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            // 단일 실행 파일 publish에서는 AppDomain.BaseDirectory가 추출 임시 폴더이므로
+            // 실제 exe 옆을 가리키는 CommonUtil.ExecutableDirectory를 사용한다.
+            string baseDir = CommonUtil.ExecutableDirectory;
 
             // 2. 모니터링 앱 경로 탐색 (SingleFile: 같은 폴더 / Debug: 서브폴더)
             string monitoringAppPath = Path.Combine(baseDir, "MLAH_Mornitoring.exe");

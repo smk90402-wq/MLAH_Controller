@@ -29,7 +29,7 @@ namespace MLAH_Controller
             //var server = new UDPServer("127.0.0.1", 11000);
             //server.SendMessage(1,"notepad.exe");  // 예를 들어, 명령 1을 전송
             //server.Close();
-            string strINIFilePath = AppDomain.CurrentDomain.BaseDirectory + "Config.ini";
+            string strINIFilePath = CommonUtil.ExecutableDirectory + "Config.ini";
             int.TryParse((CommonUtil.Readini_Click("Platform", "Platform", strINIFilePath)), out Controller_Platform);
 
 

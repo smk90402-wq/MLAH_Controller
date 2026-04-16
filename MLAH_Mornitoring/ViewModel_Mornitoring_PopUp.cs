@@ -59,7 +59,9 @@ namespace MLAH_Mornitoring
             FilteredDataSource.Filter = FilterMessages;
 
             // A. MLAHInterop: 블랙리스트 방식 (null을 넘기면 _excludedMessageNames를 제외하고 다 넣음)
-            LoadProtoMessages(Path.Combine("gRPC", "MLAHIntefaceProto.proto"), null);
+            // 단일 실행 파일 publish에서는 CWD가 exe 폴더가 아닐 수 있으므로
+            // AppContext.BaseDirectory(추출된 Content가 있는 위치)를 기준으로 절대 경로를 만든다.
+            LoadProtoMessages(Path.Combine(AppContext.BaseDirectory, "gRPC", "MLAHIntefaceProto.proto"), null);
 
             // B. FederateInterface: 화이트리스트 방식 (지정한 이름만 넣음)
             var federateAllowList = new HashSet<string>
@@ -67,7 +69,7 @@ namespace MLAH_Mornitoring
         "JoinFederationExecutionReq",
         "ResignFederationExecutionReq"
     };
-            LoadProtoMessages(Path.Combine("gRPC", "FederateInterface.proto"), federateAllowList);
+            LoadProtoMessages(Path.Combine(AppContext.BaseDirectory, "gRPC", "FederateInterface.proto"), federateAllowList);
 
             UpdateFilter();
 

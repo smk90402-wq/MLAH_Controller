@@ -77,7 +77,7 @@ namespace MLAH_Controller
             // 버튼 텍스트 초기화
             btnToggleMap.Content = "Switch to AzureWeb";
 
-            string srtmPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "srtm_62_05.tif");
+            string srtmPath = System.IO.Path.Combine(CommonUtil.ExecutableDirectory, "srtm_62_05.tif");
             ViewModel_Unit_Map.SingletonInstance.InitializeSrtm(srtmPath);
 
         }
@@ -101,7 +101,7 @@ namespace MLAH_Controller
             }
 
             // 3. SRTM 초기화
-            string srtmPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "srtm_62_05.tif");
+            string srtmPath = System.IO.Path.Combine(CommonUtil.ExecutableDirectory, "srtm_62_05.tif");
             vm.InitializeSrtm(srtmPath);
 
             // 4. 고정 폴리곤 초기화 (백그라운드)
