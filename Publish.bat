@@ -22,22 +22,22 @@ IF EXIST "%PUBLISH_DIR%" (
 
 ECHO.
 ECHO [1/4] MLAH_Controller 발행 중...
-dotnet publish "%ROOT%\MLAH_Controller\MLAH_Controller.csproj" -c Release -r win-x64 -p:Platform=x64 --self-contained false -o "%PUBLISH_DIR%\MLAH_Controller" --nologo -v quiet
+dotnet publish "%ROOT%\MLAH_Controller\MLAH_Controller.csproj" -c Release -r win-x64 -p:Platform=x64 --self-contained true -p:DebugType=None -p:DebugSymbols=false -o "%PUBLISH_DIR%\MLAH_Controller" --nologo -v quiet
 IF ERRORLEVEL 1 GOTO :FAIL
 
 ECHO.
 ECHO [2/4] MLAH_LogAnalyzer 발행 중...
-dotnet publish "%ROOT%\MLAH_LogAnalyzer\MLAH_LogAnalyzer.csproj" -c Release -r win-x64 -p:Platform=x64 --self-contained false -o "%PUBLISH_DIR%\MLAH_LogAnalyzer" --nologo -v quiet
+dotnet publish "%ROOT%\MLAH_LogAnalyzer\MLAH_LogAnalyzer.csproj" -c Release -r win-x64 -p:Platform=x64 --self-contained true -p:DebugType=None -p:DebugSymbols=false -o "%PUBLISH_DIR%\MLAH_LogAnalyzer" --nologo -v quiet
 IF ERRORLEVEL 1 GOTO :FAIL
 
 ECHO.
 ECHO [3/4] MLAH_Mornitoring 발행 중...
-dotnet publish "%ROOT%\MLAH_Mornitoring\MLAH_Mornitoring.csproj" -c Release -r win-x64 -p:Platform=x64 --self-contained false -o "%PUBLISH_DIR%\MLAH_Mornitoring" --nologo -v quiet
+dotnet publish "%ROOT%\MLAH_Mornitoring\MLAH_Mornitoring.csproj" -c Release -r win-x64 -p:Platform=x64 --self-contained true -p:DebugType=None -p:DebugSymbols=false -o "%PUBLISH_DIR%\MLAH_Mornitoring" --nologo -v quiet
 IF ERRORLEVEL 1 GOTO :FAIL
 
 ECHO.
 ECHO [4/4] MLAH_Mornitoring_UDP 발행 중...
-dotnet publish "%ROOT%\MLAH_Mornitoring_UDP\MLAH_Mornitoring_UDP.csproj" -c Release -r win-x64 -p:Platform=x64 --self-contained false -o "%PUBLISH_DIR%\MLAH_Mornitoring_UDP" --nologo -v quiet
+dotnet publish "%ROOT%\MLAH_Mornitoring_UDP\MLAH_Mornitoring_UDP.csproj" -c Release -r win-x64 -p:Platform=x64 --self-contained true -p:DebugType=None -p:DebugSymbols=false -o "%PUBLISH_DIR%\MLAH_Mornitoring_UDP" --nologo -v quiet
 IF ERRORLEVEL 1 GOTO :FAIL
 
 ECHO.
