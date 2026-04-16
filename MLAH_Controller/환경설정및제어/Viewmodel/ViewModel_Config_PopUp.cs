@@ -76,7 +76,8 @@ namespace MLAH_Controller
         #endregion 생성자 & 콜백
         private string strINIFilePath = AppDomain.CurrentDomain.BaseDirectory + "Config.ini";
 
-        PsExecModule ExecModule = new PsExecModule();
+        // PsExec 사용 중단으로 주석 처리
+        //PsExecModule ExecModule = new PsExecModule();
 
         //취소용 임시 저장 변수
         private String TempBattlefieldSituationIP;
@@ -587,14 +588,14 @@ namespace MLAH_Controller
                 {
                     // 1. 기존 프로세스가 있는지 확인하고 종료합니다.
                     splashViewModel.Status = "기존 프로세스 확인 및 종료 중...";
-                    await ExecModule.QuitCommandUnrealAsync(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath);
+                    //await ExecModule.QuitCommandUnrealAsync(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath);
 
                     // 약간의 지연을 주어 프로세스가 완전히 종료될 시간을 확보합니다.
                     await Task.Delay(1000);
 
                     // 2. 새로운 프로세스를 실행합니다.
                     splashViewModel.Status = "원격 PC에 실행 명령 전송 중...";
-                    ExecModule.ExecuteCommand(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath);
+                    //ExecModule.ExecuteCommand(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath);
                 });
             }
             finally
@@ -632,7 +633,7 @@ namespace MLAH_Controller
 
                     // 2. 새로운 프로세스를 실행합니다.
                     splashViewModel.Status = "원격 PC에 실행 명령 전송 중...";
-                    ExecModule.ExecuteCommand(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath1);
+                    //ExecModule.ExecuteCommand(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath1);
                 });
             }
             finally
@@ -661,13 +662,13 @@ namespace MLAH_Controller
                 {
                     // 1. 기존 프로세스가 있는지 확인하고 종료합니다.
                     splashViewModel.Status = "기존 프로세스 확인 및 종료 중...";
-                    await ExecModule.QuitCommandUnrealAsync(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationDebugExecPath);
+                    //await ExecModule.QuitCommandUnrealAsync(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationDebugExecPath);
 
                     await Task.Delay(1000);
 
                     // 2. 새로운 프로세스를 실행합니다.
                     splashViewModel.Status = "원격 PC에 실행 명령 전송 중...";
-                    ExecModule.ExecuteCommand(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationDebugExecPath);
+                    //ExecModule.ExecuteCommand(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationDebugExecPath);
                 });
             }
             finally
@@ -694,7 +695,8 @@ namespace MLAH_Controller
 
                 await Task.Run(async () =>
                 {
-                    await ExecModule.QuitCommandUnrealAsync(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath);
+                    //await ExecModule.QuitCommandUnrealAsync(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath);
+                    await Task.CompletedTask;
                 });
             }
             finally
@@ -721,7 +723,8 @@ namespace MLAH_Controller
 
                 await Task.Run(async () =>
                 {
-                    await ExecModule.QuitCommand(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath);
+                    //await ExecModule.QuitCommand(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath);
+                    await Task.CompletedTask;
                 });
             }
             finally
@@ -734,14 +737,14 @@ namespace MLAH_Controller
 
         public void CompTaskExecCommandAction(object param)
         {
-            ExecModule.ExecuteCommand(CompTaskSituationIP, CompTaskSituationUser, CompTaskSituationPw, CompTaskSituationExecPath);
+            //ExecModule.ExecuteCommand(CompTaskSituationIP, CompTaskSituationUser, CompTaskSituationPw, CompTaskSituationExecPath);
         }
 
         public RelayCommand CompTaskQuitCommand { get; set; }
 
         public void CompTaskQuitCommandAction(object param)
         {
-            ExecModule.QuitCommand(CompTaskSituationIP, CompTaskSituationUser, CompTaskSituationPw, CompTaskSituationExecPath);
+            //ExecModule.QuitCommand(CompTaskSituationIP, CompTaskSituationUser, CompTaskSituationPw, CompTaskSituationExecPath);
         }
 
         public RelayCommand DroneExecCommand { get; set; }
@@ -766,7 +769,7 @@ namespace MLAH_Controller
                 {
                     // 1. 기존 프로세스가 있는지 확인하고 종료합니다.
                     splashViewModel.Status = "기존 프로세스 확인 및 종료 중...";
-                    await ExecModule.QuitCommand(UAVSim1IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
+                    //await ExecModule.QuitCommand(UAVSim1IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
 
                     // 약간의 지연을 주어 프로세스가 완전히 종료될 시간을 확보합니다.
                     await Task.Delay(1000);
@@ -774,7 +777,7 @@ namespace MLAH_Controller
                     // 2. 새로운 프로세스를 실행합니다.
                     splashViewModel.Status = "원격 PC에 실행 명령 전송 중...";
                     //ExecModule.ExecuteCommand(BattleSim1IP, BattlefieldSituationUser, BattlefieldSituationPw, BattlefieldSituationExecPath);
-                    ExecModule.ExecuteCommand(UAVSim1IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
+                    //ExecModule.ExecuteCommand(UAVSim1IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
                 });
             }
             finally
@@ -788,14 +791,14 @@ namespace MLAH_Controller
 
         public void DroneQuitCommandAction(object param)
         {
-            ExecModule.QuitCommand(UAVSim1IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
+            //ExecModule.QuitCommand(UAVSim1IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
         }
 
         public RelayCommand UAV2ExecCommand { get; set; }
 
         public void UAV2ExecCommandAction(object param)
         {
-            ExecModule.ExecuteCommand(UAVSim2IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
+            //ExecModule.ExecuteCommand(UAVSim2IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
             //RunRemoteApplication(DroneSituationIP, DroneSituationExecPath, DroneSituationUser, DroneSituationPw);
             //UAV1SimWaiter.Content = "무인기 모의기 1 실행 중";
             //UAV1SimWaiter.DeferedVisibility = true;
@@ -805,14 +808,14 @@ namespace MLAH_Controller
 
         public void UAV2QuitCommandAction(object param)
         {
-            ExecModule.QuitCommand(UAVSim2IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
+            //ExecModule.QuitCommand(UAVSim2IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
         }
 
         public RelayCommand UAV3ExecCommand { get; set; }
 
         public void UAV3ExecCommandAction(object param)
         {
-            ExecModule.ExecuteCommand(UAVSim3IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
+            //ExecModule.ExecuteCommand(UAVSim3IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
             //RunRemoteApplication(DroneSituationIP, DroneSituationExecPath, DroneSituationUser, DroneSituationPw);
             //UAV1SimWaiter.Content = "무인기 모의기 1 실행 중";
             //UAV1SimWaiter.DeferedVisibility = true;
@@ -822,35 +825,35 @@ namespace MLAH_Controller
 
         public void UAV3QuitCommandAction(object param)
         {
-            ExecModule.QuitCommand(UAVSim3IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
+            //ExecModule.QuitCommand(UAVSim3IP, DroneSituationUser, DroneSituationPw, DroneSituationExecPath);
         }
 
         public RelayCommand DisplaySimExecCommand { get; set; }
 
         public void DisplaySimExecCommandAction(object param)
         {
-            ExecModule.ExecuteCommand(DisplaySimIP, DisplaySimUser, DisplaySimPw, DisplaySimExecPath);
+            //ExecModule.ExecuteCommand(DisplaySimIP, DisplaySimUser, DisplaySimPw, DisplaySimExecPath);
         }
 
         public RelayCommand DisplaySimQuitCommand { get; set; }
 
         public void DisplaySimQuitCommandAction(object param)
         {
-            ExecModule.QuitCommand(DisplaySimIP, DisplaySimUser, DisplaySimPw, DisplaySimExecPath);
+            //ExecModule.QuitCommand(DisplaySimIP, DisplaySimUser, DisplaySimPw, DisplaySimExecPath);
         }
 
         public RelayCommand ControlOperSimExecCommand { get; set; }
 
         public void ControlOperSimExecCommandAction(object param)
         {
-            ExecModule.ExecuteCommand(ControlOperSimIP, ControlOperSimUser, ControlOperSimPassword, ControlOperSimExecPath);
+            //ExecModule.ExecuteCommand(ControlOperSimIP, ControlOperSimUser, ControlOperSimPassword, ControlOperSimExecPath);
         }
 
         public RelayCommand ControlOperSimQuitCommand { get; set; }
 
         public void ControlOperSimQuitCommandAction(object param)
         {
-            ExecModule.QuitCommand(ControlOperSimIP, ControlOperSimUser, ControlOperSimPassword, ControlOperSimExecPath);
+            //ExecModule.QuitCommand(ControlOperSimIP, ControlOperSimUser, ControlOperSimPassword, ControlOperSimExecPath);
         }
 
 
@@ -866,7 +869,7 @@ namespace MLAH_Controller
 
         public void UAV1SimShutDownCommandAction(object param)
         {
-            ExecModule.ShutdownCommand(UAVSim1IP, DroneSituationUser, DroneSituationPw);
+            //ExecModule.ShutdownCommand(UAVSim1IP, DroneSituationUser, DroneSituationPw);
         }
 
         public RelayCommand CloseCommand { get; set; }
